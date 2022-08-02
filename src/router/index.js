@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import store from "../store";
 import index from "@/views/index.vue";
 import login from "@/views/login.vue";
+import signup from "@/views/signup.vue";
 import Home from "@/views/HomeView.vue";
 import FrameDefault from "@/layouts/workFrame.vue";
 
@@ -25,9 +26,15 @@ const routes = [
   },
   {
     //로그인
-    path: "/login",
+    path: "/",
     name: "login",
     component: login,
+  },
+  {
+    //로그인
+    path: "/",
+    name: "signup",
+    component: signup,
   },
   {
     path: "/",
