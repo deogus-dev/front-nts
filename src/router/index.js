@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "../store";
+import index from "@/views/index.vue";
 import login from "@/views/login.vue";
 import Home from "@/views/HomeView.vue";
 import FrameDefault from "@/layouts/workFrame.vue";
@@ -16,6 +17,12 @@ const requireAuth = () => (to, from, next) => {
 };
 
 const routes = [
+  {
+    //로그인
+    path: "/",
+    name: "appmain",
+    component: index,
+  },
   {
     //로그인
     path: "/login",
