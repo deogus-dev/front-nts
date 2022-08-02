@@ -20,19 +20,19 @@ const requireAuth = () => (to, from, next) => {
 const routes = [
   {
     //앱 메인
-    path: "/",
+    path: "/main",
     name: "appmain",
     component: index,
   },
   {
     //로그인
-    path: "/",
+    path: "/login",
     name: "login",
     component: login,
   },
   {
     //로그인
-    path: "/",
+    path: "/signup",
     name: "signup",
     component: signup,
   },

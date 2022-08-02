@@ -1,12 +1,12 @@
 <template>
   <div class="card h-100 p-0 border border-0">
-    <div class="card-header p-0 border border-0">
+    <!-- <div class="card-header p-0 border border-0">
       <Header></Header>
-    </div>
+    </div> -->
     <div class="card-body p-0 h-100">
       <router-view class="h-100 w-100" />
     </div>
-    <div class="card-footer p-0 border border-0">
+    <div class="card-footer shadow-lg border border-0">
       <Footer></Footer>
     </div>
   </div>

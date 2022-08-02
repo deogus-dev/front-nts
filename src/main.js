@@ -9,6 +9,7 @@ Vue.prototype.$axios = axios
 
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+// import 'bootstrap/scss/bootstrap'
 
 new Vue({
   router,
