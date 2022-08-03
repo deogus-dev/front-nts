@@ -10,6 +10,10 @@ module.exports = {
         target: "http://localhost:8080",
         changeOrigin: true,
       },
+      "/main": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+      },
     },
   },
   lintOnSave: false,
