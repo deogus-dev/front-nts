@@ -3,7 +3,11 @@
     <div class="row m-0">
       <div class="col-md-4">This is header section</div>
       <div class="col-md-4 text-warning">Login State [ {{ loginYn }} ]</div>
-      <div class="col-md-4 text-primary">User name is [ {{ userNm }} ]</div>
+      <div class="col-md-4 text-primary">
+        <router-link :to="{ name: 'signup' }"
+          >User name is [ {{ userNm }} ]</router-link
+        ><br />
+      </div>
     </div>
   </div>
 </template>

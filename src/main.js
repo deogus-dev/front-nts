@@ -3,13 +3,13 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import axios from "axios";
+import "./axios.js";
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import 'bootstrap/scss/bootstrap'
 
 Vue.prototype.$axios = axios;
 

@@ -1,20 +1,28 @@
 <template>
   <div class="container text-center">
     <div class="row row-cols-5">
-      <div class="col m-0 p-0">
-        <button class="btn btn-secondary" @click="goHome">Home</button>
+      <div class="col m-0 px-1">
+        <button class="btn shadow w-100" @click="goHome">ico1</button>
       </div>
-      <div class="col m-0 p-0">
-        <button class="btn btn-secondary">Time</button>
+      <div class="col m-0 px-1">
+        <router-link :to="{ name: 'page2' }">
+          <button class="btn shadow w-100">ico2</button>
+        </router-link>
       </div>
-      <div class="col m-0 p-0">
-        <button class="btn btn-secondary">My Info</button>
+      <div class="col m-0 px-1">
+        <router-link :to="{ name: 'page3' }">
+          <button class="btn shadow w-100">ico3</button>
+        </router-link>
       </div>
-      <div class="col m-0 p-0">
-        <button class="btn btn-secondary">Lock</button>
+      <div class="col m-0 px-1">
+        <router-link :to="{ name: 'page4' }">
+          <button class="btn shadow w-100">ico4</button>
+        </router-link>
       </div>
-      <div class="col m-0 p-0">
-        <button class="btn btn-secondary">Alarm</button>
+      <div class="col m-0 px-1">
+        <router-link :to="{ name: 'page5' }">
+          <button class="btn shadow w-100">ico5</button>
+        </router-link>
       </div>
     </div>
   </div>
@@ -30,10 +38,10 @@ export default {
   methods: {
     async goHome() {
       const res1 = await this.$axios.get("/api/testApiCall");
-      console.log(res1);
+      console.log("[ api call test 1 ]\r\n", res1.data);
 
       const res2 = await this.$axios.get("/main/testApiCall");
-      console.log(res2);
+      console.log("[ api call test 2 ]\r\n", res2);
     },
   },
 };

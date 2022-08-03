@@ -4,9 +4,11 @@
       <Header></Header>
     </div> -->
     <div class="card-body p-0 h-100">
-      <router-view class="h-100 w-100" />
+      <transition name="slide-fade" mode="out-in">
+        <router-view class="h-100 w-100" />
+      </transition>
     </div>
-    <div class="card-footer shadow-lg border border-0">
+    <div class="card-footer shadow">
       <Footer></Footer>
     </div>
   </div>
