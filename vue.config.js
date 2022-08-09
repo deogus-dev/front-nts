@@ -7,12 +7,14 @@ module.exports = {
     port: 7888,
     proxy: {
       "/api": {
-        target: "http://localhost:8080",
+        target: "http://localhost:8081",
         changeOrigin: true,
+        withCredentials: true,
       },
       "/main": {
-        target: "http://localhost:8080",
+        target: "http://localhost:8081",
         changeOrigin: true,
+        withCredentials: true,
       },
     },
   },

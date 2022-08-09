@@ -39,9 +39,6 @@ export default {
     async goHome() {
       const res1 = await this.$axios.get("/api/testApiCall");
       console.log("[ api call test 1 ]\r\n", res1.data);
-
-      const res2 = await this.$axios.get("/main/testApiCall");
-      console.log("[ api call test 2 ]\r\n", res2);
     },
   },
 };
