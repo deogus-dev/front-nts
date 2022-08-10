@@ -5,6 +5,8 @@ import store from "./store";
 import axios from "axios";
 import "./axios.js";
 
+import "bootstrap-icons/font/bootstrap-icons.css";
+
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 

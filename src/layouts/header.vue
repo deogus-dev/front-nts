@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-success text-white font-weight-bold fs-3">
+  <div class="bg-light font-weight-bold fs-3">
     <button
-      class="btn btn-primary align-self-end"
+      class="btn btn-primary"
       type="button"
       data-bs-toggle="offcanvas"
       data-bs-target="#offcanvasExample"

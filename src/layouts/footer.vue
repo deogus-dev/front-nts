@@ -1,32 +1,31 @@
 <template>
-  <div class="container text-center">
-    <div class="row row-cols-5">
-      <div class="col m-0 px-1 h-100">
-        <!-- <button class="btn shadow w-100" @click="goHome">ico1</button> -->
-        <router-link :to="{ name: 'login' }">
-          <button class="btn shadow w-100">login</button>
-        </router-link>
-      </div>
-      <div class="col m-0 px-1 h-100">
-        <router-link :to="{ name: 'signup' }">
-          <button class="btn shadow w-100">signup</button>
-        </router-link>
-      </div>
-      <div class="col m-0 px-1 h-100">
-        <router-link :to="{ name: 'main' }">
-          <button class="btn shadow w-100">main</button>
-        </router-link>
-      </div>
-      <div class="col m-0 px-1 h-100">
-        <router-link :to="{ name: 'page4' }">
-          <button class="btn shadow w-100">ico4</button>
-        </router-link>
-      </div>
-      <div class="col m-0 px-1 h-100">
-        <router-link :to="{ name: 'page5' }">
-          <button class="btn shadow w-100">ico5</button>
-        </router-link>
-      </div>
+  <div class="row row-cols-5 p-0 m-0">
+    <div class="col m-0 px-1 h-100">
+      <router-link :to="{ name: 'page1' }">
+        <button class="btn btn-light w-100"><i class="bi-house"></i></button>
+      </router-link>
+    </div>
+    <div class="col m-0 px-1 h-100">
+      <router-link :to="{ name: 'page2' }">
+        <button class="btn btn-light w-100"><i class="bi-clock"></i></button>
+      </router-link>
+    </div>
+    <div class="col m-0 px-1 h-100">
+      <router-link :to="{ name: 'page3' }">
+        <button class="btn btn-light w-100"><i class="bi-person"></i></button>
+      </router-link>
+    </div>
+    <div class="col m-0 px-1 h-100">
+      <router-link :to="{ name: 'page4' }">
+        <button class="btn btn-light w-100"><i class="bi-lock"></i></button>
+      </router-link>
+    </div>
+    <div class="col m-0 px-1 h-100">
+      <router-link :to="{ name: 'page5' }">
+        <button class="btn btn-light w-100">
+          <i class="bi-alarm"></i>
+        </button>
+      </router-link>
     </div>
   </div>
 </template>

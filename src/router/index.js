@@ -21,7 +21,7 @@ const requireAuth = () => (to, from, next) => {
 const routes = [
   {
     //앱 메인
-    path: "/",
+    path: "/index",
     name: "appmain",
     component: index,
   },
@@ -40,14 +40,7 @@ const routes = [
   {
     path: "/",
     component: FrameDefault,
-    children: [
-      {
-        path: "/",
-        name: "main",
-        component: Home,
-      },
-      ...pageRouter,
-    ],
+    children: [...pageRouter],
     // beforeEnter: requireAuth(),
   },
 ];
