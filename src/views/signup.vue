@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import prevBtn from "@/components/prevBtn.vue";
+import prevBtn from "@/components/button/prevBtn.vue";
 export default {
   name: "signUp",
   components: {

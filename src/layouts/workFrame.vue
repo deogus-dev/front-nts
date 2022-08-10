@@ -1,14 +1,14 @@
 <template>
-  <div class="card h-100 p-0">
+  <div class="card h-100 p-0 border-0 shadow">
     <div class="card-header p-0">
       <Header></Header>
     </div>
-    <div class="card-body p-0">
+    <div class="card-body p-0 border-0">
       <transition name="slide-fade" mode="out-in">
         <router-view />
       </transition>
     </div>
-    <div class="card-footer px-0">
+    <div class="card-footer px-0 border-0 shadow">
       <Footer></Footer>
     </div>
   </div>

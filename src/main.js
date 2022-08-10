@@ -6,14 +6,13 @@ import axios from "axios";
 import "./axios.js";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 
-import "bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-
-Vue.prototype.$axios = axios;
+Vue.component("globalAlert", () => import("@/components/alert/global.vue"));
 
 new Vue({
   router,

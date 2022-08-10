@@ -4,7 +4,6 @@ import store from "../store";
 import index from "@/views/index.vue";
 import login from "@/views/login.vue";
 import signup from "@/views/signup.vue";
-import Home from "@/views/HomeView.vue";
 import FrameDefault from "@/layouts/workFrame.vue";
 import pageRouter from "./pageRouter";
 

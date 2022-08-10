@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import common from "@/store/modules/common.js";
 import auth from "@/store/modules/auth.js";
 import createPersistedState from "vuex-persistedstate";
 
@@ -11,6 +12,7 @@ export default new Vuex.Store({
   actions: {},
   getters: {},
   modules: {
+    common,
     auth,
   },
   plugins: [

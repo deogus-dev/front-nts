@@ -3,6 +3,7 @@
     <transition name="slide-fade" mode="out-in">
       <router-view />
     </transition>
+    <global-alert />
   </div>
 </template>
 
