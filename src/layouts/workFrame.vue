@@ -1,8 +1,8 @@
 <template>
   <div class="card h-100 p-0 border border-0">
-    <!-- <div class="card-header p-0 border border-0">
+    <div class="card-header p-0 border border-0">
       <Header></Header>
-    </div> -->
+    </div>
     <div class="card-body p-0 h-100">
       <transition name="slide-fade" mode="out-in">
         <router-view class="h-100 w-100" />

@@ -1,12 +1,48 @@
 <template>
   <div class="bg-success text-white font-weight-bold fs-3">
-    <div class="row m-0">
-      <div class="col-md-4">This is header section</div>
-      <div class="col-md-4 text-warning">Login State [ {{ loginYn }} ]</div>
-      <div class="col-md-4 text-primary">
-        <router-link :to="{ name: 'signup' }"
-          >User name is [ {{ userNm }} ]</router-link
-        ><br />
+    <button
+      class="btn btn-primary align-self-end"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasExample"
+      aria-controls="offcanvasExample"
+    >
+      =
+    </button>
+    <div
+      class="offcanvas offcanvas-start"
+      tabindex="-1"
+      id="offcanvasExample"
+      aria-labelledby="offcanvasExampleLabel"
+    >
+      <div class="offcanvas-header text-secondary">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Nine To Six</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <div>
+          Some text as placeholder. In real life you can have the elements you
+          have chosen. Like, text, images, lists, etc.
+        </div>
+        <div class="dropdown mt-3">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+          >
+            Dropdown button
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
