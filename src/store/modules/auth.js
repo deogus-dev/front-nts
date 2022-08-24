@@ -11,9 +11,9 @@ const userInfo = {
     userName: "test",
   },
   mutations: {
-    loginSuccess(state, { user, password }) {
+    loginSuccess(state, { email, password }) {
       state.loginSuccess = true;
-      state.userName = user;
+      state.userName = email;
       state.password = password;
     },
     loginError(state, { user, password }) {
@@ -23,17 +23,15 @@ const userInfo = {
     },
   },
   actions: {
-    async login({ commit }, { user, password }) {
+    async login({ commit }, { email, password }) {
       try {
-        const result = await axios.get("/api/login", {
-          auth: {
-            username: user,
-            password: password,
-          },
+        const result = await axios.post("/auth/login", {
+          email: email,
+          password: password,
         });
         if (result.status === 200) {
           commit("loginSuccess", {
-            user: user,
+            email: email,
             password: password,
           });
         }

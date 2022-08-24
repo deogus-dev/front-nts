@@ -19,10 +19,10 @@
         v-model="password"
         placeholder="password"
       />
-      <!-- <button class="btn btn-primary my-1" @click="login">Login</button> -->
-      <router-link :to="{ name: 'main' }" class="btn btn-primary my-1"
+      <button class="btn btn-primary my-1" @click="login">Login</button>
+      <!-- <router-link :to="{ name: 'main' }" class="btn btn-primary my-1"
         >Login</router-link
-      >
+      > -->
     </div>
   </div>
 </template>
@@ -48,12 +48,10 @@ export default {
     async login() {
       try {
         await this.$store.dispatch("login", {
-          user: this.user,
+          email: this.user,
           password: this.password,
         });
-        await this.$router.push({
-          name: "main",
-        });
+        await this.$router.push("/");
       } catch (err) {
         this.loginError = true;
         this.error = true;

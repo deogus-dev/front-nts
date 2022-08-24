@@ -6,10 +6,11 @@
       class="btn btn-primary"
       data-bs-toggle="modal"
       data-bs-target="#staticBackdrop"
-      @click="openAlert"
+      @click="loginCheck"
     >
       open global alert
     </button>
+    <button class="btn btn-success" @click="loginCheck">loginCheck</button>
   </div>
 </template>
 
@@ -18,6 +19,13 @@ export default {
   methods: {
     openAlert() {
       this.$store.dispatch("alertSet", "alert test !!!");
+    },
+
+    async loginCheck() {
+      const result = await this.$axios.get("/user/v1/me", {});
+      if (result.status === 200) {
+        console.log(JSON.stringify(result.data));
+      }
     },
   },
 };

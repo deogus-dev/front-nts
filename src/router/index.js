@@ -11,7 +11,7 @@ Vue.use(VueRouter);
 
 const requireAuth = () => (to, from, next) => {
   if (!store.getters["isLoggedIn"]) {
-    return next("/login");
+    return next("/index");
   } else {
     return next();
   }
@@ -40,7 +40,7 @@ const routes = [
     path: "/",
     component: FrameDefault,
     children: [...pageRouter],
-    // beforeEnter: requireAuth(),
+    beforeEnter: requireAuth(),
   },
 ];
 

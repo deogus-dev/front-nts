@@ -6,13 +6,13 @@ module.exports = {
   devServer: {
     port: 7888,
     proxy: {
-      "/api": {
-        target: "http://localhost:8081",
+      "/auth": {
+        target: "http://localhost:8080",
         changeOrigin: true,
         withCredentials: true,
       },
-      "/main": {
-        target: "http://localhost:8081",
+      "/user/v1": {
+        target: "http://localhost:8080",
         changeOrigin: true,
         withCredentials: true,
       },
