@@ -35,7 +35,7 @@ export default {
     }
 
     // get position
-    navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.watchPosition(
       (pos) => {
         console.log("watchposition");
         this.curPos.latitude = pos.coords.latitude;
