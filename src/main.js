@@ -9,6 +9,9 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import "@/assets/css/main.css";
+import "@/assets/css/transition.css";
+
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 
