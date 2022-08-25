@@ -71,7 +71,7 @@ export default {
           position: this.map.getCenter(),
         });
 
-        marker.setMap(this.map);
+        marker.setPosition(this.curPos);
         if (this.circle) this.chkPos();
       },
       deep: true,
