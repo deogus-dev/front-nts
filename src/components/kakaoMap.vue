@@ -71,7 +71,9 @@ export default {
           position: this.map.getCenter(),
         });
 
-        marker.setPosition(this.curPos);
+        marker.setPosition(
+          new kakao.maps.LatLng(this.curPos.latitude, this.curPos.longitude)
+        );
         if (this.circle) this.chkPos();
       },
       deep: true,
