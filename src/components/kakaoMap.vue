@@ -37,7 +37,7 @@ export default {
     // get position
     navigator.geolocation.watchPosition(
       (pos) => {
-        console.log("watchposition");
+        console.log("watchposition!@#");
         if (
           pos.coords.longitude > this.circle.getBounds().ha &&
           pos.coords.latitude > this.circle.getBounds().qa &&
