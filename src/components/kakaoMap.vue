@@ -67,6 +67,11 @@ export default {
   watch: {
     curPos: {
       handler: function () {
+        var marker = new kakao.maps.Marker({
+          position: this.map.getCenter(),
+        });
+
+        marker.setMap(this.map);
         if (this.circle) this.chkPos();
       },
       deep: true,
