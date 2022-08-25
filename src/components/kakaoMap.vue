@@ -1,6 +1,6 @@
 <template>
   <section class="h-100">
-    <div id="map" class="h-100"></div>
+    <div id="map"></div>
     <p>
       <button
         class="btn"
@@ -143,6 +143,6 @@ export default {
 <style>
 #map {
   width: 100%;
-  height: 100%;
+  height: 400px;
 }
 </style>
