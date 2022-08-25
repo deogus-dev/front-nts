@@ -51,7 +51,7 @@ export default {
     if (!window.kakao || !window.kakao.maps) {
       console.log("script");
       const script = document.createElement("script");
-      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.VUE_APP_KAKAOMAP_KEY}`;
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.VUE_APP_KAKAOMAP_KEY}`;
       /* global kakao */
       script.addEventListener("load", () => {
         kakao.maps.load(this.initMap);
