@@ -1,6 +1,6 @@
 <template>
-  <section>
-    <div id="map"></div>
+  <section class="h-100">
+    <div id="map" class="h-100"></div>
     <p>
       <button
         class="btn"
@@ -11,7 +11,7 @@
         출석체크
       </button>
     </p>
-    {{ curPos }}
+    <small>{{ curPos }}</small>
   </section>
 </template>
 
@@ -22,43 +22,52 @@ export default {
       map: null,
       circle: null,
       curPos: {
-        latitude: 0,
-        longitude: 0,
+        latitude: 33.450701,
+        longitude: 126.570667,
       },
       status: false,
     };
   },
   created() {
+    console.log("created");
     if (!("geolocation" in navigator)) {
       return;
     }
 
     // get position
-    navigator.geolocation.watchPosition(
+    navigator.geolocation.getCurrentPosition(
       (pos) => {
+        console.log("watchposition");
         this.curPos.latitude = pos.coords.latitude;
         this.curPos.longitude = pos.coords.longitude;
+        this.initMap;
       },
       (err) => {
-        alert(err.message);
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 15000,
-        maximumAge: 0,
+        console.log(err.message);
       }
     );
   },
   mounted() {
-    window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
+    if (!window.kakao || !window.kakao.maps) {
+      console.log("script");
+      const script = document.createElement("script");
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.VUE_APP_KAKAOMAP_KEY}`;
+      /* global kakao */
+      script.addEventListener("load", () => {
+        kakao.maps.load(this.initMap);
+      });
+      document.head.appendChild(script);
+    } else {
+      console.log("initmap");
+      //console.log("이미 로딩됨: ", window.kakao);
+      this.initMap();
+    }
   },
 
   watch: {
     curPos: {
       handler: function () {
-        // if (!this.curPos.latitude != 0 && !this.curPos.longitude != 0) {
-        this.chkPos();
-        // }
+        if (this.circle) this.chkPos();
       },
       deep: true,
     },
@@ -127,23 +136,13 @@ export default {
 
       this.chkPos();
     },
-
-    addScript() {
-      const script = document.createElement("script");
-      /* global kakao */
-      script.onload = () => kakao.maps.load(this.initMap);
-      script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=" +
-        process.env.VUE_APP_KAKAOMAP_KEY;
-      document.head.appendChild(script);
-    },
   },
 };
 </script>
 
-<style scoped lang="scss">
+<style>
 #map {
-  width: 400px;
-  height: 400px;
+  width: 100%;
+  height: 100%;
 }
 </style>

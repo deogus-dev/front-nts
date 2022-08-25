@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkfrontend_nts"]=self["webpackChunkfrontend_nts"]||[]).push([[291],{7291:function(n,t,s){s.r(t),s.d(t,{default:function(){return l}});var e=function(){var n=this,t=n._self._c;return t("div",{staticClass:"fs-1"},[n._v(" This is Page 4"),t("br"),t("router-link",{attrs:{to:{name:"main"}}},[n._v("to main")])],1)},r=[],u=s(3736),a={},i=(0,u.Z)(a,e,r,!1,null,null,null),l=i.exports}}]);
+//# sourceMappingURL=291.5a7c2915.js.map

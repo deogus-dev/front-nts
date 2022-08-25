@@ -1,5 +1,5 @@
 <template>
-  <div class="h-100 w-100 text-center">
+  <div class="h-100 text-center">
     <transition name="slide-fade" mode="out-in">
       <router-view />
     </transition>
@@ -12,7 +12,7 @@ export default {
   data() {
     return {};
   },
-  computed: {},
+  created() {},
 };
 </script>
 

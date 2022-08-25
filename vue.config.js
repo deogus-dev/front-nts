@@ -19,5 +19,7 @@ module.exports = {
     },
   },
   lintOnSave: false,
-  outputDir: path.resolve(__dirname, "../src/main/resources/static/"),
+  publicPath: "/front-nts/",
+  outputDir: "./docs",
+  // outputDir: path.resolve(__dirname, "../src/main/resources/static/"),
 };

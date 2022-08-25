@@ -2,7 +2,7 @@ export default [
   {
     path: "/",
     name: "main",
-    component: () => import("@/views/pages/mainPage.vue"),
+    component: () => import("@/views/pages/appMain.vue"),
   },
   {
     path: "/",
