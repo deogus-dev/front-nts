@@ -8,7 +8,9 @@
         <i class="bi-person"></i>
       </div>
     </div>
-    <div class="card-body border-0 bg-danger">1</div>
+    <div class="card-body border-0 bg-danger">
+      {{ position.lat }} | {{ position.lng }}
+    </div>
     <div class="card-body border-0 bg-success">
       <strong>{{ time }}</strong>
     </div>
@@ -22,19 +24,42 @@
 export default {
   data() {
     return {
+      interval: null,
       time: null,
+      position: {
+        lat: 0,
+        lng: 0,
+      },
     };
   },
   components: {
     // kakaoMap,
   },
+  created() {
+    if (navigator.geolocation) {
+      console.log("getPosition1");
+      navigator.geolocation.getCurrentPosition((pos) => {
+        this.position.lat = pos.coords.latitude;
+        this.position.lng = pos.coords.longitude;
+      });
+    }
+  },
   mounted() {
-    setInterval(this.getNow, 1000);
+    this.interval = setInterval(this.getNow, 5000);
+  },
+  beforeDestroy() {
+    console.log("beforeDestroy");
+    clearInterval(this.interval);
   },
   methods: {
     getNow() {
-      var date = new Date();
-      this.time = date;
+      if (navigator.geolocation) {
+        console.log("getPosition2");
+        navigator.geolocation.getCurrentPosition((pos) => {
+          this.position.lat += pos.coords.latitude;
+          this.position.lng += pos.coords.longitude;
+        });
+      }
     },
   },
 };

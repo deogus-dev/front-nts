@@ -22,8 +22,8 @@ export default {
       map: null,
       circle: null,
       curPos: {
-        latitude: 33.450701,
-        longitude: 126.570667,
+        latitude: 37.50194367899989,
+        longitude: 127.03729226862431,
       },
       status: false,
     };
@@ -37,20 +37,9 @@ export default {
     // get position
     navigator.geolocation.watchPosition(
       (pos) => {
-        console.log("watchposition test");
-        // if (
-        //   pos.coords.longitude > this.circle.getBounds().ha &&
-        //   pos.coords.latitude > this.circle.getBounds().qa &&
-        //   pos.coords.longitude < this.circle.getBounds().oa &&
-        //   pos.coords.latitude < this.circle.getBounds().pa
-        // ) {
-        //   this.status = true;
-        // } else {
-        //   this.status = false;
-        // }
         this.curPos.latitude = pos.coords.latitude;
         this.curPos.longitude = pos.coords.longitude;
-        this.initMap;
+        // this.initMap;
       },
       (err) => {
         console.log(err.message);
@@ -58,8 +47,8 @@ export default {
     );
   },
   mounted() {
+    console.log("mounted");
     if (!window.kakao || !window.kakao.maps) {
-      console.log("script");
       const script = document.createElement("script");
       script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.VUE_APP_KAKAOMAP_KEY}`;
       /* global kakao */
@@ -68,8 +57,8 @@ export default {
       });
       document.head.appendChild(script);
     } else {
-      console.log("initmap");
       //console.log("이미 로딩됨: ", window.kakao);
+      this.setPosition();
       this.initMap();
     }
   },
@@ -77,6 +66,8 @@ export default {
   watch: {
     curPos: {
       handler: function () {
+        console.log(this.curPos);
+        this.initMap;
         if (this.circle) this.chkPos();
       },
       deep: true,
@@ -84,6 +75,19 @@ export default {
   },
 
   methods: {
+    setPosition() {
+      console.log("setPosition");
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          this.curPos.latitude = pos.coords.latitude;
+          this.curPos.longitude = pos.coords.longitude;
+          // this.initMap;
+        },
+        (err) => {
+          console.log(err.message);
+        }
+      );
+    },
     chkPos() {
       if (
         this.curPos.longitude > this.circle.getBounds().ha &&
@@ -97,6 +101,7 @@ export default {
       }
     },
     initMap() {
+      console.log("init map");
       var container = document.getElementById("map");
       var options = {
         center: new kakao.maps.LatLng(
