@@ -8,7 +8,7 @@
         :disabled="!status"
         onclick="alert('반경 안에 있음!')"
       >
-        출석 체크
+        @출석 체크@
       </button>
     </p>
     <small>{{ curPos }}</small>
