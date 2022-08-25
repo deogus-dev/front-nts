@@ -38,19 +38,19 @@ export default {
     navigator.geolocation.watchPosition(
       (pos) => {
         console.log("watchposition test");
-        if (
-          pos.coords.longitude > this.circle.getBounds().ha &&
-          pos.coords.latitude > this.circle.getBounds().qa &&
-          pos.coords.longitude < this.circle.getBounds().oa &&
-          pos.coords.latitude < this.circle.getBounds().pa
-        ) {
-          this.status = true;
-        } else {
-          this.status = false;
-        }
-        // this.curPos.latitude = pos.coords.latitude;
-        // this.curPos.longitude = pos.coords.longitude;
-        // this.initMap;
+        // if (
+        //   pos.coords.longitude > this.circle.getBounds().ha &&
+        //   pos.coords.latitude > this.circle.getBounds().qa &&
+        //   pos.coords.longitude < this.circle.getBounds().oa &&
+        //   pos.coords.latitude < this.circle.getBounds().pa
+        // ) {
+        //   this.status = true;
+        // } else {
+        //   this.status = false;
+        // }
+        this.curPos.latitude = pos.coords.latitude;
+        this.curPos.longitude = pos.coords.longitude;
+        this.initMap;
       },
       (err) => {
         console.log(err.message);
