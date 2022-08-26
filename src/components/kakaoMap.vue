@@ -39,7 +39,9 @@ export default {
       (pos) => {
         this.curPos.latitude = pos.coords.latitude;
         this.curPos.longitude = pos.coords.longitude;
-        // this.initMap;
+        this.map.setCenter(
+          new kakao.maps.LatLng(this.curPos.latitude, this.curPos.longitude)
+        );
       },
       (err) => {
         console.log(err.message);
