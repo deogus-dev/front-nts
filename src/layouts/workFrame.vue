@@ -3,7 +3,7 @@
     <div class="card-header p-0" v-if="this.$route.path != '/'">
       <Header></Header>
     </div>
-    <div class="card-body p-0 border-0 h-100">
+    <div class="card-body p-0 border-0">
       <transition name="slide-fade" mode="out-in">
         <router-view />
       </transition>
