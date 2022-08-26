@@ -1,0 +1,30 @@
+[ 회사위치 - 현위치 기반 출첵 가능 ]
+
+회사 > 37.501957186941915 | 127.03731489385599
+집   > 37.275884784729506 | 127.10868871356905
+
+■ data {}
+
+■ created 
+    - if(window.kakao || window.kakao.maps) -> <head>에 카카오맵 api키 appendChild
+      else -> this.initMap()
+    
+    - 서버로부터 받아 온 회사위치 좌표 리스트 확인하여 지도에 각 위치 반경 셋팅 (foreach this.circle[index].getBounds())
+        [setCompLoc]
+    - navigator.geolocation.getCurrentPosition 으로 현 위치 확인하여 map setCenter 
+        []
+    - 실시간 위치추적(GPS?) 버튼 클릭 시 navigator.geolocation.watchPosition 으로 실시간 위치감지 (watch mapping)
+
+    - 
+
+■ mounted
+    1. if(window.kakao || window.kakao.maps) -> <head>에 카카오맵 api키 appendChild
+       else -> this.initMap()
+
+■ watch 
+    위도,경도(){
+
+    }
+
+■ methods
+    initMap() {  }

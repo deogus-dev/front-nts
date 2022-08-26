@@ -66,9 +66,13 @@ export default {
   watch: {
     curPos: {
       handler: function () {
-        console.log(this.curPos);
-        this.initMap;
-        if (this.circle) this.chkPos();
+        // this.initMap;
+        if (this.circle) {
+          // this.map.setCenter(
+          //   new kakao.maps.LatLng(this.curPos.latitude, this.curPos.longitude)
+          // );
+          this.chkPos();
+        }
       },
       deep: true,
     },
@@ -76,7 +80,6 @@ export default {
 
   methods: {
     setPosition() {
-      console.log("setPosition");
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           this.curPos.latitude = pos.coords.latitude;
@@ -108,7 +111,7 @@ export default {
           this.curPos.latitude,
           this.curPos.longitude
         ),
-        level: 3,
+        level: 6,
       };
       this.map = new kakao.maps.Map(container, options);
 
@@ -137,7 +140,7 @@ export default {
           this.curPos.latitude,
           this.curPos.longitude
         ), // 원의 중심좌표 입니다
-        radius: 100, // 미터 단위의 원의 반지름입니다
+        radius: 1000, // 미터 단위의 원의 반지름입니다
         strokeWeight: 5, // 선의 두께입니다
         strokeColor: "#75B8FA", // 선의 색깔입니다
         strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
