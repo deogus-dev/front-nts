@@ -19,8 +19,11 @@
       <div id="map"></div>
     </div>
     <div class="card-body h-100 border-0">
-      {{ status }}
-      <button class="btn btn-success">
+      <button
+        class="btn"
+        :class="status ? 'btn-success' : 'btn-secondary'"
+        @click="culcheck"
+      >
         출석체크
         <!-- <img src="@/assets/image/location-crosshairs-solid.svg" /> -->
       </button>
@@ -184,6 +187,13 @@ export default {
           }
         });
       } catch (e) {}
+    },
+    culcheck() {
+      if (this.status) {
+        alert("반경 안에 있음!");
+      } else {
+        alert("반경 안에 있지 않음");
+      }
     },
   },
 };
