@@ -45,6 +45,9 @@ export default {
       },
       (err) => {
         console.log(err.message);
+      },
+      {
+        enableHighAccuracy: false,
       }
     );
   },
