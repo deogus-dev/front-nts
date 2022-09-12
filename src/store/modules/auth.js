@@ -23,6 +23,36 @@ const userInfo = {
     },
   },
   actions: {
+
+    async signup(form){
+      try {
+        const result = await axios.post("/auth/signup", {
+          email: form.email,
+          verifyCode: form.verifyCode,
+        });
+        if (result.status === 200) {
+          // TODO location move
+        }
+      } catch (err) {
+
+        throw new Error(err);
+      }
+    },
+    // TODO check 코드값만? 아니면 시간까지? || 우선 코드만
+    async verifyCode(code){
+      try {
+        const result = await axios.post("/auth/verify-code", {
+          code: code,
+        });
+        if (result.status === 200) {
+          // TODO 전달값 어떻게 줄건지 확인
+        }
+      } catch (err) {
+
+        throw new Error(err);
+      }
+    },
+
     async login({ commit }, { email, password }) {
       try {
         const result = await axios.post("/auth/login", {
