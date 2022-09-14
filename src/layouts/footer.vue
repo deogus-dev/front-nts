@@ -1,34 +1,30 @@
 <template>
-  <div class="row row-cols-5 p-0 m-0">
+  <div class="row row-cols-4 p-0 m-0">
     <div class="col m-0 px-1 h-100">
       <router-link :to="{ name: 'main' }">
-        <button
-          class="btn w-100"
-          :class="curRouteName === 'main' ? 'btn-success' : 'btn-light'"
-        >
+        <button class="btn bg-transparent w-100 fw-bold">
           <i class="bi-house"></i>
         </button>
       </router-link>
     </div>
     <div class="col m-0 px-1 h-100">
       <router-link :to="{ name: 'page2' }">
-        <button class="btn btn-light w-100"><i class="bi-clock"></i></button>
+        <button class="btn bg-transparent w-100">
+          <i class="bi-clock"></i>
+        </button>
       </router-link>
     </div>
     <div class="col m-0 px-1 h-100">
       <router-link :to="{ name: 'page3' }">
-        <button class="btn btn-light w-100"><i class="bi-person"></i></button>
+        <button class="btn bg-transparent w-100">
+          <i class="bi-person"></i>
+        </button>
       </router-link>
     </div>
     <div class="col m-0 px-1 h-100">
       <router-link :to="{ name: 'page4' }">
-        <button class="btn btn-light w-100"><i class="bi-lock"></i></button>
-      </router-link>
-    </div>
-    <div class="col m-0 px-1 h-100">
-      <router-link :to="{ name: 'page5' }">
-        <button class="btn btn-light w-100">
-          <i class="bi-alarm"></i>
+        <button class="btn bg-transparent w-100">
+          <i class="bi-lock"></i>
         </button>
       </router-link>
     </div>

@@ -10,7 +10,7 @@
         </transition>
       </div>
     </div>
-    <div class="card-footer px-0 border-0 shadow">
+    <div class="card-footer px-0 border-0 bg-transparent">
       <Footer></Footer>
     </div>
   </div>
