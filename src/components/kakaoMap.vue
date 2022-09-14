@@ -1,171 +1,153 @@
 <template>
-  <section class="h-100">
-    <div id="map"></div>
-    <p>
-      <button
-        class="btn"
-        :class="status ? 'btn-success' : 'btn-secondary'"
-        :disabled="!status"
-        onclick="alert('반경 안에 있음!')"
-      >
-        #출석 체크#
-      </button>
-    </p>
-    <small>{{ curPos }}</small>
-  </section>
+  <div class="h-100">
+    <div id="map" class="h-100"></div>
+  </div>
 </template>
 
 <script>
 export default {
+  props: ["status", "compLoc"],
   data() {
     return {
+      interval: null,
+      time: null,
       map: null,
-      circle: null,
-      curPos: {
-        latitude: 37.50194367899989,
-        longitude: 127.03729226862431,
+      marker: null,
+      position: {
+        lat: 37.51082,
+        lng: 127.02928,
       },
-      status: false,
+      circle: [],
     };
   },
   created() {
-    console.log("created");
+    console.log("[created]");
     if (!("geolocation" in navigator)) {
       return;
     }
 
-    // get position
-    navigator.geolocation.watchPosition(
-      (pos) => {
-        this.curPos.latitude = pos.coords.latitude;
-        this.curPos.longitude = pos.coords.longitude;
-        this.map.setCenter(
-          new kakao.maps.LatLng(this.curPos.latitude, this.curPos.longitude)
-        );
-      },
-      (err) => {
-        console.log(err.message);
-      },
-      {
-        enableHighAccuracy: false,
-      }
-    );
+    this.getCurPos();
   },
   mounted() {
-    console.log("mounted");
+    console.log("[mounted]");
     if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement("script");
       script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.VUE_APP_KAKAOMAP_KEY}`;
-      /* global kakao */
       script.addEventListener("load", () => {
         kakao.maps.load(this.initMap);
       });
       document.head.appendChild(script);
     } else {
-      //console.log("이미 로딩됨: ", window.kakao);
-      this.setPosition();
+      // this.setCompBounds();
       this.initMap();
     }
-  },
 
+    // this.interval = setInterval(this.getCurPos, 10000);
+  },
   watch: {
-    curPos: {
+    position: {
       handler: function () {
-        // this.initMap;
-        if (this.circle) {
-          // this.map.setCenter(
-          //   new kakao.maps.LatLng(this.curPos.latitude, this.curPos.longitude)
-          // );
-          this.chkPos();
+        console.log("watch call");
+        if (this.map) {
+          var latlng = new kakao.maps.LatLng(
+            this.position.lat,
+            this.position.lng
+          );
+          this.map.setCenter(latlng);
+          this.marker.setPosition(latlng);
+          this.posCheck();
         }
       },
       deep: true,
     },
   },
-
+  // computed: {
+  //   dateUtil,
+  // },
+  beforeDestroy() {
+    console.log("[beforedestroy]");
+    // clearInterval(this.interval);
+    navigator.geolocation.clearWatch(this.interval);
+  },
+  destroyed() {
+    console.log(this.interval);
+  },
   methods: {
-    setPosition() {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          this.curPos.latitude = pos.coords.latitude;
-          this.curPos.longitude = pos.coords.longitude;
-          // this.initMap;
-        },
-        (err) => {
-          console.log(err.message);
-        }
-      );
-    },
-    chkPos() {
-      if (
-        this.curPos.longitude > this.circle.getBounds().ha &&
-        this.curPos.latitude > this.circle.getBounds().qa &&
-        this.curPos.longitude < this.circle.getBounds().oa &&
-        this.curPos.latitude < this.circle.getBounds().pa
-      ) {
-        this.status = true;
-      } else {
-        this.status = false;
-      }
-    },
     initMap() {
-      console.log("init map");
+      console.log("[methods]-[initmap]");
       var container = document.getElementById("map");
       var options = {
-        center: new kakao.maps.LatLng(
-          this.curPos.latitude,
-          this.curPos.longitude
-        ),
-        level: 6,
+        center: new kakao.maps.LatLng(this.position.lat, this.position.lng),
+        level: 4,
       };
       this.map = new kakao.maps.Map(container, options);
 
-      //마커추가하려면 객체를 아래와 같이 하나 만든다.
-      var marker = new kakao.maps.Marker({
+      this.marker = new kakao.maps.Marker({
         position: this.map.getCenter(),
       });
 
-      marker.setMap(this.map);
+      this.marker.setMap(this.map);
 
-      var _this = this;
-      kakao.maps.event.addListener(this.map, "click", function (mouseEvent) {
+      this.compLoc.forEach((obj) => {
+        this.circle.push(
+          new kakao.maps.Circle({
+            center: new kakao.maps.LatLng(obj.lat, obj.lng),
+          })
+        );
+      });
+
+      this.circle.forEach((obj) => {
+        obj.setMap(this.map);
+      });
+
+      //위치 테스트용으로만 사용(배포시 삭제)
+      kakao.maps.event.addListener(this.map, "click", (mouseEvent) => {
         // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
         // 클릭한 위도, 경도 정보를 가져옵니다
         var latlng = mouseEvent.latLng;
 
         // 마커 위치를 클릭한 위치로 옮깁니다
-        marker.setPosition(latlng);
+        this.marker.setPosition(latlng);
 
-        _this.curPos.latitude = latlng.getLat();
-        _this.curPos.longitude = latlng.getLng();
+        this.position.lat = latlng.getLat();
+        this.position.lng = latlng.getLng();
       });
-
-      this.circle = new kakao.maps.Circle({
-        center: new kakao.maps.LatLng(
-          this.curPos.latitude,
-          this.curPos.longitude
-        ), // 원의 중심좌표 입니다
-        radius: 1000, // 미터 단위의 원의 반지름입니다
-        strokeWeight: 5, // 선의 두께입니다
-        strokeColor: "#75B8FA", // 선의 색깔입니다
-        strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-        strokeStyle: "dashed", // 선의 스타일 입니다
-        fillColor: "#CFE7FF", // 채우기 색깔입니다
-        fillOpacity: 0.7, // 채우기 불투명도 입니다
-      });
-
-      // 지도에 원을 표시합니다
-      this.circle.setMap(this.map);
-
-      this.chkPos();
+    },
+    getCurPos() {
+      console.log("call getCurPos");
+      if (navigator.geolocation) {
+        //발열 테스트 후 발열 심하면 getCurrentPosition interval set
+        this.interval = navigator.geolocation.watchPosition(
+          (pos) => {
+            this.position.lat = pos.coords.latitude;
+            this.position.lng = pos.coords.longitude;
+          },
+          (err) => {
+            console.log("error! ", err.message);
+          },
+          {
+            enableHighAccuracy: false,
+          }
+        );
+      }
+    },
+    posCheck() {
+      try {
+        this.circle.forEach((obj) => {
+          if (
+            this.position.lng > obj.getBounds().ha &&
+            this.position.lat > obj.getBounds().qa &&
+            this.position.lng < obj.getBounds().oa &&
+            this.position.lat < obj.getBounds().pa
+          ) {
+            this.$emit("setStatus", true);
+            throw new Error("stop loop");
+          } else {
+            this.$emit("setStatus", false);
+          }
+        });
+      } catch (e) {}
     },
   },
 };
 </script>
-
-<style>
-#map {
-  width: 100%;
-  height: 400px;
-}
-</style>

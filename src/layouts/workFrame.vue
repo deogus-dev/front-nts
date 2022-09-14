@@ -3,10 +3,14 @@
     <div class="card-header p-0" v-if="this.$route.path != '/'">
       <Header></Header>
     </div>
-    <div class="card-body p-0 border-0">
-      <transition name="slide-fade" mode="out-in">
-        <router-view />
-      </transition>
+    <div
+      class="card-body p-0 border-0 row align-items-center bg-success h-100 m-0"
+    >
+      <div class="col-12 p-0 h-100">
+        <transition name="slide-fade" mode="out-in">
+          <router-view />
+        </transition>
+      </div>
     </div>
     <div class="card-footer px-0 border-0 shadow">
       <Footer></Footer>
