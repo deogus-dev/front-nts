@@ -100,6 +100,8 @@ export default {
         obj.setMap(this.map);
       });
 
+      this.map.setDraggable(true);
+
       //위치 테스트용으로만 사용(배포시 삭제)
       kakao.maps.event.addListener(this.map, "click", (mouseEvent) => {
         // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다

@@ -1,6 +1,6 @@
 <template>
   <div class="card h-100 border-0 py-2 container-md">
-    <div class="card-header border-0 row m-0 px-0 py-3 bg-transparent">
+    <div class="card-header border-0 row m-0 px-0 py-3 bg-gradient">
       <div class="col-2 text-start">
         <button class="btn shadow h-100 border rounded-circle bg-gradient">
           <i class="bi-person h-100"></i>
@@ -10,8 +10,8 @@
         <h5><strong>김지각</strong>님<br />환영합니다.</h5>
       </div>
     </div>
-    <div class="card-body h-25 border-0 shadow">오늘날짜 표시</div>
-    <div class="card-body h-25 border-0">현재시간</div>
+    <div class="card-body h-25 border-0"></div>
+    <div class="card-body h-25 border-0"></div>
     <div class="card-body border-0 p-0">
       <button
         class="btn bg-gradient w-100 shadow"
@@ -24,16 +24,15 @@
       </button>
     </div>
     <div class="card-body p-0 h-100 border-0">
-      {{ status }}
       <button
-        class="btn w-100 py-4 my-1 bg-gradient mt-5"
+        class="btn w-100 py-3 my-1 bg-gradient mt-5"
         :class="status ? 'btn-success' : 'btn-secondary'"
         @click="culcheck"
       >
         출근하기
       </button>
       <button
-        class="btn w-100 py-4 my-1 btn-secondary bg-gradient opacity-50"
+        class="btn w-100 py-3 my-1 btn-secondary bg-gradient opacity-50"
         style="--bs-bg-opacity: 0.5"
       >
         나의 출퇴근 기록
@@ -46,9 +45,9 @@
       aria-labelledby="offcanvasBottomLabel"
     >
       <div class="offcanvas-header">
-        <!-- <h5 class="offcanvas-title" id="offcanvasBottomLabel">
-          Offcanvas bottom
-        </h5> -->
+        <h5 class="offcanvas-title" id="offcanvasBottomLabel">
+          Nine to Six Map
+        </h5>
         <button
           type="button"
           class="btn-close"
@@ -62,7 +61,14 @@
           :status="status"
           :compLoc="compLoc"
           @setStatus="setStatus"
-        ></kakao-map>
+        />
+        <button
+          class="btn fixed-bottom mb-5 mx-5 bg-gradient py-3"
+          :class="status ? 'btn-success' : 'btn-secondary'"
+          @click="culcheck"
+        >
+          출근하기
+        </button>
       </div>
     </div>
   </div>
