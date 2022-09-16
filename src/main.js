@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import axios from "axios";
+import VueMoment from "vue-moment";
 import "./axios.js";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -16,6 +17,8 @@ Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 
 Vue.component("globalAlert", () => import("@/components/alert/global.vue"));
+
+Vue.use(VueMoment);
 
 new Vue({
   router,

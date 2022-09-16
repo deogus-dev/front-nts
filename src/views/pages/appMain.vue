@@ -1,8 +1,8 @@
 <template>
   <div class="card h-100 border-0 py-2 container-md">
-    <div class="card-header border-0 row m-0 px-0 py-3 bg-gradient">
+    <div class="card-header border-0 row m-0 px-0 py-3 bg-transparent">
       <div class="col-2 text-start">
-        <button class="btn shadow h-100 border rounded-circle bg-gradient">
+        <button class="btn h-100 border rounded-circle">
           <i class="bi-person h-100"></i>
         </button>
       </div>
@@ -10,8 +10,28 @@
         <h5><strong>김지각</strong>님<br />환영합니다.</h5>
       </div>
     </div>
-    <div class="card-body h-25 border-0"></div>
-    <div class="card-body h-25 border-0"></div>
+    <div class="card-body h-25 border-0 shadow">
+      <div class="row row-cols-5 m-0 align-items-center h-100">
+        <div class="col p-0 fw-light">
+          <h4>{{ getDay(-2) }}</h4>
+        </div>
+        <div class="col p-0 fw-light">
+          <h4>{{ getDay(-1) }}</h4>
+        </div>
+        <div class="col p-0 fw-bold">
+          <h4>{{ getDay(0) }}</h4>
+        </div>
+        <div class="col p-0 fw-light">
+          <h4>{{ getDay(1) }}</h4>
+        </div>
+        <div class="col p-0 fw-light">
+          <h4>{{ getDay(2) }}</h4>
+        </div>
+      </div>
+    </div>
+    <div class="card-body h-25 border-0">
+      <h2 class="fw-bold">{{ getTime }}</h2>
+    </div>
     <div class="card-body border-0 p-0">
       <button
         class="btn bg-gradient w-100 shadow"
@@ -25,9 +45,9 @@
     </div>
     <div class="card-body p-0 h-100 border-0">
       <button
-        class="btn w-100 py-3 my-1 bg-gradient mt-5"
+        class="btn w-100 py-3 my-1 bg-gradient"
         :class="status ? 'btn-success' : 'btn-secondary'"
-        @click="culcheck"
+        @click="attend"
       >
         출근하기
       </button>
@@ -65,7 +85,7 @@
         <button
           class="btn fixed-bottom mb-5 mx-5 bg-gradient py-3"
           :class="status ? 'btn-success' : 'btn-secondary'"
-          @click="culcheck"
+          @click="attend"
         >
           출근하기
         </button>
@@ -95,19 +115,50 @@ export default {
   components: {
     kakaoMap,
   },
-  created() {
+  async created() {
     // 1. 서버에 출근정보 요청
+    // let data = { test123: "test" };
+    // const compList = await this.$axios.get("/attend", data);
+    // this.compLoc = compList.data;
     // 2. 회사 위치 정보 가져오기
   },
+  computed: {
+    getTime() {
+      return this.$moment().format("HH:mm:ss");
+    },
+    getDay() {
+      return (days) => {
+        return this.$moment().add("days", days).format("DD\n일");
+      };
+    },
+  },
   methods: {
+    async getCompLoc() {
+      try {
+        const compList = await this.$axios.get("/attend");
+        this.compLoc = compList.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
     setStatus(param) {
       this.status = param;
     },
-    culcheck() {
-      if (this.status) {
-        alert("서버에 출첵 요청!");
-      } else {
-        alert("현재 위치가 회사 근처가 아닙니다 위치를 확인해주세요!");
+    async attend() {
+      try {
+        if (this.status) {
+          alert("서버에 출첵 요청!");
+        } else {
+          const compList = await this.$axios.get("/attend", {
+            params: {
+              test: "test13",
+            },
+          });
+          this.compLoc = compList.data;
+          alert("현재 위치가 회사 근처가 아닙니다 위치를 확인해주세요!");
+        }
+      } catch (err) {
+        console.log(err);
       }
     },
   },

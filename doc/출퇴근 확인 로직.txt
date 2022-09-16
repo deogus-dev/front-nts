@@ -24,6 +24,11 @@ if(출근확인[0].퇴근 is null){
     }
 }
 
+if(출근확인[1].출근 not null && 출근확인[1].퇴근 not null){
+    근무종료
+    return;
+}
+
 if(출근확인[1].출근 is null){
     출근활성화
 }else{

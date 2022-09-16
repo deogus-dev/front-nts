@@ -4,8 +4,17 @@ import axios from "axios";
 axios.interceptors.request.use(
   function (config) {
     // 요청을 보내기 전에 수행할 일
-    // ...
-    console.log("[request] interceptor");
+
+    // 토큰 valid check를 위해 header 설정
+    config.headers["Content-Type"] = "application/json; charset=utf-8";
+    config.headers["Authorization"] = "baerer test";
+
+    // 회원 id default set
+    if (config.params == null) {
+      config.params = {};
+    }
+    config.params.userId = "userid";
+
     return config;
   },
   function (error) {
@@ -19,9 +28,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   function (response) {
     // 응답 데이터를 가공
-    // ...
-    console.log("[response] interceptor");
-    console.log("[response] " + JSON.stringify(response.data));
+    // 토큰 만료 시 토큰 재발급 요청 후 재발급 된 access token으로 api 재요청
     return response;
   },
   function (error) {
