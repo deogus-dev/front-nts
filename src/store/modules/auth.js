@@ -8,14 +8,34 @@ const userInfo = {
   state: {
     loginSuccess: false,
     loginError: false,
-    userName: "test",
+    email: "",
+    accessToken: "",
+    accessTokenExpiresIn: 0,
+    grantType: "",
+    refreshToken: "",
+    name: "",
   },
   mutations: {
-    loginSuccess(state, { email }) {
+    loginSuccess(
+      state,
+      {
+        email,
+        name,
+        accessToken,
+        refreshToken,
+        accessTokenExpiresIn,
+        grantType,
+      }
+    ) {
       state.loginSuccess = true;
-      state.userName = email;
+      state.email = email;
+      state.name = name;
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
+      state.accessTokenExpiresIn = accessTokenExpiresIn;
+      state.grantType = grantType;
     },
-    loginError(state, {}) {
+    loginError(state) {
       state.loginError = true;
     },
   },
@@ -56,15 +76,23 @@ const userInfo = {
         if (result.status === 200) {
           commit("loginSuccess", {
             email: email,
+            name: result.name ? result.data.name : "장대현",
+            accessToken: result.data.accessToken,
+            refreshToken: result.data.refreshToken,
+            accessTokenExpiresIn: result.data.accessTokenExpiresIn,
+            grantType: result.data.grantType,
           });
         }
       } catch (err) {
-        commit("loginError", {});
+        commit("loginError");
         throw new Error(err);
       }
     },
   },
   getters: {
+    getGrantType: (state) => state.grantType,
+    getAccessToken: (state) => state.accessToken,
+    getEmail: (state) => state.email,
     isLoggedIn: (state) => state.loginSuccess,
     hasLoginErrored: (state) => state.loginError,
     getUserName: (state) => state.userName,

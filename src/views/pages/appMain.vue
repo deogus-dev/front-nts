@@ -46,10 +46,10 @@
     <div class="card-body p-0 h-100 border-0">
       <button
         class="btn w-100 py-3 my-1 bg-gradient"
-        :class="status ? 'btn-success' : 'btn-secondary'"
+        :class="locationInfo.circleIn ? 'btn-success' : 'btn-secondary'"
         @click="attend"
       >
-        출근하기
+        {{ attendType === "in" ? "출근하기" : "퇴근하기" }}
       </button>
       <button
         class="btn w-100 py-3 my-1 btn-secondary bg-gradient opacity-50"
@@ -78,16 +78,16 @@
       <div class="offcanvas-body small h-100 p-0">
         <kakao-map
           class="h-100"
-          :status="status"
+          :locationInfo="locationInfo"
           :compLoc="compLoc"
-          @setStatus="setStatus"
+          @setLocationInfo="setLocationInfo"
         />
         <button
           class="btn fixed-bottom mb-5 mx-5 bg-gradient py-3"
-          :class="status ? 'btn-success' : 'btn-secondary'"
+          :class="locationInfo.circleIn ? 'btn-success' : 'btn-secondary'"
           @click="attend"
         >
-          출근하기
+          {{ attendType === "in" ? "출근하기" : "퇴근하기" }}
         </button>
       </div>
     </div>
@@ -97,9 +97,16 @@
 <script>
 import kakaoMap from "@/components/kakaoMap.vue";
 export default {
+  components: { kakaoMap },
+
   data() {
     return {
-      status: false,
+      attendType: "in", // 출근, 퇴근 버튼 구분값
+      attendInfo: [{}, {}],
+      locationInfo: {
+        circleIn: false, // 현재 위치가 회사위치 반경 안 유무
+        locCode: null, // 현재 회사위치 코드
+      },
       compLoc: [
         {
           lat: 37.501957186941915,
@@ -112,17 +119,48 @@ export default {
       ],
     };
   },
-  components: {
-    kakaoMap,
-  },
-  async created() {
-    // 1. 서버에 출근정보 요청
-    const attend = await this.$axios.get("/attend", {
-      params: {},
-    });
 
-    // 2. 회사 위치 정보 가져오기
+  async created() {
+    try {
+      // 1. 서버에 출근정보 요청
+      const result1 = await this.$axios.get("/attends", {
+        params: {
+          email: JSON.stringify(this.$store.getters.getEmail),
+        },
+      });
+      if (result1.status === 200) {
+        if (!result1[0].outTime) {
+          if (result1[0].attendCode === "PM") {
+            this.attendType = "out";
+            return;
+          } else if (result1[0].attendCode != "휴가") {
+            // 전일 퇴근시간 입력 요청(18:00)
+          }
+        }
+        if (result1[1].inTime && result1[1].outTime) {
+          // 근무종료
+          return;
+        }
+        if (!result1[1].inTime) {
+          this.attendType = "in";
+        } else {
+          this.attendType = "out";
+        }
+      }
+      // 2. 회사 위치 정보 가져오기
+      const result2 = await this.$axios.get("/company-locations", {
+        params: {
+          email: this.$store.getters.getEmail,
+        },
+      });
+      if (result2.status === 200) {
+        console.log(result2.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   },
+
   computed: {
     getTime() {
       return this.$moment().format("HH:mm:ss");
@@ -133,6 +171,7 @@ export default {
       };
     },
   },
+
   methods: {
     async getCompLoc() {
       try {
@@ -142,20 +181,27 @@ export default {
         console.log(err);
       }
     },
-    setStatus(param) {
-      this.status = param;
+    setLocationInfo(param) {
+      this.locationInfo.circleIn = param.circleIn;
+      this.locationInfo.locCode = param.locCode;
     },
-    async attend() {
+    async attend(type) {
       try {
-        if (this.status) {
-          alert("서버에 출첵 요청!");
+        //출근, 퇴근 버튼 클릭?
+        let data = {
+          companyLocationId: this.locationInfo.locCode,
+          attendCode: "AC01",
+        };
+        if (type === "in") {
+          data.inTime = "090000";
         } else {
-          const compList = await this.$axios.get("/attend", {
-            params: {
-              test: "test13",
-            },
-          });
+          data.outTime = "180000";
+        }
+
+        if (this.locationInfo.circleIn) {
+          const compList = await this.$axios.post("/attend", data);
           this.compLoc = compList.data;
+        } else {
           alert("현재 위치가 회사 근처가 아닙니다 위치를 확인해주세요!");
         }
       } catch (err) {

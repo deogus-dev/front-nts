@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  props: ["status", "compLoc"],
+  props: ["locationInfo", "compLoc"],
   data() {
     return {
       interval: null,
@@ -142,10 +142,16 @@ export default {
             this.position.lng < obj.getBounds().oa &&
             this.position.lat < obj.getBounds().pa
           ) {
-            this.$emit("setStatus", true);
+            this.$emit("setLocationInfo", {
+              circleIn: true,
+              locCode: "LC00", // obj.companyLocationCode,
+            });
             throw new Error("stop loop");
           } else {
-            this.$emit("setStatus", false);
+            this.$emit("setLocationInfo", {
+              circleIn: false,
+              locCode: "LC00", //obj.companyLocationCode,
+            });
           }
         });
       } catch (e) {}
