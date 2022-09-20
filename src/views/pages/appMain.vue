@@ -117,9 +117,10 @@ export default {
   },
   async created() {
     // 1. 서버에 출근정보 요청
-    // let data = { test123: "test" };
-    // const compList = await this.$axios.get("/attend", data);
-    // this.compLoc = compList.data;
+    const attend = await this.$axios.get("/attend", {
+      params: {},
+    });
+
     // 2. 회사 위치 정보 가져오기
   },
   computed: {
