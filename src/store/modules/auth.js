@@ -11,20 +11,16 @@ const userInfo = {
     userName: "test",
   },
   mutations: {
-    loginSuccess(state, { email, password }) {
+    loginSuccess(state, { email }) {
       state.loginSuccess = true;
       state.userName = email;
-      state.password = password;
     },
-    loginError(state, { user, password }) {
+    loginError(state, {}) {
       state.loginError = true;
-      state.userName = user;
-      state.userName = password;
     },
   },
   actions: {
-
-    async signup(form){
+    async signup(form) {
       try {
         const result = await axios.post("/auth/signup", {
           email: form.email,
@@ -34,12 +30,11 @@ const userInfo = {
           // TODO location move
         }
       } catch (err) {
-
         throw new Error(err);
       }
     },
     // TODO check 코드값만? 아니면 시간까지? || 우선 코드만
-    async verifyCode(code){
+    async verifyCode(code) {
       try {
         const result = await axios.post("/auth/verify-code", {
           code: code,
@@ -48,27 +43,23 @@ const userInfo = {
           // TODO 전달값 어떻게 줄건지 확인
         }
       } catch (err) {
-
         throw new Error(err);
       }
     },
 
     async login({ commit }, { email, password }) {
       try {
-        const result = await axios.post("/auth/login", {
+        const result = await axios.post("/auth", {
           email: email,
           password: password,
         });
         if (result.status === 200) {
           commit("loginSuccess", {
             email: email,
-            password: password,
           });
         }
       } catch (err) {
-        commit("loginError", {
-          userName: user,
-        });
+        commit("loginError", {});
         throw new Error(err);
       }
     },
@@ -77,7 +68,6 @@ const userInfo = {
     isLoggedIn: (state) => state.loginSuccess,
     hasLoginErrored: (state) => state.loginError,
     getUserName: (state) => state.userName,
-    getUserPass: (state) => state.userPass,
   },
   modules: {},
 };

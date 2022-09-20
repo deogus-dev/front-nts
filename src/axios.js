@@ -26,7 +26,7 @@ axios.interceptors.response.use(
 
     // response status 코드에 따른 후처리
     // ex) 권한error 인 경우 재로그인 요청 alert와 함께 로그인페이지로 이동
-
+    console.log(response);
     return response;
   },
   function (error) {
