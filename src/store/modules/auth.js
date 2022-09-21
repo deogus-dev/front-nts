@@ -98,7 +98,10 @@ const userInfo = {
       }
     },
 
-    reissue({ commit }, { accessToken, refreshToken }) {
+    reissue(
+      { commit },
+      { accessToken, refreshToken, accessTokenExpiresIn, grantType }
+    ) {
       commit("reissueToken", {
         accessToken,
         refreshToken,

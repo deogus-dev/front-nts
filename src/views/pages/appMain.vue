@@ -176,7 +176,9 @@ export default {
   methods: {
     async getCompLoc() {
       try {
-        const compList = await this.$axios.get("/attend");
+        const compList = await this.$axios.post("/attend", {
+          email: "it1713@gsitm.com",
+        });
         this.compLoc = compList.data;
       } catch (err) {
         console.log(err);

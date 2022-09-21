@@ -9,8 +9,13 @@ axios.interceptors.request.use(
     console.log(config);
     // 토큰 valid check를 위해 header 설정
     config.headers["Content-Type"] = "application/json; charset=utf-8";
-    config.headers["Authorization"] =
-      store.getters["getGrantType"] + " " + store.getters["getAccessToken"];
+
+    // 토큰 valid check이 안되는 이유? grantType 대소문자!
+    // reissue일때는 header에 토큰을 넣지 않는다.
+    if (config.url != "/reissue") {
+      config.headers["Authorization"] =
+        store.getters["getGrantType"] + " " + store.getters["getAccessToken"];
+    }
 
     return config;
   },
@@ -24,40 +29,47 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   (response) => {
     // 응답 데이터를 가공 (status : 2xx)
-    // 토큰 만료 시 토큰 재발급 요청 후 재발급 된 access token으로 api 재요청
 
     // response status 코드에 따른 후처리
-    // ex) 권한error 인 경우 재로그인 요청 alert와 함께 로그인페이지로 이동
-    console.log("success interceptor out");
+
+    console.log("interceptor out");
+    console.log(response);
     return response;
   },
   async (error) => {
     // 오류 응답을 처리
 
-    if (error.response.status === 500) {
-      //토큰 만료
-      alert("reissue process start");
+    // 권한error 인 경우 재로그인 요청 alert와 함께 로그인페이지로 이동
+    console.log("[error]");
+    console.log(error);
+    if (error.response.status === 401) {
+      // 추후 에러코드 401받아서 처리
+      console.log("토큰 재발급 start");
       const originalRequest = error.config;
       const accessToken = store.getters["getAccessToken"];
       const refreshToken = store.getters["getRefreshToken"];
 
-      const reissue = await axios.post("/reissue", {
+      //reissue때 기존 토큰 체크를 하기 때문에 header 변경
+      error.config.headers.Authorization = "refresh_token";
+      const result = await axios.post("/reissue", {
         accessToken: accessToken,
         refreshToken: refreshToken,
       });
 
-      if (reissue.status === 200) {
+      if (result.status === 200) {
         store.dispatch("reissue", {
-          accessToken: reissue.data.accessToken,
-          refreshToken: reissue.data.refreshToken,
-          accessTokenExpiresIn: reissue.data.accessTokenExpiresIn,
-          grantType: reissue.data.grandType,
+          accessToken: result.data.accessToken,
+          refreshToken: result.data.refreshToken,
+          accessTokenExpiresIn: result.data.accessTokenExpiresIn,
+          grantType: result.data.grantType,
         });
       }
-      alert("reissue process end");
+      console.log("토큰 재발급 end");
 
+      // 재발급 된 access token으로 기존 api 재요청
       return axios(originalRequest);
     }
+
     return Promise.reject(error);
   }
 );
