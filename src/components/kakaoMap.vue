@@ -21,7 +21,6 @@ export default {
     };
   },
   created() {
-    console.log("[created]");
     if (!("geolocation" in navigator)) {
       return;
     }
@@ -29,7 +28,6 @@ export default {
     this.getCurPos();
   },
   mounted() {
-    console.log("[mounted]");
     if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement("script");
       script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.VUE_APP_KAKAOMAP_KEY}`;
@@ -47,7 +45,6 @@ export default {
   watch: {
     position: {
       handler: function () {
-        console.log("watch call");
         if (this.map) {
           var latlng = new kakao.maps.LatLng(
             this.position.lat,
@@ -65,16 +62,14 @@ export default {
   //   dateUtil,
   // },
   beforeDestroy() {
-    console.log("[beforedestroy]");
     // clearInterval(this.interval);
     navigator.geolocation.clearWatch(this.interval);
   },
   destroyed() {
-    console.log(this.interval);
+    // console.log(this.interval);
   },
   methods: {
     initMap() {
-      console.log("[methods]-[initmap]");
       var container = document.getElementById("map");
       var options = {
         center: new kakao.maps.LatLng(this.position.lat, this.position.lng),
@@ -116,7 +111,6 @@ export default {
       });
     },
     getCurPos() {
-      console.log("call getCurPos");
       if (navigator.geolocation) {
         //발열 테스트 후 발열 심하면 getCurrentPosition interval set
         this.interval = navigator.geolocation.watchPosition(

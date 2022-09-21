@@ -1,5 +1,5 @@
 import axios from "axios";
-import Vue from "vue";
+import Vue, { ref } from "vue";
 import Vuex from "vuex";
 
 Vue.use(Vuex);
@@ -37,6 +37,15 @@ const userInfo = {
     },
     loginError(state) {
       state.loginError = true;
+    },
+    reissueToken(
+      state,
+      { accessToken, refreshToken, accessTokenExpiresIn, grantType }
+    ) {
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
+      state.accessTokenExpiresIn = accessTokenExpiresIn;
+      state.grantType = grantType;
     },
   },
   actions: {
@@ -88,10 +97,20 @@ const userInfo = {
         throw new Error(err);
       }
     },
+
+    reissue({ commit }, { accessToken, refreshToken }) {
+      commit("reissueToken", {
+        accessToken,
+        refreshToken,
+        accessTokenExpiresIn,
+        grantType,
+      });
+    },
   },
   getters: {
     getGrantType: (state) => state.grantType,
     getAccessToken: (state) => state.accessToken,
+    getRefreshToken: (state) => state.refreshToken,
     getEmail: (state) => state.email,
     isLoggedIn: (state) => state.loginSuccess,
     hasLoginErrored: (state) => state.loginError,
