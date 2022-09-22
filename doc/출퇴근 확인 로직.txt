@@ -34,3 +34,49 @@ if(출근확인[1].출근 is null){
 }else{
     퇴근활성화
 }
+
+
+async created() {
+    try {
+      // 1. 서버에 출근정보 요청
+      const result1 = await this.$axios.get("/attends", {
+        params: {
+          email: JSON.stringify(this.$store.getters.getEmail),
+        },
+      });
+      if (result1.status === 200) {
+        if (!result1[0].outTime) {
+          if (result1[0].attendCode === "PM") {
+            this.attendType = "out";
+            return;
+          } else if (result1[0].attendCode != "휴가") {
+            // 전일 퇴근시간 입력 요청(18:00)
+          }
+        }
+        if (result1[1].inTime && result1[1].outTime) {
+          // 근무종료
+          return;
+        }
+        if (!result1[1].inTime) {
+          this.attendType = "in";
+        } else {
+          this.attendType = "out";
+        }
+      }
+      // 2. 회사 위치 정보 가져오기
+      const result2 = await this.$axios.get("/company-locations", {
+        params: {
+          email: this.$store.getters.getEmail,
+        },
+      });
+      if (result2.status === 200) {
+        console.log(result2.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  역삼GS타워 : 37.50195492996154 | 127.03732902930322
+  보헌빌딩 : 37.57838965148805 | 126.98667257949424
+  원서빌딩 : 37.57917595553029 | 126.98844416432452

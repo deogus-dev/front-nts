@@ -6,13 +6,14 @@
 
 <script>
 export default {
-  props: ["locationInfo", "compLoc"],
+  props: ["locationInfo"],
   data() {
     return {
       interval: null,
       time: null,
       map: null,
       marker: null,
+      compLoc: [],
       position: {
         lat: 37.51082,
         lng: 127.02928,
@@ -24,7 +25,6 @@ export default {
     if (!("geolocation" in navigator)) {
       return;
     }
-
     this.getCurPos();
   },
   mounted() {
@@ -57,6 +57,13 @@ export default {
       },
       deep: true,
     },
+
+    compLoc: {
+      handler: function () {
+        this.initMap();
+      },
+      deep: true,
+    },
   },
   // computed: {
   //   dateUtil,
@@ -69,7 +76,7 @@ export default {
     // console.log(this.interval);
   },
   methods: {
-    initMap() {
+    async initMap() {
       var container = document.getElementById("map");
       var options = {
         center: new kakao.maps.LatLng(this.position.lat, this.position.lng),
@@ -83,17 +90,27 @@ export default {
 
       this.marker.setMap(this.map);
 
-      this.compLoc.forEach((obj) => {
-        this.circle.push(
-          new kakao.maps.Circle({
-            center: new kakao.maps.LatLng(obj.lat, obj.lng),
-          })
-        );
+      const result = await this.$axios.get("/company-locations", {
+        params: {
+          email: "it1713@gsitm.com",
+        },
       });
+      if (result.status === 200) {
+        result.data.forEach((obj) => {
+          this.circle.push(
+            new kakao.maps.Circle({
+              center: new kakao.maps.LatLng(obj.latitude, obj.longitude),
+            })
+          );
+        });
 
-      this.circle.forEach((obj) => {
-        obj.setMap(this.map);
-      });
+        this.circle.forEach((obj) => {
+          obj.setMap(this.map);
+        });
+
+        this.posCheck();
+      }
+      // this.compLoc = result.data;
 
       this.map.setDraggable(true);
 
@@ -110,6 +127,7 @@ export default {
         this.position.lng = latlng.getLng();
       });
     },
+
     getCurPos() {
       if (navigator.geolocation) {
         //발열 테스트 후 발열 심하면 getCurrentPosition interval set

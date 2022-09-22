@@ -57,7 +57,7 @@
       >
         나의 출퇴근 기록
       </button>
-      {{ compLoc }}
+      <!-- <pre class="text-start">{{ attendInfo }}</pre> -->
     </div>
     <div
       class="offcanvas offcanvas-bottom h-100"
@@ -80,13 +80,12 @@
         <kakao-map
           class="h-100"
           :locationInfo="locationInfo"
-          :compLoc="compLoc"
           @setLocationInfo="setLocationInfo"
         />
         <button
           class="btn fixed-bottom mb-5 mx-5 bg-gradient py-3"
           :class="locationInfo.circleIn ? 'btn-success' : 'btn-secondary'"
-          @click="attend"
+          @click="attend(attendType)"
         >
           {{ attendType === "in" ? "출근하기" : "퇴근하기" }}
         </button>
@@ -108,58 +107,46 @@ export default {
         circleIn: false, // 현재 위치가 회사위치 반경 안 유무
         locCode: null, // 현재 회사위치 코드
       },
-      compLoc: [
-        {
-          lat: 37.501957186941915,
-          lng: 127.03731489385599,
-        },
-        {
-          lat: 37.275884784729506,
-          lng: 127.10868871356905,
-        },
-      ],
+      // compLoc: [],
     };
   },
 
   async created() {
-    // try {
-    //   // 1. 서버에 출근정보 요청
-    //   const result1 = await this.$axios.get("/attends", {
-    //     params: {
-    //       email: JSON.stringify(this.$store.getters.getEmail),
-    //     },
-    //   });
-    //   if (result1.status === 200) {
-    //     if (!result1[0].outTime) {
-    //       if (result1[0].attendCode === "PM") {
-    //         this.attendType = "out";
-    //         return;
-    //       } else if (result1[0].attendCode != "휴가") {
-    //         // 전일 퇴근시간 입력 요청(18:00)
-    //       }
-    //     }
-    //     if (result1[1].inTime && result1[1].outTime) {
-    //       // 근무종료
-    //       return;
-    //     }
-    //     if (!result1[1].inTime) {
-    //       this.attendType = "in";
-    //     } else {
-    //       this.attendType = "out";
-    //     }
-    //   }
-    //   // 2. 회사 위치 정보 가져오기
-    //   const result2 = await this.$axios.get("/company-locations", {
-    //     params: {
-    //       email: this.$store.getters.getEmail,
-    //     },
-    //   });
-    //   if (result2.status === 200) {
-    //     console.log(result2.data);
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      // 1. 서버에 출근정보 요청
+      const result1 = await this.$axios.get("/attends");
+      if (result1.status === 200) {
+        this.attendInfo = result1.data.attendList;
+        console.log(result1.data.attendList);
+      }
+
+      if (!this.attendInfo[0].outTime) {
+        if (this.attendInfo[0].attendCode === "PM") {
+          alert("PM 작업중!");
+          this.attendType = "out";
+          return;
+        }
+        // else if (this.attendInfo[0].attendCode != "휴가") {
+        //   // 전일 주말, 공휴일 체크?
+        // }
+      }
+      if (this.attendInfo[1].inTime && this.attendInfo[1].outTime) {
+        alert("근무종료됨");
+        // 근무종료
+        return;
+      }
+      if (!this.attendInfo[1].inTime) {
+        this.attendType = "in";
+        alert("출근하기 버튼 활성화!");
+      } else {
+        this.attendType = "out";
+        alert("퇴근하기 버튼 활성화!");
+      }
+
+      // 2. 회사 위치 정보 가져오기
+    } catch (err) {
+      console.log(err);
+    }
   },
 
   computed: {
@@ -174,39 +161,46 @@ export default {
   },
 
   methods: {
-    async getCompLoc() {
-      try {
-        const compList = await this.$axios.post("/attend", {
-          email: "it1713@gsitm.com",
-        });
-        this.compLoc = compList.data;
-      } catch (err) {
-        console.log(err);
-      }
-    },
+    // async getCompLoc() {
+    //   try {
+    //     const compList = await this.$axios.post("/attend", {
+    //       email: "it1713@gsitm.com",
+    //     });
+    //     this.compLoc = compList.data;
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // },
     setLocationInfo(param) {
       this.locationInfo.circleIn = param.circleIn;
       this.locationInfo.locCode = param.locCode;
     },
     async attend(type) {
-      // try {
-      //출근, 퇴근 버튼 클릭?
-      let data = { email: "it1713@gsitm.com" };
-      if (type === "in") {
-        data.inTime = "090000";
-      } else {
-        data.outTime = "180000";
-      }
+      try {
+        //출근, 퇴근 버튼 클릭?
+        let data = {
+          email: "it1713@gsitm.com",
+          attendDate: this.$moment().format("YYMMDD"),
+          attendCode: "A01",
+          locationCode: this.locationInfo.locCode,
+        };
+        if (type === "in") {
+          data.inTime = this.$moment().format("HHmmss");
+        } else {
+          data.outTime = this.$moment().format("HHmmss");
+        }
 
-      if (this.locationInfo.circleIn) {
-        const compList = await this.$axios.post("/attend/code", data);
-        this.compLoc = compList.data;
-      } else {
-        alert("현재 위치가 회사 근처가 아닙니다 위치를 확인해주세요!");
+        if (this.locationInfo.circleIn) {
+          const result = await this.$axios.post("/attend", data);
+
+          if (result.status === 200) {
+          }
+        } else {
+          alert("현재 위치가 회사 근처가 아닙니다 위치를 확인해주세요!");
+        }
+      } catch (err) {
+        console.log(JSON.stringify(err));
       }
-      // } catch (err) {
-      //   console.log(JSON.stringify(err));
-      // }
     },
   },
 };
