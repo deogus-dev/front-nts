@@ -96,10 +96,12 @@ export default {
         },
       });
       if (result.status === 200) {
+        console.log(result.data);
         result.data.forEach((obj) => {
           this.circle.push(
             new kakao.maps.Circle({
               center: new kakao.maps.LatLng(obj.latitude, obj.longitude),
+              fillColor: obj.locationCode, // kakao circle에 커스텀 데이터 삽입 위해 (String) fillColor 활용
             })
           );
         });
@@ -147,6 +149,7 @@ export default {
     },
     posCheck() {
       try {
+        console.log(this.circle);
         this.circle.forEach((obj) => {
           if (
             this.position.lng > obj.getBounds().ha &&
@@ -156,13 +159,13 @@ export default {
           ) {
             this.$emit("setLocationInfo", {
               circleIn: true,
-              locCode: "LC00", // obj.companyLocationCode,
+              locCode: obj.Eb.fillColor,
             });
             throw new Error("stop loop");
           } else {
             this.$emit("setLocationInfo", {
               circleIn: false,
-              locCode: "LC00", //obj.companyLocationCode,
+              locCode: null,
             });
           }
         });

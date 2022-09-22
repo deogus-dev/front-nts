@@ -161,41 +161,46 @@ export default {
   },
 
   methods: {
-    // async getCompLoc() {
-    //   try {
-    //     const compList = await this.$axios.post("/attend", {
-    //       email: "it1713@gsitm.com",
-    //     });
-    //     this.compLoc = compList.data;
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // },
     setLocationInfo(param) {
       this.locationInfo.circleIn = param.circleIn;
       this.locationInfo.locCode = param.locCode;
     },
     async attend(type) {
       try {
-        //출근, 퇴근 버튼 클릭?
         let data = {
           email: "it1713@gsitm.com",
           attendDate: this.$moment().format("YYMMDD"),
           attendCode: "A01",
-          locationCode: this.locationInfo.locCode,
         };
+
+        //출근하기 클릭
         if (type === "in") {
           data.inTime = this.$moment().format("HHmmss");
-        } else {
+          data.locationCode = this.locationInfo.locCode;
+
+          // if (this.locationInfo.circleIn) {
+          //   const result = await this.$axios.post("/attend", data);
+
+          //   if (result.status === 200) {
+          //     this.$router.go();
+          //   }
+          // } else {
+          //   alert("현재 위치가 회사 근처가 아닙니다 위치를 확인해주세요!");
+          // }
+        }
+
+        //퇴근하기 클릭
+        else {
           data.outTime = this.$moment().format("HHmmss");
         }
 
-        if (this.locationInfo.circleIn) {
+        if ((type === "in" && this.locationInfo.circleIn) || type === "out") {
           const result = await this.$axios.post("/attend", data);
 
           if (result.status === 200) {
+            this.$router.go();
           }
-        } else {
+        } else if (type === "in" && !this.locationInfo.circleIn) {
           alert("현재 위치가 회사 근처가 아닙니다 위치를 확인해주세요!");
         }
       } catch (err) {
