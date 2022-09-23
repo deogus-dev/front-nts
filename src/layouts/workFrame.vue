@@ -13,6 +13,26 @@
     <div class="card-footer p-0 border-0 bg-transparent">
       <Footer></Footer>
     </div>
+
+    <div
+      class="offcanvas offcanvas-bottom h-25"
+      tabindex="-1"
+      id="offcanvasHoly"
+      aria-labelledby="offcanvasHolyLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasHolyLabel">
+          휴가 및 기타일정 관리
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body small h-100 p-0"></div>
+    </div>
   </div>
 </template>
 

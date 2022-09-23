@@ -22,11 +22,16 @@
       </router-link>
     </div>
     <div class="col m-0 p-0 h-100">
-      <router-link :to="{ name: 'page4' }">
-        <button class="btn bg-transparent w-100">
-          <i class="bi-lock"></i>
-        </button>
-      </router-link>
+      <!-- <router-link :to="{ name: 'page4' }"> -->
+      <button
+        class="btn bg-transparent w-100"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasHoly"
+        aria-controls="offcanvasHoly"
+      >
+        <i class="bi-lock"></i>
+      </button>
+      <!-- </router-link> -->
     </div>
   </div>
 </template>
