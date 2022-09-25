@@ -188,31 +188,24 @@ export default {
           , ranCode: code
         }
         try {
-
           const result = await axios.put(`/auth/code/`+code,
               data,
           );
           if (result.status === 200) {
-
+            document.getElementById('verify-code').className = "form-control is-valid";
+            this.errors.push({
+              'message': '이상없음.'
+            });
+            document.getElementById('verify-code').disabled = true;
+            this.isFirstStepSign = true;
+            console.log("인증성공")
+          }else{
+            this.errors.push({
+              'message': '인증번호가 틀렸습니다.'
+            });
           }
         } catch (err) {
           throw new Error(err);
-        }
-
-        if (!this.hasVerify) {
-          this.errors.push({
-            'message': '인증번호가 틀렸습니다.'
-          });
-          console.log("인증틀림")
-        } else {
-          document.getElementById('verify-code').className = "form-control is-valid";
-          this.errors.push({
-            'message': '이상없음.'
-          });
-          document.getElementById('verify-code').disabled = true;
-          this.isFirstStepSign = true;
-          console.log("인증성공")
-          console.log("hasVerify ==>" , this.hasVerify)
         }
       }
     },
