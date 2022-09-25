@@ -49,14 +49,19 @@
                   <div v-if="isFirstStepSign">
                     <div class='form-outline mb-4'>
                       <label class="form-label" for="password" required>비밀번호 입력</label>
-                      <input type='password' id='password' class='sign-input form-control form-control-lg'/>
-                      <div class="invalid-tooltip">{{ pwdText }}</div>
+                      <input type='password' v-model="password" v-bind:class="{ 'is-invalid': pwdError }" id='password' class='sign-input form-control form-control-lg'/>
+<!--                      <div class="invalid-tooltip">{{ pwdText }}</div>-->
+                      <div class="invalid-feedback" id="password-feedback" v-if="errors[0]">
+                        {{ errors[0].message }}
+                      </div>
                     </div>
 
                     <div class='form-outline mb-4'>
                       <label class="form-label" for="check-password" required>비밀번호 재입력</label>
-                      <input type='password' id='check-password' class='sign-input form-control form-control-lg'/>
-                      <p>{{ pwdText }}</p>
+                      <input type='password' v-model="chkPassword" v-bind:class="{ 'is-invalid': pwdError }" id='check-password' class='sign-input form-control form-control-lg'/>
+                      <div class="invalid-feedback" id="password-feedback" v-if="errors[1]">
+                        {{ errors[1].message }}
+                      </div>
                     </div>
 
                     <div class='d-flex justify-content-center'>
@@ -90,6 +95,8 @@ export default {
   data() {
     return {
       email: '',
+      chkPassword: '',
+      password: '',
       fromType: 'signup',
       hasVerify: false,
       isPersonalInfoCheck: false,
@@ -100,6 +107,7 @@ export default {
       emailError: false,
       verifyCodeError: false,
       personalInfoError: false,
+      pwdError: false,
     };
   },
   created() {
@@ -129,6 +137,8 @@ export default {
         this.errors.push({
           'message': '발송되었습니다.'
         });
+
+        // 비밀번호 작업할때 -> this.hasVerify = true;
         const email = this.email
         try {
           const result = await axios.get("/auth/code", {
@@ -152,6 +162,7 @@ export default {
     },
     async sendNext() {
       this.errors = [];
+      this.isFirstStepSign = true;
       // 이용약관 동의 체크
       if (!this.isPersonalInfoCheck) {
         this.personalInfoError = true;
@@ -182,8 +193,7 @@ export default {
               data,
           );
           if (result.status === 200) {
-            // TODO 전달값 어떻게 줄건지 확인
-            this.hasVerify = true;
+
           }
         } catch (err) {
           throw new Error(err);
@@ -207,24 +217,49 @@ export default {
       }
     },
     sendForm: function () {
-      if (this.hasVerify === true && this.isFirstStepSign === true) {
-        console.log("start")
-      }
-      /*
-      const signForm = document.forms.namedItem('signup');
-      const data = new FormData(signForm)
-      try {
-        const response = await this.$store.dispatch('signup', {
-          data
+
+      const pwdNum = this.password.search(/[0-9]/g);
+      const pwdTxt = this.password.search(/[a-z]/ig);
+      const pwdSpecTxt = this.password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+      this.errors = []
+      // 비밀번호 검증
+      if (this.password.length < 9) {
+        this.pwdError = true;
+        this.errors.push({
+          'message': '비밀번호는 최소 8자 이상 입력해주세요.'
         });
-        console.log('response ===>', response)
-        await this.$router.push('/');
-      } catch (err) {
-        // this.loginError = true;
-        // this.error = true;
-        throw new Error(err)
+      } else if(pwdNum < 0 && pwdTxt < 0 && pwdSpecTxt < 0) {
+        this.pwdError = true;
+        this.errors.push({
+          'message': '영문,숫자, 특수문자를 혼합하여 입력해주세요'
+        });
+      } else if(this.password != this.chkPassword){
+        this.pwdError = true;
+        this.errors.push({
+          'message': '두 비밀번호가 틀립니다'
+        });
+      } else{
+        document.getElementById('password').className = "form-control is-valid";
+        document.getElementById('check-password').className = "form-control is-valid";
+        this.errors.push({
+          'message': '올바른 비밀번호입니다.'
+        });
       }
-      */
+        /*
+        const signForm = document.forms.namedItem('signup');
+        const data = new FormData(signForm)
+        try {
+          const response = await this.$store.dispatch('signup', {
+            data
+          });
+          console.log('response ===>', response)
+          await this.$router.push('/');
+        } catch (err) {
+          // this.loginError = true;
+          // this.error = true;
+          throw new Error(err)
+        }
+        */
     },
   },
 }
