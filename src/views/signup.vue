@@ -22,10 +22,10 @@
                       <input type='email' v-model='email' v-bind:class="{ 'is-invalid': emailError }" id='email'
                              placeholder="it1234@gsitm.com" class='form-control form-control-lg sign-input'/>
                       <div class='input-group-append' style='margin-top:10px;'>
-                        <button class='btn btn-outline-secondary' id='verify-btn' @click='verify()' type='button'>
+                        <button class='btn btn-outline-secondary' id='verify-btn' @click='sendCode()' type='button'>
                           인증번호발송
                         </button>
-                        <input type='hidden' name='isVerify' v-model='isVerify'/>
+                        <input type='hidden' name='hasVerify' v-model='hasVerify'/>
                       </div>
                       <div class="invalid-feedback" id="email-feedback" v-if="errors[0]">
                         {{ errors[0].message }}
@@ -41,7 +41,7 @@
                       {{ errors[1].message }}
                     </div>
                     <div class='d-flex justify-content-center'>
-                      <button type='button' @click='sendNext()' :disabled='isVerify === false'
+                      <button type='button' @click='sendNext()' :disabled='hasVerify === false'
                               class='btn btn-secondary btn-block btn-lg gradient-custom-4 text-body next-btn'>다음1
                       </button>
                     </div>
@@ -60,7 +60,7 @@
                     </div>
 
                     <div class='d-flex justify-content-center'>
-                      <button type='button' @click='sendForm()' :disabled='isVerify === false'
+                      <button type='button' @click='sendForm()' :disabled='hasVerify === false'
                               class='btn btn-secondary btn-block btn-lg gradient-custom-4 text-body next-btn'>다음
                       </button>
                     </div>
@@ -80,6 +80,8 @@
 //import prevBtn from '@/components/button/prevBtn.vue';
 
 
+import axios from "axios";
+
 export default {
   name: 'signUp',
   components: {
@@ -88,7 +90,8 @@ export default {
   data() {
     return {
       email: '',
-      isVerify: false,
+      fromType: 'signup',
+      hasVerify: false,
       isPersonalInfoCheck: false,
       isFirstStepSign: false,
       pwdText: '숫자,영문,특수문자 혼합하여 8자리 이상 입력해주세요.',
@@ -103,7 +106,7 @@ export default {
   },
   watch: {
     email: function () {
-      console.log(this.isVerify)
+      console.log(this.hasVerify)
     }
   },
 
@@ -111,10 +114,9 @@ export default {
     toggleOnOff: function () {
       this.isFirstStepSign = !this.isFirstStepSign;
     },
-    verify: function () {
+    async sendCode() {
       console.log(this.email)
       this.errors = [];
-      // TODO 인증번호 구현 전이기에 인증여부 값으로 진행 / 인증 후 남은 시간 체크
 
       // 이메일 검증
       if (this.email.length < 10 || this.email.search('@') === -1) {
@@ -127,7 +129,20 @@ export default {
         this.errors.push({
           'message': '발송되었습니다.'
         });
-        this.isVerify = true;
+        const email = this.email
+        try {
+          const result = await axios.get("/auth/code", {
+                params: {
+                  email: email
+                  , fromType: 'SIGNUP'
+                }
+          });
+          if (result.status === 200) {
+            this.hasVerify = true;
+          }
+        } catch (err) {
+          throw new Error(err);
+        }
         // document.getElementById('email-feedback').className = "valid-feedback";
       }
     },
@@ -135,7 +150,7 @@ export default {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
-    sendNext: function () {
+    async sendNext() {
       this.errors = [];
       // 이용약관 동의 체크
       if (!this.isPersonalInfoCheck) {
@@ -154,11 +169,27 @@ export default {
         });
         console.log("6자리미만")
       } else {
-        // TODO 상상코딩함 인증코드 우선 123123
-        //const resultCode = this.$store.dispatch('verify-code', {code: this.verifyCode})
-        const resultCode = '123123';
-        console.log("ddd")
-        if (this.verifyCode != resultCode) {
+        const email = this.email
+        const code = this.verifyCode
+        const data = {
+          email: email
+          , fromType: "SIGNUP"
+          , ranCode: code
+        }
+        try {
+
+          const result = await axios.put(`/auth/code/`+code,
+              data,
+          );
+          if (result.status === 200) {
+            // TODO 전달값 어떻게 줄건지 확인
+            this.hasVerify = true;
+          }
+        } catch (err) {
+          throw new Error(err);
+        }
+
+        if (!this.hasVerify) {
           this.errors.push({
             'message': '인증번호가 틀렸습니다.'
           });
@@ -169,12 +200,14 @@ export default {
             'message': '이상없음.'
           });
           document.getElementById('verify-code').disabled = true;
+          this.isFirstStepSign = true;
           console.log("인증성공")
+          console.log("hasVerify ==>" , this.hasVerify)
         }
       }
     },
     sendForm: function () {
-      if (this.isVerify === true && this.isFirstStepSign === true) {
+      if (this.hasVerify === true && this.isFirstStepSign === true) {
         console.log("start")
       }
       /*
@@ -193,7 +226,6 @@ export default {
       }
       */
     },
-//test
   },
 }
 ;
