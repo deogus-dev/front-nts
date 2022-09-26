@@ -49,7 +49,7 @@
                   <div v-if="isFirstStepSign">
                     <div class='form-outline mb-4'>
                       <label class="form-label" for="password" required>비밀번호 입력</label>
-                      <input type='password' v-model="password" v-bind:class="{ 'is-invalid': pwdError }" id='password' class='sign-input form-control form-control-lg'/>
+                      <input type='password' v-model="password" v-bind:class="{ 'is-invalid': pwdError }" :disabled='isComparePwd === true' id='password' class='sign-input form-control form-control-lg'/>
 <!--                      <div class="invalid-tooltip">{{ pwdText }}</div>-->
                       <div class="invalid-feedback" id="password-feedback" v-if="errors[0]">
                         {{ errors[0].message }}
@@ -58,7 +58,7 @@
 
                     <div class='form-outline mb-4'>
                       <label class="form-label" for="check-password" required>비밀번호 재입력</label>
-                      <input type='password' v-model="chkPassword" v-bind:class="{ 'is-invalid': pwdError }" id='check-password' class='sign-input form-control form-control-lg'/>
+                      <input type='password' v-model="chkPassword" v-bind:class="{ 'is-invalid': pwdError }" :disabled='isComparePwd === true' id='check-password' class='sign-input form-control form-control-lg'/>
                       <div class="invalid-feedback" id="password-feedback" v-if="errors[1]">
                         {{ errors[1].message }}
                       </div>
@@ -108,6 +108,7 @@ export default {
       verifyCodeError: false,
       personalInfoError: false,
       pwdError: false,
+      isComparePwd: false
     };
   },
   created() {
@@ -232,6 +233,7 @@ export default {
           'message': '두 비밀번호가 틀립니다'
         });
       } else{
+        this.isComparePwd = true
         document.getElementById('password').className = "form-control is-valid";
         document.getElementById('check-password').className = "form-control is-valid";
         this.errors.push({
