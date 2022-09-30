@@ -13,7 +13,7 @@ axios.interceptors.request.use(
 
     // 토큰 valid check이 안되는 이유? grantType 대소문자!
     // reissue일때는 header에 토큰을 넣지 않는다.
-    if (config.url != "/reissue") {
+    if (config.url != "/reissue" && config.url != "/login") {
       config.headers["Authorization"] =
         store.getters["getGrantType"] + " " + store.getters["getAccessToken"];
     }

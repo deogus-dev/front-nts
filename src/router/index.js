@@ -40,7 +40,7 @@ const routes = [
     path: "/",
     component: FrameDefault,
     children: [...pageRouter],
-    beforeEnter: requireAuth(),
+    // beforeEnter: requireAuth(),
   },
 ];
 
