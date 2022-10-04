@@ -70,9 +70,10 @@ axios.interceptors.response.use(
       // 재발급 된 access token으로 기존 api 재요청
       console.log("실패한 api 재호출");
       return axios(originalRequest);
-    } else {
-      router.push("/login");
     }
+    // else {
+    //   router.push("/login");
+    // }
 
     return Promise.reject(error);
   }
