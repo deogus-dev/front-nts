@@ -117,6 +117,7 @@ export default {
       const result1 = await this.$axios.get("/attends");
       if (result1.status === 200) {
         this.attendInfo = result1.data.attendList;
+        console.log("attend list");
         console.log(result1.data.attendList);
       }
 

@@ -90,11 +90,7 @@ export default {
 
       this.marker.setMap(this.map);
 
-      const result = await this.$axios.get("/company-locations", {
-        params: {
-          email: "it1713@gsitm.com",
-        },
-      });
+      const result = await this.$axios.get("/company-locations");
       if (result.status === 200) {
         console.log(result.data);
         result.data.forEach((obj) => {
