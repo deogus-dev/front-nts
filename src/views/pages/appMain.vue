@@ -84,7 +84,11 @@
         />
         <button
           class="btn fixed-bottom mb-5 mx-5 bg-gradient py-3"
-          :class="locationInfo.circleIn ? 'btn-success' : 'btn-secondary'"
+          :class="
+            locationInfo.circleIn || attendType === 'out'
+              ? 'btn-success'
+              : 'btn-secondary'
+          "
           @click="attend(attendType)"
         >
           {{ attendType === "in" ? "출근하기" : "퇴근하기" }}
@@ -168,6 +172,7 @@ export default {
     },
     async attend(type) {
       try {
+        alert("attend");
         let data = {
           email: "it1713@gsitm.com",
           attendDate: this.$moment().format("YYMMDD"),
@@ -195,13 +200,19 @@ export default {
           data.outTime = this.$moment().format("HHmmss");
         }
 
-        if ((type === "in" && this.locationInfo.circleIn) || type === "out") {
+        alert(this.attendType);
+
+        if (
+          (this.attendType === "in" && this.locationInfo.circleIn) ||
+          this.attendType === "out"
+        ) {
+          alert("out!");
           const result = await this.$axios.post("/attend", data);
 
           if (result.status === 200) {
             this.$router.go();
           }
-        } else if (type === "in" && !this.locationInfo.circleIn) {
+        } else if (this.attendType === "in" && !this.locationInfo.circleIn) {
           alert("현재 위치가 회사 근처가 아닙니다 위치를 확인해주세요!");
         }
       } catch (err) {
