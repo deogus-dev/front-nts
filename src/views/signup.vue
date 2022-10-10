@@ -6,15 +6,15 @@
           <div class='col-12 col-md-9 col-lg-7 col-xl-6'>
             <div class='card' style='border-radius: 15px;'>
               <div class='card-body p-5'>
-                <h2 class='text-uppercase mb-5'>본인 확인을 위해 이메일 주소를 입력해 주세요.</h2>
                 <form name='signup' class="needs-validation" novalidate>
-                  <div v-if="!isFirstStepSign">
+                  <div v-if="!isFirstStepSign && !isAddInfo">
+                  <h2 class='text-uppercase mb-5'>본인 확인을 위해 이메일 주소를 입력해 주세요.</h2>
                     <ul class='checkbox-info'>
                       <li>
                         <input type='checkbox' id='personalInfo' v-model="isPersonalInfoCheck"/>
                         <label for='personalInfo'>[필수] 본인 인증 이용약관 동의 <span></span></label>
-                        <div class="invalid-feedback" id="personalInfo" v-if="errors[2]">
-                          {{ errors[2].message }}
+                        <div class="invalid-feedback" id="personalInfo" v-if="errors[0]">
+                          {{ errors[0].message }}
                         </div>
                       </li>
                     </ul>
@@ -27,8 +27,8 @@
                         </button>
                         <input type='hidden' name='hasVerify' v-model='hasVerify'/>
                       </div>
-                      <div class="invalid-feedback" id="email-feedback" v-if="errors[0]">
-                        {{ errors[0].message }}
+                      <div class="invalid-feedback" id="email-feedback" v-if="errors[1]">
+                        {{ errors[1].message }}
                       </div>
                     </div>
 
@@ -37,36 +37,59 @@
                              v-bind:class="{ 'is-invalid': verifyCodeError }"
                              class='sign-input form-control form-control-lg'/>
                     </div>
-                    <div class="invalid-feedback" id="verify-feedback" v-if="errors[1]">
-                      {{ errors[1].message }}
+                    <div class="invalid-feedback" id="verify-feedback" v-if="errors[2]">
+                      {{ errors[2].message }}
                     </div>
                     <div class='d-flex justify-content-center'>
                       <button type='button' @click='sendNext()' :disabled='hasVerify === false'
-                              class='btn btn-secondary btn-block btn-lg gradient-custom-4 text-body next-btn'>다음1
+                              class='btn btn-secondary btn-block btn-lg gradient-custom-4 text-body next-btn'>확인
                       </button>
                     </div>
                   </div>
-                  <div v-if="isFirstStepSign">
+                  <div v-if="isFirstStepSign && isAddInfo">
+                    <h2 class='text-uppercase mb-5'>비밀번호 설정</h2>
                     <div class='form-outline mb-4'>
                       <label class="form-label" for="password" required>비밀번호 입력</label>
                       <input type='password' v-model="password" v-bind:class="{ 'is-invalid': pwdError }" :disabled='isComparePwd === true' id='password' class='sign-input form-control form-control-lg'/>
-<!--                      <div class="invalid-tooltip">{{ pwdText }}</div>-->
-                      <div class="invalid-feedback" id="password-feedback" v-if="errors[0]">
-                        {{ errors[0].message }}
+                      <div class="invalid-feedback" id="password-feedback" v-if="errors[3]">
+                        {{ errors[3].message }}
                       </div>
                     </div>
 
                     <div class='form-outline mb-4'>
                       <label class="form-label" for="check-password" required>비밀번호 재입력</label>
                       <input type='password' v-model="chkPassword" v-bind:class="{ 'is-invalid': pwdError }" :disabled='isComparePwd === true' id='check-password' class='sign-input form-control form-control-lg'/>
-                      <div class="invalid-feedback" id="password-feedback" v-if="errors[1]">
-                        {{ errors[1].message }}
+                      <div class="invalid-feedback" id="password-feedback" v-if="errors[4]">
+                        {{ errors[4].message }}
                       </div>
                     </div>
 
                     <div class='d-flex justify-content-center'>
-                      <button type='button' @click='sendForm()' :disabled='hasVerify === false'
-                              class='btn btn-secondary btn-block btn-lg gradient-custom-4 text-body next-btn'>다음
+                      <button type='button' @click='addNewInfo()' :disabled='hasVerify === false'
+                              class='btn btn-secondary btn-block btn-lg gradient-custom-4 text-body next-btn'>확인
+                      </button>
+                    </div>
+                  </div>
+                  <div v-if="isFirstStepSign && !isAddInfo">
+                    <h2 class='text-uppercase mb-5'>추가 정보 입력</h2>
+                    <div class='form-outline mb-4'>
+                      <label class="form-label" for="name" required>이름 입력</label>
+                      <input type='text' v-model="name" v-bind:class="{ 'is-invalid': nameError }" id='name' class='sign-input form-control form-control-lg'/>
+                      <div class="invalid-feedback" id="name-feedback" v-if="errors[5]">
+                        {{ errors[5].message }}
+                      </div>
+                    </div>
+
+                    <div class='form-outline mb-4'>
+                      <label class="form-label" for="contact" required>전화번호 입력</label>
+                      <input type='number' v-model="contact" v-bind:class="{ 'is-invalid': contactError }" id='contact' class='sign-input form-control form-control-lg'/>
+                      <div class="invalid-feedback" id="contact-feedback" v-if="errors[6]">
+                        {{ errors[6].message }}
+                      </div>
+                    </div>
+
+                    <div class='d-flex justify-content-center'>
+                      <button type='button' @click='sendForm()' class='btn btn-secondary btn-block btn-lg gradient-custom-4 text-body next-btn'>확인
                       </button>
                     </div>
                   </div>
@@ -97,17 +120,20 @@ export default {
       email: '',
       chkPassword: '',
       password: '',
+      name:'',
+      contact:'',
       fromType: 'signup',
       hasVerify: false,
       isPersonalInfoCheck: false,
       isFirstStepSign: false,
+      isAddInfo: false,
       pwdText: '숫자,영문,특수문자 혼합하여 8자리 이상 입력해주세요.',
       errors: [],
       verifyCode: '',
       emailError: false,
       verifyCodeError: false,
       personalInfoError: false,
-      pwdError: false,
+      pwdError: false, contactError: false, nameError: false,
       isComparePwd: false
     };
   },
@@ -210,7 +236,7 @@ export default {
         }
       }
     },
-    sendForm: function () {
+    async addNewInfo() {
 
       const pwdNum = this.password.search(/[0-9]/g);
       const pwdTxt = this.password.search(/[a-z]/ig);
@@ -240,22 +266,46 @@ export default {
           'message': '올바른 비밀번호입니다.'
         });
       }
-        /*
-        const signForm = document.forms.namedItem('signup');
-        const data = new FormData(signForm)
-        try {
-          const response = await this.$store.dispatch('signup', {
-            data
-          });
-          console.log('response ===>', response)
-          await this.$router.push('/');
-        } catch (err) {
-          // this.loginError = true;
-          // this.error = true;
-          throw new Error(err)
-        }
-        */
     },
+    async sendForm(){
+      this.errors = []
+      // 비밀번호 검증
+      if (this.name.length < 1) {
+        this.nameError = true;
+        this.errors.push({
+          'message': '이름을 입력해주세요'
+        });
+      }else{
+        document.getElementById('name').className = "form-control is-valid";
+      }
+      if(this.contact < 1) {
+        this.contactError = true;
+        this.errors.push({
+          'message': '전화번호를 입력해주세요.'
+        });
+      } else{
+        document.getElementById('contact').className = "form-control is-valid";
+      }
+
+      try {
+        const result = await axios.post('/auth/new',{
+              email : 'it1596@gsitm.com',
+              // email : this.email,
+              password : '1q2w3e4r5t!',
+              // password : this.password,
+              name: this.name,
+              contact: this.contact,
+              companyCode: "C0001",
+              pushAgreeYn: "N"
+            }
+        );
+        console.log('result ===>', result)
+        await this.$router.push('./signup-finish');
+      } catch (err) {
+        throw new Error(err)
+      }
+    }
+
   },
 }
 ;
