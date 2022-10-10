@@ -14,7 +14,8 @@
       <Footer></Footer>
     </div>
 
-    <div
+    <offcanvas></offcanvas>
+    <!-- <div
       class="offcanvas offcanvas-bottom h-25"
       tabindex="-1"
       id="offcanvasHoly"
@@ -32,13 +33,15 @@
         ></button>
       </div>
       <div class="offcanvas-body small h-100 p-0"></div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import Header from "@/layouts/header.vue";
 import Footer from "@/layouts/footer.vue";
+import offcanvas from "@/components/offcanvas.vue";
+import Offcanvas from "@/components/offcanvas.vue";
 
 export default {
   data: function () {
@@ -47,6 +50,7 @@ export default {
   components: {
     Header,
     Footer,
+    Offcanvas,
   },
   created() {},
 };

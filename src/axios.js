@@ -43,6 +43,7 @@ axios.interceptors.response.use(
     // 권한error 인 경우 재로그인 요청 alert와 함께 로그인페이지로 이동
     console.log("[error]");
     console.log(error);
+    console.log(error.response.status);
     if (error.response.status === 401) {
       // 추후 에러코드 401받아서 처리
       console.log("토큰 재발급 start");
@@ -71,6 +72,8 @@ axios.interceptors.response.use(
       console.log("실패한 api 재호출");
       return axios(originalRequest);
     } else {
+      localStorage.clear();
+      console.log(localStorage.getItem("vuex"));
       router.push("/login");
     }
 
