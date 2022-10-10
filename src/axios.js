@@ -72,11 +72,8 @@ axios.interceptors.response.use(
       console.log("실패한 api 재호출");
       return axios(originalRequest);
     } else {
-      router.push("/login");
+      // router.push("/login");
     }
-    // else {
-    //   router.push("/login");
-    // }
 
     return Promise.reject(error);
   }
