@@ -13,7 +13,7 @@ axios.interceptors.request.use(
 
     // 토큰 valid check이 안되는 이유? grantType 대소문자!
     // reissue일때는 header에 토큰을 넣지 않는다.
-    if (config.url != "/reissue") {
+    if (config.url != "/reissue" && config.url != "/login") {
       config.headers["Authorization"] =
         store.getters["getGrantType"] + " " + store.getters["getAccessToken"];
     }
@@ -72,10 +72,11 @@ axios.interceptors.response.use(
       console.log("실패한 api 재호출");
       return axios(originalRequest);
     } else {
-      localStorage.clear();
-      console.log(localStorage.getItem("vuex"));
       router.push("/login");
     }
+    // else {
+    //   router.push("/login");
+    // }
 
     return Promise.reject(error);
   }

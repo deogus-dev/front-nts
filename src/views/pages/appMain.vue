@@ -111,6 +111,7 @@ export default {
       const result1 = await this.$axios.get("/attends");
       if (result1.status === 200) {
         this.attendInfo = result1.data.attendList;
+        console.log("attend list");
         console.log(result1.data.attendList);
       }
     } catch (err) {
@@ -143,6 +144,7 @@ export default {
     },
     async attend(type) {
       try {
+        alert("attend");
         let data = {
           attendDate: this.$moment().format("YYMMDD"),
           attendCode: "A01",
@@ -159,13 +161,19 @@ export default {
           data.outTime = this.$moment().format("HHmmss");
         }
 
-        if ((type === "in" && this.locationInfo.circleIn) || type === "out") {
+        alert(this.attendType);
+
+        if (
+          (this.attendType === "in" && this.locationInfo.circleIn) ||
+          this.attendType === "out"
+        ) {
+          alert("out!");
           const result = await this.$axios.post("/attend", data);
 
           if (result.status === 200) {
             this.$router.go();
           }
-        } else if (type === "in" && !this.locationInfo.circleIn) {
+        } else if (this.attendType === "in" && !this.locationInfo.circleIn) {
           alert("현재 위치가 회사 근처가 아닙니다 위치를 확인해주세요!");
         }
       } catch (err) {
