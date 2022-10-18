@@ -144,10 +144,10 @@ export default {
     },
     async attend(type) {
       try {
-        alert("attend");
         let data = {
           attendDate: this.$moment().format("YYMMDD"),
-          attendCode: "A01",
+          attendCode: "AC01",
+          email: "it1713@gsitm.com",
         };
 
         //출근하기 클릭
@@ -161,20 +161,20 @@ export default {
           data.outTime = this.$moment().format("HHmmss");
         }
 
-        alert(this.attendType);
-
-        if (
-          (this.attendType === "in" && this.locationInfo.circleIn) ||
-          this.attendType === "out"
-        ) {
-          alert("out!");
-          const result = await this.$axios.post("/attend", data);
+        if ((type === "in" && this.locationInfo.circleIn) || type === "out") {
+          alert("attend process start");
+          const result = await this.$axios.post(
+            "/attend",
+            JSON.stringify(data)
+          );
 
           if (result.status === 200) {
             this.$router.go();
           }
-        } else if (this.attendType === "in" && !this.locationInfo.circleIn) {
+        } else if (type === "in" && !this.locationInfo.circleIn) {
           alert("현재 위치가 회사 근처가 아닙니다 위치를 확인해주세요!");
+        } else {
+          alert("another");
         }
       } catch (err) {
         console.log(JSON.stringify(err));
