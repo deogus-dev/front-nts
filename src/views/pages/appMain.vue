@@ -6,8 +6,37 @@
           <i class="bi-person h-100"></i>
         </button>
       </div>
-      <div class="col-10 text-start">
+      <div class="col-7 text-start">
         <h5><strong>김지각</strong>님<br />환영합니다.</h5>
+      </div>
+      <div class="col-3 text-start">
+        <div class="form-check form-switch">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckChecked"
+            true-value="AC07"
+            false-value="AC01"
+            v-model="attendInfo[1].attendCode"
+            checked
+          />
+          <!-- <label class="form-check-label" for="flexSwitchCheckChecked">{{
+            attendInfo[1].attendCode
+          }}</label> -->
+          <select
+            class="border-0"
+            style="appearance: none"
+            for="flexSwitchCheckChecked"
+            v-model="attendInfo[1].attendCode"
+            disabled
+          >
+            {{
+            <option value="AC01">정상근무</option>
+            <option value="AC07">재택근무</option>
+            }}
+          </select>
+        </div>
       </div>
     </div>
     <div class="card-body h-25 border-0 shadow">
@@ -111,6 +140,10 @@ export default {
       const result1 = await this.$axios.get("/attends");
       if (result1.status === 200) {
         this.attendInfo = result1.data.attendList;
+
+        if (!this.attendInfo[1].attendCode) {
+          this.attendInfo[1].attendCode = "AC01";
+        }
         console.log("attend list");
         console.log(result1.data.attendList);
       }
@@ -122,7 +155,7 @@ export default {
   computed: {
     attendStatus() {
       if (!this.attendInfo[0].outTime) {
-        if (this.attendInfo[0].attendCode === "PM") {
+        if (this.attendInfo[0].attendCode === "AC08") {
           return "out";
         }
       }
@@ -146,7 +179,7 @@ export default {
       try {
         let data = {
           attendDate: this.$moment().format("YYMMDD"),
-          attendCode: "AC01",
+          attendCode: this.attendInfo[1].attendCode,
           email: "it1713@gsitm.com",
         };
 
@@ -162,11 +195,7 @@ export default {
         }
 
         if ((type === "in" && this.locationInfo.circleIn) || type === "out") {
-          alert("attend process start");
-          const result = await this.$axios.post(
-            "/attend",
-            JSON.stringify(data)
-          );
+          const result = await this.$axios.post("/attend", data);
 
           if (result.status === 200) {
             this.$router.go();

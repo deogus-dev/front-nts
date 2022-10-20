@@ -128,7 +128,6 @@ export default {
 
     getCurPos() {
       if (navigator.geolocation) {
-        //발열 테스트 후 발열 심하면 getCurrentPosition interval set
         this.interval = navigator.geolocation.watchPosition(
           (pos) => {
             this.position.lat = pos.coords.latitude;
