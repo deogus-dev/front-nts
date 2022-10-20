@@ -40,7 +40,11 @@
       </div>
     </div>
     <div class="card-body h-25 border-0 shadow">
-      <day-component></day-component>
+      <day-component v-if="attendStatus === 'in'"></day-component>
+      <working-component
+        v-else-if="attendStatus === 'out'"
+        :inTime="attendInfo[1].inTime"
+      ></working-component>
     </div>
 
     <div class="card-body border-0 p-0">
@@ -55,6 +59,11 @@
       </button>
     </div>
     <div class="card-body p-0 h-100 border-0">
+      <!-- <attend-button
+        class="btn w-100 py-3 my-1 bg-gradient"
+        :attendStatus="attendStatus"
+        :locationStatus="locationInfo.circleIn"
+      ></attend-button> -->
       <button
         class="btn w-100 py-3 my-1 bg-gradient"
         :class="
@@ -98,6 +107,10 @@
           :locationInfo="locationInfo"
           @setLocationInfo="setLocationInfo"
         />
+        <!-- <attend-button
+          class="btn fixed-bottom mb-5 mx-5 bg-gradient py-3"
+          :attendStatus="attendStatus"
+        ></attend-button> -->
         <button
           class="btn fixed-bottom mb-5 mx-5 bg-gradient py-3"
           :class="
@@ -106,7 +119,7 @@
               ? 'btn-success'
               : 'btn-secondary'
           "
-          @click="attend(attendStatus)"
+          @click="attend()"
         >
           {{ attendStatus === "in" ? "출근하기" : "퇴근하기" }}
         </button>
@@ -119,9 +132,10 @@
 
 <script>
 import kakaoMap from "@/components/kakaoMap.vue";
-import dayComponent from "@/components/button/dayComponent.vue";
+import dayComponent from "@/components/dayComponent.vue";
+import workingComponent from "@/components/workingComponent.vue";
 export default {
-  components: { kakaoMap, dayComponent },
+  components: { kakaoMap, dayComponent, workingComponent },
 
   data() {
     return {
@@ -153,6 +167,23 @@ export default {
   },
 
   computed: {
+    isVisible() {
+      switch (this.attendStatus) {
+        case "in":
+          if (!this.attendInfo[1].inTime) {
+            return true;
+          }
+          break;
+        case "out":
+          if (this.attendInfo[1].inTime && !this.attendInfo[1].outTime) {
+            return true;
+          }
+          break;
+        case "end":
+          break;
+      }
+      return false;
+    },
     attendStatus() {
       if (!this.attendInfo[0].outTime) {
         if (this.attendInfo[0].attendCode === "AC08") {
@@ -175,7 +206,7 @@ export default {
       this.locationInfo.circleIn = param.circleIn;
       this.locationInfo.locCode = param.locCode;
     },
-    async attend(type) {
+    async attend() {
       try {
         let data = {
           attendDate: this.$moment().format("YYMMDD"),
@@ -184,7 +215,7 @@ export default {
         };
 
         //출근하기 클릭
-        if (type === "in") {
+        if (this.attendStatus === "in") {
           data.inTime = this.$moment().format("HHmmss");
           data.locationCode = this.locationInfo.locCode;
         }
@@ -194,13 +225,16 @@ export default {
           data.outTime = this.$moment().format("HHmmss");
         }
 
-        if ((type === "in" && this.locationInfo.circleIn) || type === "out") {
+        if (
+          (this.attendStatus === "in" && this.locationInfo.circleIn) ||
+          this.attendStatus === "out"
+        ) {
           const result = await this.$axios.post("/attend", data);
 
           if (result.status === 200) {
             this.$router.go();
           }
-        } else if (type === "in" && !this.locationInfo.circleIn) {
+        } else if (this.attendStatus === "in" && !this.locationInfo.circleIn) {
           alert("현재 위치가 회사 근처가 아닙니다 위치를 확인해주세요!");
         } else {
           alert("another");
