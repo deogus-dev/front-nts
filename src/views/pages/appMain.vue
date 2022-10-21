@@ -19,7 +19,6 @@
             true-value="AC07"
             false-value="AC01"
             v-model="attendInfo[1].attendCode"
-            checked
           />
           <!-- <label class="form-check-label" for="flexSwitchCheckChecked">{{
             attendInfo[1].attendCode
@@ -29,6 +28,7 @@
             style="appearance: none"
             for="flexSwitchCheckChecked"
             v-model="attendInfo[1].attendCode"
+            @change="attend()"
             disabled
           >
             <option value="AC01">정상근무</option>
@@ -206,6 +206,9 @@ export default {
     },
     async attend() {
       try {
+        if (!this.attendValid()) {
+          return false;
+        }
         let data = {
           attendDate: this.$moment().format("YYMMDD"),
           attendCode: this.attendInfo[1].attendCode,
@@ -219,27 +222,36 @@ export default {
         }
 
         //퇴근하기 클릭
-        else {
+        else if (this.attendStatus === "out") {
           data.outTime = this.$moment().format("HHmmss");
         }
 
-        if (
-          (this.attendStatus === "in" && this.locationInfo.circleIn) ||
-          this.attendStatus === "out"
-        ) {
-          const result = await this.$axios.post("/attend", data);
+        console.log(data);
+        alert("stop;");
 
-          if (result.status === 200) {
-            this.$router.go();
-          }
-        } else if (this.attendStatus === "in" && !this.locationInfo.circleIn) {
-          alert("현재 위치가 회사 근처가 아닙니다 위치를 확인해주세요!");
-        } else {
-          alert("another");
+        const result = await this.$axios.post("/attend", data);
+
+        if (result.status === 200) {
+          this.$router.go();
         }
       } catch (err) {
         console.log(JSON.stringify(err));
       }
+    },
+    attendValid() {
+      if (this.attendStatus === "in") {
+        if (!this.locationInfo.circleIn) {
+          alert("현재 위치가 회사 근처가 아닙니다 위치를 확인해주세요!");
+          return false;
+        }
+      }
+
+      if (this.attendStatus === "end") {
+        alert("근무가 종료되었습니다. 수고하셨습니다.");
+        return false;
+      }
+
+      return true;
     },
   },
 };

@@ -1,6 +1,9 @@
 <template>
   <div class="row m-0 align-items-center h-100">
-    <div class="col-12">refresh button</div>
+    <div class="col-12">
+      <!-- <button><i class="bi-arrow-clockwise"></i></button> -->
+      출근시간 : {{ inTime | timeFormat }}
+    </div>
     <div class="col-12">{{ workText }}</div>
     <div class="col-12">
       <div class="progress">
@@ -37,7 +40,19 @@ export default {
     };
   },
   created() {
-    setInterval(this.workingTime, 1000);
+    setInterval(this.workingTime, 10000);
+    this.workingTime();
+  },
+  filters: {
+    timeFormat: function (val) {
+      return (
+        val.substring(0, 2) +
+        ":" +
+        val.substring(2, 4) +
+        ":" +
+        val.substring(4, 6)
+      );
+    },
   },
   methods: {
     workingTime() {
@@ -49,7 +64,9 @@ export default {
           this.inTime.substring(4, 6),
         "YYYYMMDDHHmmss"
       );
-      const workTime = this.$moment.utc(t1.diff(t2)).add(-1, "hours");
+      // alert(t1.format("YYYY-MM-DD HH:mm:ss"));
+      // alert(t2.format("YYYY-MM-DD HH:mm:ss"));
+      const workTime = this.$moment.utc(t1.diff(t2));
       this.workHour = workTime.format("H");
       this.workText = workTime.format("HH시간 mm분째 근무중");
       //   return {
