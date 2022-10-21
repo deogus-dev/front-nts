@@ -7,7 +7,10 @@
         </button>
       </div>
       <div class="col-7 text-start">
-        <h5><strong>김지각</strong>님<br />환영합니다.</h5>
+        <h5>
+          <strong>{{ getName }}</strong
+          >님<br />환영합니다.
+        </h5>
       </div>
       <div class="col-3 text-start">
         <div class="form-check form-switch">
@@ -20,6 +23,7 @@
             false-value="AC01"
             @change="toggle()"
             v-model="attendInfo[1].attendCode"
+            :disabled="attendStatus === 'out' || attendStatus === 'end'"
           />
           <!-- <label class="form-check-label" for="flexSwitchCheckChecked">{{
             attendInfo[1].attendCode
@@ -37,12 +41,13 @@
         </div>
       </div>
     </div>
-    <div class="card-body h-25 border-0 shadow">
+    <div class="card-body h-100 border-0 shadow">
       <day-component v-if="attendStatus === 'in'"></day-component>
       <working-component
         v-else-if="attendStatus === 'out'"
         :inTime="attendInfo[1].inTime"
       ></working-component>
+      <end-component v-else></end-component>
     </div>
 
     <div class="card-body border-0 p-0">
@@ -56,7 +61,7 @@
         내 위치보기
       </button>
     </div>
-    <div class="card-body p-0 h-100 border-0">
+    <div class="card-body px-0 py-5 border-0" v-if="attendStatus !== 'end'">
       <!-- <attend-button
         class="btn w-100 py-3 my-1 bg-gradient"
         :attendStatus="attendStatus"
@@ -66,7 +71,8 @@
         class="btn w-100 py-3 my-1 bg-gradient"
         :class="
           (attendStatus === 'in' && locationInfo.circleIn) ||
-          attendStatus === 'out'
+          attendStatus === 'out' ||
+          attendInfo[1].attendCode === 'AC07'
             ? 'btn-success'
             : 'btn-secondary'
         "
@@ -113,7 +119,8 @@
           class="btn fixed-bottom mb-5 mx-5 bg-gradient py-3"
           :class="
             (attendStatus === 'in' && locationInfo.circleIn) ||
-            attendStatus === 'out'
+            attendStatus === 'out' ||
+            attendInfo[1].attendCode === 'AC07'
               ? 'btn-success'
               : 'btn-secondary'
           "
@@ -123,17 +130,17 @@
         </button>
       </div>
     </div>
-    {{ attendStatus }}<br />
-    {{ attendInfo }}
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import kakaoMap from "@/components/kakaoMap.vue";
 import dayComponent from "@/components/dayComponent.vue";
 import workingComponent from "@/components/workingComponent.vue";
+import endComponent from "@/components/endComponent.vue";
 export default {
-  components: { kakaoMap, dayComponent, workingComponent },
+  components: { kakaoMap, dayComponent, workingComponent, endComponent },
 
   data() {
     return {
@@ -156,8 +163,10 @@ export default {
         if (!this.attendInfo[1].attendCode) {
           this.attendInfo[1].attendCode = "AC01";
         }
-        console.log("attend list");
-        console.log(result1.data.attendList);
+
+        if (!this.attendInfo[1].attendDate) {
+          this.attendInfo[1].attendDate = this.$moment().format("YYMMDD");
+        }
       }
     } catch (err) {
       console.log(err);
@@ -165,6 +174,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters(["getName"]),
     isVisible() {
       switch (this.attendStatus) {
         case "in":
@@ -212,7 +222,6 @@ export default {
         let data = {
           attendDate: this.$moment().format("YYMMDD"),
           attendCode: this.attendInfo[1].attendCode,
-          email: "it1713@gsitm.com",
         };
 
         //출근하기 클릭
@@ -229,6 +238,14 @@ export default {
         const result = await this.$axios.post("/attend", data);
 
         if (result.status === 200) {
+          var attendTxt = null;
+          if (this.attendStatus === "in") {
+            attendTxt = "출근";
+          } else if (this.attendStatus === "out") {
+            attendTxt = "퇴근";
+          }
+          // global alert으로 변경
+          alert(attendTxt + "이 확인되었습니다!");
           this.$router.go();
         }
       } catch (err) {
@@ -236,26 +253,27 @@ export default {
       }
     },
     attendValid() {
-      if (this.attendStatus === "in") {
+      if (
+        this.attendStatus === "in" &&
+        this.attendInfo[1].attendCode !== "AC07"
+      ) {
         if (!this.locationInfo.circleIn) {
           alert("현재 위치가 회사 근처가 아닙니다 위치를 확인해주세요!");
           return false;
         }
       }
-
-      if (this.attendStatus === "end") {
-        alert("근무가 종료되었습니다. 수고하셨습니다.");
-        return false;
-      }
-
       return true;
     },
 
-    toggle() {
-      this.$axios.post("/attend", {
+    async toggle() {
+      const result = await this.$axios.post("/attend", {
         attendDate: this.$moment().format("YYMMDD"),
         attendCode: this.attendInfo[1].attendCode,
       });
+
+      if (result.status === 200) {
+        console.log("succeed!");
+      }
     },
   },
 };

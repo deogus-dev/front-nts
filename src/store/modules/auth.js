@@ -71,7 +71,7 @@ const userInfo = {
         if (result.status === 200) {
           commit("loginSuccess", {
             email: email,
-            name: result.name ? result.data.name : "장대현",
+            name: result.data.name,
             accessToken: result.data.accessToken,
             refreshToken: result.data.refreshToken,
             accessTokenExpiresIn: result.data.accessTokenExpiresIn,
@@ -100,6 +100,7 @@ const userInfo = {
     getGrantType: (state) => state.grantType,
     getAccessToken: (state) => state.accessToken,
     getRefreshToken: (state) => state.refreshToken,
+    getName: (state) => state.name,
     getEmail: (state) => state.email,
     isLoggedIn: (state) => state.loginSuccess,
     hasLoginErrored: (state) => state.loginError,
