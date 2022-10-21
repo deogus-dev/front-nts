@@ -31,10 +31,8 @@
             v-model="attendInfo[1].attendCode"
             disabled
           >
-            {{
             <option value="AC01">정상근무</option>
             <option value="AC07">재택근무</option>
-            }}
           </select>
         </div>
       </div>
