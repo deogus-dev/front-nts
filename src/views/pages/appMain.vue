@@ -18,6 +18,7 @@
             id="flexSwitchCheckChecked"
             true-value="AC07"
             false-value="AC01"
+            @change="toggle()"
             v-model="attendInfo[1].attendCode"
           />
           <!-- <label class="form-check-label" for="flexSwitchCheckChecked">{{
@@ -28,7 +29,6 @@
             style="appearance: none"
             for="flexSwitchCheckChecked"
             v-model="attendInfo[1].attendCode"
-            @change="attend()"
             disabled
           >
             <option value="AC01">정상근무</option>
@@ -226,9 +226,6 @@ export default {
           data.outTime = this.$moment().format("HHmmss");
         }
 
-        console.log(data);
-        alert("stop;");
-
         const result = await this.$axios.post("/attend", data);
 
         if (result.status === 200) {
@@ -252,6 +249,13 @@ export default {
       }
 
       return true;
+    },
+
+    toggle() {
+      this.$axios.post("/attend", {
+        attendDate: this.$moment().format("YYMMDD"),
+        attendCode: this.attendInfo[1].attendCode,
+      });
     },
   },
 };
