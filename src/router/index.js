@@ -6,6 +6,7 @@ import login from "@/views/login.vue";
 import signup from "@/views/signup.vue";
 import FrameDefault from "@/layouts/workFrame.vue";
 import pageRouter from "./pageRouter";
+import signupFinish from "@/views/signup-finish";
 
 Vue.use(VueRouter);
 
@@ -31,10 +32,16 @@ const routes = [
     component: login,
   },
   {
-    //로그인
+    // 회원가입
     path: "/signup",
     name: "signup",
     component: signup,
+  },
+  {
+    //회원가입 완료
+    path: "/signup-finish",
+    name: "signup-finish",
+    component: signupFinish,
   },
   {
     path: "/",

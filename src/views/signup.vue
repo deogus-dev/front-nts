@@ -1,106 +1,101 @@
 <template>
-  <section class='vh-100 bg-image'>
-    <div class='mask d-flex align-items-center h-100 gradient-custom-3'>
-      <div class='container h-100' style="text-align: start">
-        <div class='row d-flex justify-content-center align-items-center h-100'>
-          <div class='col-12 col-md-9 col-lg-7 col-xl-6'>
-            <div class='card' style='border-radius: 15px;'>
-              <div class='card-body p-5'>
-                <form name='signup' class="needs-validation" novalidate>
-                  <div v-if="!isFirstStepSign && !isAddInfo">
-                  <h2 class='text-uppercase mb-5'>본인 확인을 위해 이메일 주소를 입력해 주세요.</h2>
-                    <ul class='checkbox-info'>
-                      <li>
-                        <input type='checkbox' id='personalInfo' v-model="isPersonalInfoCheck"/>
-                        <label for='personalInfo'>[필수] 본인 인증 이용약관 동의 <span></span></label>
-                        <div class="invalid-feedback" id="personalInfo" v-if="errors[0]">
-                          {{ errors[0].message }}
-                        </div>
-                      </li>
-                    </ul>
-                    <div class='input-group form-outline mb-4'>
-                      <input type='email' v-model='email' v-bind:class="{ 'is-invalid': emailError }" id='email'
-                             placeholder="it1234@gsitm.com" class='form-control form-control-lg sign-input'/>
-                      <div class='input-group-append' style='margin-top:10px;'>
-                        <button class='btn btn-outline-secondary' id='verify-btn' @click='sendCode()' type='button'>
-                          인증번호발송
-                        </button>
-                        <input type='hidden' name='hasVerify' v-model='hasVerify'/>
-                      </div>
-                      <div class="invalid-feedback" id="email-feedback" v-if="errors[1]">
-                        {{ errors[1].message }}
-                      </div>
-                    </div>
+  <section class="vh-100">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6 text-black">
+          <div class="px-5 ms-xl-4" style="text-align:left;">
+            <span class="h1 fw-bold mb-0" >{{ headerText }}</span>
+          </div>
+          <ul class='checkbox-info'>
+            <li>
+              <input type='checkbox' id='personalInfo' v-model="isPersonalInfoCheck"/>
+              <label for='personalInfo'>[필수] 본인 인증 이용약관 동의 <span></span></label>
+              <div class="invalid-feedback" id="personalInfo" v-if="errors[0]">
+                {{ errors[0].message }}
+              </div>
+            </li>
+          </ul>
+          <form>
+            <div v-if="!isFirstStepSign && !isAddInfo">
+              <div class='input-group form-outline mb-4'>
+                <input type='email' v-model='email' v-bind:class="{ 'is-invalid': emailError }" id='email'
+                       placeholder="it1234@gsitm.com" class='form-control form-control-lg sign-input'/>
+                <div class='input-group-append' style='margin-top:10px;'>
+                  <button class='btn btn-outline-secondary' id='verify-btn' @click='sendCode()' type='button'>
+                    인증번호발송
+                  </button>
+                  <input type='hidden' name='hasVerify' v-model='hasVerify'/>
+                </div>
+                <div class="invalid-feedback" id="email-feedback" v-if="errors[1]">
+                  {{ errors[1].message }}
+                </div>
+              </div>
 
-                    <div class='form-outline mb-4'>
-                      <input type='number' id='verify-code' v-model="verifyCode" placeholder='인증번호를 입력해주세요.'
-                             v-bind:class="{ 'is-invalid': verifyCodeError }"
-                             class='sign-input form-control form-control-lg'/>
-                    </div>
-                    <div class="invalid-feedback" id="verify-feedback" v-if="errors[2]">
-                      {{ errors[2].message }}
-                    </div>
-                    <div class='d-flex justify-content-center'>
-                      <button type='button' @click='sendNext()' :disabled='hasVerify === false'
-                              class='btn btn-secondary btn-block btn-lg gradient-custom-4 text-body next-btn'>확인
-                      </button>
-                    </div>
-                  </div>
-                  <div v-if="isFirstStepSign && isAddInfo">
-                    <h2 class='text-uppercase mb-5'>비밀번호 설정</h2>
-                    <div class='form-outline mb-4'>
-                      <label class="form-label" for="password" required>비밀번호 입력</label>
-                      <input type='password' v-model="password" v-bind:class="{ 'is-invalid': pwdError }" :disabled='isComparePwd === true' id='password' class='sign-input form-control form-control-lg'/>
-                      <div class="invalid-feedback" id="password-feedback" v-if="errors[3]">
-                        {{ errors[3].message }}
-                      </div>
-                    </div>
-
-                    <div class='form-outline mb-4'>
-                      <label class="form-label" for="check-password" required>비밀번호 재입력</label>
-                      <input type='password' v-model="chkPassword" v-bind:class="{ 'is-invalid': pwdError }" :disabled='isComparePwd === true' id='check-password' class='sign-input form-control form-control-lg'/>
-                      <div class="invalid-feedback" id="password-feedback" v-if="errors[4]">
-                        {{ errors[4].message }}
-                      </div>
-                    </div>
-
-                    <div class='d-flex justify-content-center'>
-                      <button type='button' @click='addNewInfo()' :disabled='hasVerify === false'
-                              class='btn btn-secondary btn-block btn-lg gradient-custom-4 text-body next-btn'>확인
-                      </button>
-                    </div>
-                  </div>
-                  <div v-if="isFirstStepSign && !isAddInfo">
-                    <h2 class='text-uppercase mb-5'>추가 정보 입력</h2>
-                    <div class='form-outline mb-4'>
-                      <label class="form-label" for="name" required>이름 입력</label>
-                      <input type='text' v-model="name" v-bind:class="{ 'is-invalid': nameError }" id='name' class='sign-input form-control form-control-lg'/>
-                      <div class="invalid-feedback" id="name-feedback" v-if="errors[5]">
-                        {{ errors[5].message }}
-                      </div>
-                    </div>
-
-                    <div class='form-outline mb-4'>
-                      <label class="form-label" for="contact" required>전화번호 입력</label>
-                      <input type='number' v-model="contact" v-bind:class="{ 'is-invalid': contactError }" id='contact' class='sign-input form-control form-control-lg'/>
-                      <div class="invalid-feedback" id="contact-feedback" v-if="errors[6]">
-                        {{ errors[6].message }}
-                      </div>
-                    </div>
-
-                    <div class='d-flex justify-content-center'>
-                      <button type='button' @click='sendForm()' class='btn btn-secondary btn-block btn-lg gradient-custom-4 text-body next-btn'>확인
-                      </button>
-                    </div>
-                  </div>
-                </form>
+              <div class='form-outline mb-4'>
+                <input type='number' id='verify-code' v-model="verifyCode" placeholder='인증번호를 입력해주세요.'
+                       v-bind:class="{ 'is-invalid': verifyCodeError }"
+                       class='sign-input form-control form-control-lg'/>
+              </div>
+              <div class="invalid-feedback" id="verify-feedback" v-if="errors[2]">
+                {{ errors[2].message }}
+              </div>
+              <div class='d-flex justify-content-center'>
+                <button type='button' @click='sendNext()' :disabled='hasVerify === false'
+                        class='btn btn-secondary btn-block btn-lg gradient-custom-4 text-body next-btn'>확인
+                </button>
               </div>
             </div>
-          </div>
+            <div v-if="isFirstStepSign && isAddInfo">
+              <h2 class='text-uppercase mb-5'>비밀번호 설정</h2>
+              <div class='form-outline mb-4'>
+                <label class="form-label" for="password" required>비밀번호 입력</label>
+                <input type='password' v-model="password" v-bind:class="{ 'is-invalid': pwdError }" :disabled='isComparePwd === true' id='password' class='sign-input form-control form-control-lg'/>
+                <div class="invalid-feedback" id="password-feedback" v-if="errors[3]">
+                  {{ errors[3].message }}
+                </div>
+              </div>
+
+              <div class='form-outline mb-4'>
+                <label class="form-label" for="check-password" required>비밀번호 재입력</label>
+                <input type='password' v-model="chkPassword" v-bind:class="{ 'is-invalid': pwdError }" :disabled='isComparePwd === true' id='check-password' class='sign-input form-control form-control-lg'/>
+                <div class="invalid-feedback" id="password-feedback" v-if="errors[4]">
+                  {{ errors[4].message }}
+                </div>
+              </div>
+
+              <div class='d-flex justify-content-center'>
+                <button type='button' @click='addNewInfo()' :disabled='hasVerify === false'
+                        class='btn btn-secondary btn-block btn-lg gradient-custom-4 text-body next-btn'>확인
+                </button>
+              </div>
+            </div>
+            <div v-if="isFirstStepSign && !isAddInfo">
+              <h2 class='text-uppercase mb-5'>추가 정보 입력</h2>
+              <div class='form-outline mb-4'>
+                <label class="form-label" for="name" required>이름 입력</label>
+                <input type='text' v-model="name" v-bind:class="{ 'is-invalid': nameError }" id='name' class='sign-input form-control form-control-lg'/>
+                <div class="invalid-feedback" id="name-feedback" v-if="errors[5]">
+                  {{ errors[5].message }}
+                </div>
+              </div>
+
+              <div class='form-outline mb-4'>
+                <label class="form-label" for="contact" required>전화번호 입력</label>
+                <input type='number' v-model="contact" v-bind:class="{ 'is-invalid': contactError }" id='contact' class='sign-input form-control form-control-lg'/>
+                <div class="invalid-feedback" id="contact-feedback" v-if="errors[6]">
+                  {{ errors[6].message }}
+                </div>
+              </div>
+
+              <div class='d-flex justify-content-center'>
+                <button type='button' @click='sendForm()' class='btn btn-secondary btn-block btn-lg gradient-custom-4 text-body next-btn'>확인
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
   </section>
 </template>
 
@@ -112,11 +107,9 @@ import axios from "axios";
 
 export default {
   name: 'signUp',
-  components: {
-//    prevBtn,
-  },
   data() {
     return {
+      headerText: '본인 확인을 위해 이메일주소를 입력해 주세요.',
       email: '',
       chkPassword: '',
       password: '',
@@ -225,6 +218,7 @@ export default {
             });
             document.getElementById('verify-code').disabled = true;
             this.isFirstStepSign = true;
+            this.headerText = '비밀번호 입력';
             console.log("인증성공")
           }else{
             this.errors.push({
@@ -265,6 +259,7 @@ export default {
         this.errors.push({
           'message': '올바른 비밀번호입니다.'
         });
+        this.headerText = '추가정보 입력';
       }
     },
     async sendForm(){
@@ -289,17 +284,14 @@ export default {
 
       try {
         const result = await axios.post('/auth/new',{
-              email : 'it1596@gsitm.com',
-              // email : this.email,
-              password : '1q2w3e4r5t!',
-              // password : this.password,
+              email : this.email,
+              password : this.password,
               name: this.name,
               contact: this.contact,
               companyCode: "C0001",
               pushAgreeYn: "N"
             }
         );
-        console.log('result ===>', result)
         await this.$router.push('./signup-finish');
       } catch (err) {
         throw new Error(err)
