@@ -6948,6 +6948,11 @@
     "hash-sum" "^2.0.0"
     "loader-utils" "^2.0.0"
 
+"vue-loading-overlay@3.0":
+  "integrity" "sha512-1y7Yghbb8SFw0DzMVz6tVKUz7wvsmWw+78mKQ148ZWDfGroX86wCUmsurx4BxNggziVfWWGvS0QexpwkmdSMgw=="
+  "resolved" "https://registry.npmjs.org/vue-loading-overlay/-/vue-loading-overlay-3.0.1.tgz"
+  "version" "3.0.1"
+
 "vue-moment@^4.1.0":
   "integrity" "sha512-Gzisqpg82ItlrUyiD9d0Kfru+JorW2o4mQOH06lEDZNgxci0tv/fua1Hl0bo4DozDV2JK1r52Atn/8QVCu8qQw=="
   "resolved" "https://registry.npmjs.org/vue-moment/-/vue-moment-4.1.0.tgz"

@@ -1,11 +1,11 @@
 <template>
   <div class="h-100 text-center">
-    <prev-btn/>
-    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <!-- <prev-btn/>
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'> -->
     <transition name="slide-fade" mode="out-in">
       <router-view />
     </transition>
-    <global-alert />
+    <!-- <global-alert /> -->
   </div>
 </template>
 

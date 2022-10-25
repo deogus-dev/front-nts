@@ -543,3 +543,10 @@ input.input100 {
     opacity: 1;
   }
 }
+
+.select {
+  -o-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}

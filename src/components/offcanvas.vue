@@ -1,6 +1,7 @@
 <template>
   <div
-    class="offcanvas offcanvas-bottom h-25 p-0"
+    class="offcanvas offcanvas-bottom p-0"
+    style="height: 40%"
     tabindex="-1"
     id="offcanvasHoly"
     aria-labelledby="offcanvasHolyLabel"
@@ -35,13 +36,35 @@
     </nav>
     <div class="tab-content" id="nav-tabContent">
       <div
-        class="tab-pane fade show active"
+        class="tab-pane fade show active p-2"
         id="nav-home"
         role="tabpanel"
         aria-labelledby="nav-home-tab"
         tabindex="0"
       >
-        ...
+        <select class="form-select mb-3">
+          <option>전일</option>
+          <option>오전반차</option>
+          <option>오전반차</option>
+          <option>오전반반차</option>
+          <option>오후반반차</option>
+        </select>
+        <div class="input-group mb-3">
+          <input
+            type="date"
+            class="form-control"
+            placeholder="Username"
+            aria-label="Username"
+          />
+          <span class="input-group-text">~</span>
+          <input
+            type="date"
+            class="form-control"
+            placeholder="Server"
+            aria-label="Server"
+          />
+        </div>
+        <button class="btn btn-primary">저장</button>
       </div>
       <div
         class="tab-pane fade"
