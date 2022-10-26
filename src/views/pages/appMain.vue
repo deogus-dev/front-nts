@@ -1,5 +1,6 @@
 <template>
   <div class="card h-100 border-0 py-2 container-md">
+    {{ attendInfo }}
     <div class="card-header border-0 row m-0 px-0 py-3 bg-transparent">
       <div class="col-2 text-start">
         <button class="btn h-100 border rounded-circle">
@@ -19,8 +20,8 @@
             type="checkbox"
             role="switch"
             id="flexSwitchCheckChecked"
-            true-value="AC07"
-            false-value="AC01"
+            true-value="AT07"
+            false-value="AT01"
             @change="toggle()"
             v-model="attendInfo[1].attendCode"
             :disabled="attendStatus === 'out' || attendStatus === 'end'"
@@ -35,8 +36,8 @@
             v-model="attendInfo[1].attendCode"
             disabled
           >
-            <option value="AC01">정상근무</option>
-            <option value="AC07">재택근무</option>
+            <option value="AT01">정상근무</option>
+            <option value="AT07">재택근무</option>
           </select>
         </div>
       </div>
@@ -72,7 +73,7 @@
         :class="
           (attendStatus === 'in' && locationInfo.circleIn) ||
           attendStatus === 'out' ||
-          attendInfo[1].attendCode === 'AC07'
+          attendInfo[1].attendCode === 'AT07'
             ? 'btn-success'
             : 'btn-secondary'
         "
@@ -120,7 +121,7 @@
           :class="
             (attendStatus === 'in' && locationInfo.circleIn) ||
             attendStatus === 'out' ||
-            attendInfo[1].attendCode === 'AC07'
+            attendInfo[1].attendCode === 'AT07'
               ? 'btn-success'
               : 'btn-secondary'
           "
@@ -160,8 +161,15 @@ export default {
       if (result1.status === 200) {
         this.attendInfo = result1.data.attendList;
 
+        // if (
+        //   this.attendInfo[0].attendCode !== "AT08" &&
+        //   !this.attendInfo[0].outTime
+        // ) {
+        //   alert("전일 퇴근 정보가 없어 18:00 퇴근으로 입력합니다.");
+        // }
+
         if (!this.attendInfo[1].attendCode) {
-          this.attendInfo[1].attendCode = "AC01";
+          this.attendInfo[1].attendCode = "AT01";
         }
 
         if (!this.attendInfo[1].attendDate) {
@@ -194,7 +202,10 @@ export default {
     },
     attendStatus() {
       if (!this.attendInfo[0].outTime) {
-        if (this.attendInfo[0].attendCode === "AC08") {
+        if (
+          this.attendInfo[0].attendCode === "AT08" &&
+          this.attendInfo[1].attendCode === "AT08"
+        ) {
           return "out";
         }
       }
@@ -255,7 +266,7 @@ export default {
     attendValid() {
       if (
         this.attendStatus === "in" &&
-        this.attendInfo[1].attendCode !== "AC07"
+        this.attendInfo[1].attendCode !== "AT07"
       ) {
         if (!this.locationInfo.circleIn) {
           alert("현재 위치가 회사 근처가 아닙니다 위치를 확인해주세요!");

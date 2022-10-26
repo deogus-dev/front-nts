@@ -15,7 +15,7 @@ async axios
 
 await 
 if(출근확인[0].퇴근 is null){
-    if(출근확인[0].상태 === 'PM'){
+    if(출근확인[0].상태 === 'PM' && 출근확인[1].상태 === 'PM'){
         퇴근 활성화
         return;
     }

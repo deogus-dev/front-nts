@@ -1,7 +1,7 @@
 <template>
   <div
-    class="offcanvas offcanvas-bottom p-0"
-    style="height: 40%"
+    class="offcanvas offcanvas-bottom p-0 rounded-top"
+    style="height: auto"
     tabindex="-1"
     id="offcanvasHoly"
     aria-labelledby="offcanvasHolyLabel"
@@ -42,12 +42,10 @@
         aria-labelledby="nav-home-tab"
         tabindex="0"
       >
-        <select class="form-select mb-3">
-          <option>전일</option>
-          <option>오전반차</option>
-          <option>오전반차</option>
-          <option>오전반반차</option>
-          <option>오후반반차</option>
+        <select class="form-select mb-3" v-model="attendCode">
+          <option v-for="code in comCode" :key="code.code" :value="code.code">
+            {{ code.name }}
+          </option>
         </select>
         <div class="input-group mb-3">
           <input
@@ -55,13 +53,16 @@
             class="form-control"
             placeholder="Username"
             aria-label="Username"
+            v-model="from"
           />
-          <span class="input-group-text">~</span>
+          <span class="input-group-text" v-if="attendCode === 'AT06'">~</span>
           <input
             type="date"
             class="form-control"
             placeholder="Server"
             aria-label="Server"
+            v-model="to"
+            v-if="attendCode === 'AT06'"
           />
         </div>
         <button class="btn btn-primary">저장</button>
@@ -75,50 +76,35 @@
       >
         ...
       </div>
-      <div
-        class="tab-pane fade"
-        id="nav-contact"
-        role="tabpanel"
-        aria-labelledby="nav-contact-tab"
-        tabindex="0"
-      >
-        ...
-      </div>
-      <div
-        class="tab-pane fade"
-        id="nav-disabled"
-        role="tabpanel"
-        aria-labelledby="nav-disabled-tab"
-        tabindex="0"
-      >
-        ...
-      </div>
     </div>
-    <!-- <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasHolyLabel">
-        휴가 및 기타일정 관리
-      </h5>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="offcanvas"
-        aria-label="Close"
-      ></button>
-    </div>
-    <div class="offcanvas-body small h-100 p-0">
-      <select class="form-select" aria-label="Default select example">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-      </select>
-    </div> -->
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+      comCode: [],
+      attendCode: null,
+      from: null,
+      to: null,
+    };
+  },
+  async created() {
+    const result = await this.$axios.get("/codes", {
+      params: {
+        codeGroup: "ATTEND",
+      },
+    });
+
+    if (result.status === 200) {
+      this.comCode = result.data;
+    }
+  },
+  methods: {
+    // 휴가 신청시 attendCode, from, to
+    // api 통신 전에 to가 null인 경우 to = from 으로 넣고 call
+    // if(from > to) { alert("시작일이 종료일보다 클 수 없습니다."); return false; }
   },
 };
 </script>
