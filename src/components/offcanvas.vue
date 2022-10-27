@@ -42,7 +42,7 @@
         aria-labelledby="nav-home-tab"
         tabindex="0"
       >
-        <select class="form-select mb-3" v-model="attendCode">
+        <select class="form-select mb-3" v-model="data.attendCode">
           <option v-for="code in comCode" :key="code.code" :value="code.code">
             {{ code.name }}
           </option>
@@ -53,19 +53,21 @@
             class="form-control"
             placeholder="Username"
             aria-label="Username"
-            v-model="from"
+            v-model="data.from"
           />
-          <span class="input-group-text" v-if="attendCode === 'AT06'">~</span>
+          <span class="input-group-text" v-if="data.attendCode === 'AT06'"
+            >~</span
+          >
           <input
             type="date"
             class="form-control"
             placeholder="Server"
             aria-label="Server"
-            v-model="to"
-            v-if="attendCode === 'AT06'"
+            v-model="data.to"
+            v-if="data.attendCode === 'AT06'"
           />
         </div>
-        <button class="btn btn-primary">저장</button>
+        <button class="btn btn-primary" @click="attend()">저장</button>
       </div>
       <div
         class="tab-pane fade"
@@ -85,9 +87,11 @@ export default {
   data() {
     return {
       comCode: [],
-      attendCode: null,
-      from: null,
-      to: null,
+      data: {
+        attendCode: null,
+        from: null,
+        to: null,
+      },
     };
   },
   async created() {
@@ -101,10 +105,35 @@ export default {
       this.comCode = result.data;
     }
   },
+  watch: {
+    data: {
+      handler: function () {
+        if (this.data.from > this.data.to) {
+          alert("시작일이 종료일보다 클 수 없습니다.");
+          this.data.from = null;
+          this.data.to = null;
+        }
+      },
+      deep: true,
+    },
+  },
   methods: {
-    // 휴가 신청시 attendCode, from, to
-    // api 통신 전에 to가 null인 경우 to = from 으로 넣고 call
-    // if(from > to) { alert("시작일이 종료일보다 클 수 없습니다."); return false; }
+    async attend() {
+      const data = {
+        attendCode: this.data.attendCode,
+        from: this.$moment(this.data.from).format("YYYYMMDD"),
+        // api 통신 전에 to가 null인 경우 to = from 으로 넣고 call
+        to: !this.data.to
+          ? this.$moment(this.data.from).format("YYYYMMDD")
+          : this.$moment(this.data.to).format("YYYYMMDD"),
+      };
+
+      const result = await this.$axios.post("/attend/code", data);
+
+      if (result.status === 200) {
+        alert("저장되었습니다.");
+      }
+    },
   },
 };
 </script>

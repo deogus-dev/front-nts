@@ -84,6 +84,8 @@ const userInfo = {
       }
     },
 
+    //로그아웃 구현 시 accessToken param에 추가해서 call
+
     reissue(
       { commit },
       { accessToken, refreshToken, accessTokenExpiresIn, grantType }

@@ -13,7 +13,6 @@ export default {
       time: null,
       map: null,
       marker: null,
-      compLoc: [],
       position: {
         lat: 37.51082,
         lng: 127.02928,
@@ -57,13 +56,6 @@ export default {
       },
       deep: true,
     },
-
-    compLoc: {
-      handler: function () {
-        this.initMap();
-      },
-      deep: true,
-    },
   },
   // computed: {
   //   dateUtil,
@@ -77,6 +69,7 @@ export default {
   },
   methods: {
     async initMap() {
+      alert("initmap!");
       var container = document.getElementById("map");
       var options = {
         center: new kakao.maps.LatLng(this.position.lat, this.position.lng),
@@ -108,7 +101,6 @@ export default {
 
         this.posCheck();
       }
-      // this.compLoc = result.data;
 
       this.map.setDraggable(true);
 

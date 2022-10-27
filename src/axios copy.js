@@ -26,42 +26,39 @@ axios.interceptors.request.use(
   }
 );
 
-// 다중 요청 대응 코드 추가
-let isTokenRefreshing = false;
-let refreshSubscribers = [];
-
-const onTokenRefreshed = (accessToken) => {
-  refreshSubscribers.map((callback) => callback(accessToken));
-};
-
-const addRefreshSubscriber = (callback) => {
-  refreshSubscribers.push(callback);
-};
-
 axios.interceptors.response.use(
   (response) => {
+    // 응답 데이터를 가공 (status : 2xx)
+
+    // response status 코드에 따른 후처리
+
+    console.log("interceptor out");
+    console.log(response);
     return response;
   },
   async (error) => {
-    const {
-      config,
-      response: { status },
-    } = error;
-    const originalRequest = config;
-    if (status === 401) {
-      if (!isTokenRefreshing) {
+    try {
+      console.log(error);
+      // 오류 응답을 처리
+      const errorCode = error.response.data.status;
+      const errorMsg = error.response.data.message;
+
+      // access Token 만료 시 refresh Token으로 토큰 재발급 과정 진행
+      if (errorCode === 401) {
         console.log("토큰 재발급 start");
-        // isTokenRefreshing이 false인 경우에만 token refresh 요청
-        isTokenRefreshing = true;
+        const originalRequest = error.config;
         const accessToken = store.getters["getAccessToken"];
         const refreshToken = store.getters["getRefreshToken"];
+
+        // reissue때 기존 access 토큰을 체크를 하기 때문에 header 변경
+        error.config.headers.Authorization = "refresh_token";
 
         // 토큰 재발급 요청
         const result = await axios.post("/reissue", {
           accessToken: accessToken,
           refreshToken: refreshToken,
         });
-        // 새로운 토큰 저장
+
         if (result.status === 200) {
           store.dispatch("reissue", {
             accessToken: result.data.accessToken,
@@ -69,25 +66,21 @@ axios.interceptors.response.use(
             accessTokenExpiresIn: result.data.accessTokenExpiresIn,
             grantType: result.data.grantType,
           });
-          isTokenRefreshing = false;
         }
+        console.log("토큰 재발급 end");
 
-        // 새로운 토큰으로 지연되었던 요청 진행
-        onTokenRefreshed(store.getters["getAccessToken"]);
+        // 재발급 된 access token으로 기존 api 재요청
+        console.log("실패한 api 재호출");
+        return axios(originalRequest);
+      } else {
+        alert("errorCode : " + errorCode + "\r\nerrorMsg : " + errorMsg);
+        // alert("세션이 만료되었습니다. \r\n재로그인 해주시기 바랍니다.");
+        localStorage.clear();
+        router.push("/login");
       }
-
-      // token이 재발급 되는 동안의 요청은 refreshSubscribers에 저장
-      const retryOriginalRequest = new Promise((resolve) => {
-        addRefreshSubscriber(() => {
-          originalRequest.headers.Authorization =
-            store.getters["getGrantType"] +
-            " " +
-            store.getters["getAccessToken"];
-          resolve(axios(originalRequest));
-        });
-      });
-
-      return retryOriginalRequest;
+    } catch (err) {
+      console.log("catch err" + err);
+      throw new Error(err);
     }
     return Promise.reject(error);
   }
