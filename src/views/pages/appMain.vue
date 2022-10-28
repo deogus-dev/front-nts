@@ -177,7 +177,7 @@ export default {
         }
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   },
 
@@ -260,7 +260,7 @@ export default {
           this.$router.go();
         }
       } catch (err) {
-        console.log(JSON.stringify(err));
+        // console.log(JSON.stringify(err));
       }
     },
     attendValid() {

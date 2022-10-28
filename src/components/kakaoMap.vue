@@ -69,7 +69,6 @@ export default {
   },
   methods: {
     async initMap() {
-      alert("initmap!");
       var container = document.getElementById("map");
       var options = {
         center: new kakao.maps.LatLng(this.position.lat, this.position.lng),
@@ -85,7 +84,6 @@ export default {
 
       const result = await this.$axios.get("/company-locations");
       if (result.status === 200) {
-        console.log(result.data);
         result.data.forEach((obj) => {
           this.circle.push(
             new kakao.maps.Circle({
@@ -126,7 +124,7 @@ export default {
             this.position.lng = pos.coords.longitude;
           },
           (err) => {
-            console.log("error! ", err.message);
+            console.log("[navigator error] : ", err.message);
           },
           {
             enableHighAccuracy: false,
@@ -136,7 +134,6 @@ export default {
     },
     posCheck() {
       try {
-        console.log(this.circle);
         this.circle.forEach((obj) => {
           if (
             this.position.lng > obj.getBounds().ha &&
