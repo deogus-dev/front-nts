@@ -17,7 +17,7 @@ module.exports = {
     //     withCredentials: true,
     //   },
     // },
-    proxy: "http://localhost:8080",
+    proxy: "http://3.36.236.131:8080",
   },
   lintOnSave: false,
   publicPath: "/front-nts/",
