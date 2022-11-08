@@ -16,6 +16,10 @@ import "@/assets/css/transition.css";
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 
+axios.defaults.baseURL = "https://www.ninetosixapi.tk";
+axios.defaults.headers.post["Content-Type"] = "application/json; charset=utf-8";
+axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
+
 Vue.component("globalAlert", () => import("@/components/alert/global.vue"));
 
 Vue.use(VueMoment);
