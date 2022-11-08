@@ -16,7 +16,8 @@ import "@/assets/css/transition.css";
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 
-axios.defaults.baseURL = "http://3.36.236.131:8080";
+axios.defaults.baseURL = "https://www.ninetosixapi.tk";
+axios.defaults.withCredentials = true;
 
 Vue.component("globalAlert", () => import("@/components/alert/global.vue"));
 
