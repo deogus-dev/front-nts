@@ -18,9 +18,9 @@ axios.interceptors.request.use(
   (config) => {
     // 토큰 valid check를 위해 header 설정
     config.headers["Content-Type"] = "application/json; charset=utf-8";
-    config.headers["Access-Control-Allow-Origin"] =
-      "https://www.ninetosixapi.tk"; // CORS 설정(모든 리소스 허용)
-    config.headers["Access-Control-Allow-Credentials"] = true; // CORS 설정(모든 리소스 허용)
+    // config.headers["Access-Control-Allow-Origin"] =
+    //   "https://www.ninetosixapi.tk"; // CORS 설정(모든 리소스 허용)
+    // config.headers["Access-Control-Allow-Credentials"] = true; // CORS 설정(모든 리소스 허용)
     // 로그인, 토큰 재발급 일때는 header에 토큰을 넣지 않는다.
     if (config.url != "/reissue" && config.url != "/auth") {
       config.headers["Authorization"] =
