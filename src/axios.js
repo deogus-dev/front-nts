@@ -1,5 +1,6 @@
 import axios from "axios";
 import store from "@/store";
+import router from "@/router";
 
 // 다중 요청 대응 코드 추가
 let isTokenRefreshing = false;
@@ -77,6 +78,8 @@ axios.interceptors.response.use(
       }
 
       return retryOriginalRequest;
+    } else {
+      router.push("/login");
     }
     return Promise.reject(error);
   }
