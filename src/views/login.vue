@@ -5,8 +5,10 @@
         <div class="col-sm-6 text-black">
           <div class="px-5 ms-xl-4" style="text-align: left">
             <span class="h1 fw-bold mb-0">안녕하세요.</span>
-            <p>회원 서비스 이용 위해 로그인 해주세요.</p>
+            <p>회원 서비스 이용 위해 로그인 해주세요.fds</p>
+            <p>{{ apiServerUrl }}</p>
           </div>
+
           <div
             class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5"
           >
@@ -78,6 +80,11 @@ export default {
     };
   },
   created() {},
+  computed: {
+    apiServerUrl() {
+      return process.env.VUE_APP_API_URL;
+    },
+  },
   methods: {
     async login() {
       try {

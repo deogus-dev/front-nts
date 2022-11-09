@@ -16,7 +16,7 @@ import "@/assets/css/transition.css";
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 
-axios.defaults.baseURL = process.env.API_SERVER_URL;
+axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 axios.defaults.headers.post["Content-Type"] = "application/json; charset=utf-8";
 axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 

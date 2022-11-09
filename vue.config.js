@@ -3,10 +3,10 @@
 const path = require("path");
 
 module.exports = {
-  devServer: {
-    port: 7888,
-    proxy: process.env.API_SERVER_URL,
-  },
+  // devServer: {
+  //   port: 7888,
+  //   proxy: process.env.VUE_APP_API_URL,
+  // },
   lintOnSave: false,
   publicPath: "/front-nts/",
   outputDir: "./docs",
