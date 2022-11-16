@@ -12,7 +12,10 @@
     </select>
     <div>
       {{ getName }}님 {{ (search.date + "01") | moment("YYYY년 MM월") }}기준
-      <span class="text-primary">???? 시간 ????분</span> 근무하셨어요
+      <span class="text-primary"
+        >{{ totalWorkTime("Hour") }}시간 {{ totalWorkTime("Min") }}분</span
+      >
+      근무하셨어요
     </div>
     <ul v-if="attendList.length !== 0">
       <li v-for="attend in attendList" :key="attend.id" class="my-3">
@@ -20,6 +23,7 @@
         <p>{{ attend.inTime }}</p>
         <p>{{ attend.outTime }}</p>
         <p>{{ attend.attendCode }}</p>
+        <p>{{ attend.workTime }}</p>
       </li>
     </ul>
     <div v-else>해당월에 데이터가 존재하지 않음</div>
@@ -63,6 +67,21 @@ export default {
   },
   computed: {
     ...mapGetters(["getName"]),
+    totalWorkTime() {
+      return (type) => {
+        let workTime = 0;
+        this.attendList.forEach((obj) => {
+          if (obj.workTime) {
+            workTime += parseInt(
+              type === "Hour"
+                ? obj.workTime.substring(0, 2)
+                : obj.workTime.substring(5, 7)
+            );
+          }
+        });
+        return workTime;
+      };
+    },
   },
   methods: {
     async getAttends(date) {

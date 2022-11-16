@@ -1,6 +1,6 @@
 <template>
   <div class="card h-100 border-0 py-2 container-md">
-    {{ attendInfo }}
+    <!-- {{ attendInfo }} -->
     <div class="card-header border-0 row m-0 px-0 py-3 bg-transparent">
       <div class="col-2 text-start">
         <button class="btn h-100 border rounded-circle">
@@ -202,10 +202,7 @@ export default {
     },
     attendStatus() {
       if (!this.attendInfo[0].outTime) {
-        if (
-          this.attendInfo[0].attendCode === "AT08" &&
-          this.attendInfo[1].attendCode === "AT08"
-        ) {
+        if (this.attendInfo[0].attendCode === "AT08") {
           return "out";
         }
       }

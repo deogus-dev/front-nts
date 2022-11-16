@@ -70,13 +70,33 @@
         <button class="btn btn-primary" @click="attend()">저장</button>
       </div>
       <div
-        class="tab-pane fade"
+        class="tab-pane fade p-2"
         id="nav-profile"
         role="tabpanel"
         aria-labelledby="nav-profile-tab"
         tabindex="0"
       >
-        ...
+        <div class="input-group mb-3">
+          <input
+            type="date"
+            class="form-control"
+            placeholder="Username"
+            aria-label="Username"
+            v-model="data.from"
+          />
+          <span class="input-group-text" v-if="data.attendCode === 'AT06'"
+            >~</span
+          >
+          <input
+            type="date"
+            class="form-control"
+            placeholder="Server"
+            aria-label="Server"
+            v-model="data.to"
+            v-if="data.attendCode === 'AT06'"
+          />
+        </div>
+        <button class="btn btn-primary" @click="attend('AT08')">저장</button>
       </div>
     </div>
   </div>
@@ -118,9 +138,9 @@ export default {
     },
   },
   methods: {
-    async attend() {
+    async attend(attendCode) {
       const data = {
-        attendCode: this.data.attendCode,
+        attendCode: attendCode ? attendCode : this.data.attendCode,
         from: this.$moment(this.data.from).format("YYYYMMDD"),
         // api 통신 전에 to가 null인 경우 to = from 으로 넣고 call
         to: !this.data.to
