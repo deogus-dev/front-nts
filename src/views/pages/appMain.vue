@@ -81,12 +81,13 @@
       >
         {{ attendStatus === "in" ? "출근하기" : "퇴근하기" }}
       </button>
-      <button
+      <router-link
         class="btn w-100 py-3 my-1 btn-secondary bg-gradient opacity-50"
         style="--bs-bg-opacity: 0.5"
+        :to="{ name: 'page2' }"
       >
         나의 출퇴근 기록
-      </button>
+      </router-link>
       <!-- <pre class="text-start">{{ attendInfo }}</pre> -->
     </div>
     <div
