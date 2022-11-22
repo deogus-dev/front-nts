@@ -1,7 +1,5 @@
 <template>
   <div class="h-100 text-center">
-    <!-- <prev-btn/>
-    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'> -->
     <transition name="slide-fade" mode="out-in">
       <router-view />
     </transition>
@@ -10,12 +8,7 @@
 </template>
 
 <script>
-import prevBtn from "@/components/button/prevBtn";
-
 export default {
-  components: {
-    prevBtn,
-  },
   data() {
     return {};
   },

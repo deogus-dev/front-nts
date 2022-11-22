@@ -84,7 +84,7 @@
       <router-link
         class="btn w-100 py-3 my-1 btn-secondary bg-gradient opacity-50"
         style="--bs-bg-opacity: 0.5"
-        :to="{ name: 'page2' }"
+        to="/attendhistory"
       >
         나의 출퇴근 기록
       </router-link>
@@ -138,9 +138,9 @@
 <script>
 import { mapGetters } from "vuex";
 import kakaoMap from "@/components/kakaoMap.vue";
-import dayComponent from "@/components/dayComponent.vue";
-import workingComponent from "@/components/workingComponent.vue";
-import endComponent from "@/components/endComponent.vue";
+import dayComponent from "../attend/component/dayComponent.vue";
+import workingComponent from "../attend/component/workingComponent.vue";
+import endComponent from "../attend/component/endComponent.vue";
 export default {
   components: { kakaoMap, dayComponent, workingComponent, endComponent },
 
@@ -241,6 +241,7 @@ export default {
 
         //퇴근하기 클릭
         else if (this.attendStatus === "out") {
+          if (!confirm("퇴근하시겠습니까?")) return false;
           data.outTime = this.$moment().format("HHmmss");
         }
 

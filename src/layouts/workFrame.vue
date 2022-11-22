@@ -13,7 +13,7 @@
 <script>
 import Header from "@/layouts/header.vue";
 import Footer from "@/layouts/footer.vue";
-import Offcanvas from "@/components/offcanvas.vue";
+import Offcanvas from "@/views/attend/component/holynpmComponent.vue";
 
 export default {
   data: function () {

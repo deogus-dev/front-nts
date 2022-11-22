@@ -393,5 +393,5 @@ export default {
 };
 </script>
 <style>
-@import "../assets/css/signup.css";
+@import "@/assets/css/signup.css";
 </style>

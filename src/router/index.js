@@ -2,11 +2,12 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "../store";
 import index from "@/views/index.vue";
-import login from "@/views/login.vue";
-import signup from "@/views/signup.vue";
+import login from "@/views/member/login.vue";
+import signup from "@/views/member/signup.vue";
 import FrameDefault from "@/layouts/workFrame.vue";
 import pageRouter from "./pageRouter";
-import signupFinish from "@/views/signup-finish";
+import commonRouter from "./common-router";
+import signupFinish from "@/views/member/signup-finish.vue";
 
 Vue.use(VueRouter);
 
@@ -17,6 +18,10 @@ const requireAuth = () => (to, from, next) => {
     return next();
   }
 };
+
+// router.beforeEach(function (to, from, next) {
+//   console.log(this.$router);
+// });
 
 const routes = [
   {
@@ -46,7 +51,7 @@ const routes = [
   {
     path: "/",
     component: FrameDefault,
-    children: [...pageRouter],
+    children: [...pageRouter, ...commonRouter],
     beforeEnter: requireAuth(),
   },
 ];

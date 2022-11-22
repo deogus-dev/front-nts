@@ -92,7 +92,7 @@ export default {
           email: this.user,
           password: this.password,
         });
-        await this.$router.push("/");
+        await this.$router.push("/main");
       } catch (err) {
         alert(err);
         this.loginError = true;
