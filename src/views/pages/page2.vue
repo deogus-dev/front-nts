@@ -1,5 +1,6 @@
 <template>
   <div class="fs-1 h-100">
+    <back-component :title="'근무기록'" />
     <select v-model="search.date" @change="getAttends(search.date)">
       <option
         v-for="mon in monthList"

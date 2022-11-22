@@ -21,6 +21,7 @@ axios.defaults.headers.post["Content-Type"] = "application/json; charset=utf-8";
 axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 
 Vue.component("globalAlert", () => import("@/components/alert/global.vue"));
+Vue.component("backComponent", () => import("@/components/backComponent.vue"));
 
 Vue.use(VueMoment);
 

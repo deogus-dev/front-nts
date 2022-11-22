@@ -26,6 +26,9 @@ axios.interceptors.request.use(
     return config;
   },
   (error) => {
+    console.log("[request error]");
+    console.log(error);
+    console.log("[request error]");
     return Promise.reject(error);
   }
 );
@@ -35,6 +38,9 @@ axios.interceptors.response.use(
     return response;
   },
   async (error) => {
+    console.log("[response error]");
+    console.log(error);
+    console.log("[response error]");
     const originalRequest = error.config;
 
     if (error.response.data.status === 401) {
