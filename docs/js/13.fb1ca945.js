@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkfrontend_nts"]=self["webpackChunkfrontend_nts"]||[]).push([[13],{6013:function(t,n,s){s.r(n),s.d(n,{default:function(){return l}});var e=function(){var t=this,n=t._self._c;return n("div",{staticClass:"fs-1"},[n("back-component",{attrs:{title:"설정"}}),t._v(" This is Page 4"),n("br"),n("router-link",{attrs:{to:{name:"main"}}},[t._v("to main")])],1)},r=[],a=s(3736),u={},i=(0,a.Z)(u,e,r,!1,null,null,null),l=i.exports}}]);
-//# sourceMappingURL=13.fb1ca945.js.map
