@@ -16,10 +16,14 @@
 
 <script>
 export default {
-  props: ["title"],
+  props: ["title", "toMain"],
   methods: {
     back() {
-      this.$router.go(-1);
+      if (this.toMain) {
+        this.$router.push("/");
+      } else {
+        this.$router.go(-1);
+      }
     },
   },
 };

@@ -4,6 +4,7 @@ import router from "./router";
 import store from "./store";
 import axios from "axios";
 import VueMoment from "vue-moment";
+import dateUtil from "@/utils/date-util";
 import "./axios.js";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -15,6 +16,7 @@ import "@/assets/css/transition.css";
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
+Vue.prototype.$dateUtil = dateUtil;
 
 axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 axios.defaults.headers.post["Content-Type"] = "application/json; charset=utf-8";

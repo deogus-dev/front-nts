@@ -2,7 +2,7 @@
   <nav
     class="navbar fixed-bottom d-flex justify-content-between px-2 rounded-top"
   >
-    <router-link to="/main" class="btn btn-light w-25 py-2">메인</router-link>
+    <router-link to="/" class="btn btn-light w-25 py-2">메인</router-link>
 
     <router-link to="/attendhistory" class="btn btn-light w-25 py-2"
       >기록</router-link

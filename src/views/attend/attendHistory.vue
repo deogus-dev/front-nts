@@ -1,6 +1,8 @@
 <template>
   <div class="fs-1 h-100">
-    <back-component :title="'근무기록'" />
+    <!-- 헤더 공통 레이아웃 (뒤로가기) -->
+    <back-component :title="'출퇴근 기록'" :toMain="'Y'" />
+
     <select v-model="search.date" @change="getAttends(search.date)">
       <option
         v-for="mon in monthList"
@@ -20,7 +22,11 @@
     </div>
     <ul v-if="attendList.length !== 0">
       <li v-for="attend in attendList" :key="attend.id" class="my-3">
-        <p>{{ attend.attendDate }}</p>
+        <p>
+          {{ attend.attendDate | moment("MM.DD") }} ({{
+            getDay(attend.attendDate)
+          }})
+        </p>
         <p>{{ attend.inTime }}</p>
         <p>{{ attend.outTime }}</p>
         <p>{{ attend.attendCode }}</p>
@@ -81,6 +87,11 @@ export default {
           }
         });
         return workTime;
+      };
+    },
+    getDay() {
+      return (val) => {
+        return this.$dateUtil.DAY[this.$moment(val).day()];
       };
     },
   },

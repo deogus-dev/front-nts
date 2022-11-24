@@ -1,7 +1,7 @@
 export default [
   {
-    path: "/main",
-    name: "main",
+    path: "/",
+    name: "",
     component: () => import("@/views/attend/appMain.vue"),
   },
   {

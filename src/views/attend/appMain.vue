@@ -160,6 +160,7 @@ export default {
       // 1. 서버에 출근정보 요청
       const result1 = await this.$axios.get("/attends");
       if (result1.status === 200) {
+        console.log(result1.data.attendList);
         this.attendInfo = result1.data.attendList;
 
         // if (

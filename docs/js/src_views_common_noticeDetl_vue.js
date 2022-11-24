@@ -75,7 +75,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \***************************************************************************************************************************************************************************************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  props: [\"title\"],\n  methods: {\n    back() {\n      this.$router.go(-1);\n    }\n\n  }\n});\n\n//# sourceURL=webpack://frontend-nts/./src/components/backComponent.vue?./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use%5B0%5D!./node_modules/@vue/cli-service/node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  props: [\"title\", \"toMain\"],\n  methods: {\n    back() {\n      if (this.toMain) {\n        this.$router.push(\"/\");\n      } else {\n        this.$router.go(-1);\n      }\n    }\n\n  }\n});\n\n//# sourceURL=webpack://frontend-nts/./src/components/backComponent.vue?./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use%5B0%5D!./node_modules/@vue/cli-service/node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options");
 
 /***/ }),
 
