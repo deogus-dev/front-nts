@@ -1,7 +1,7 @@
 <template>
-  <div class="input-group mb-3 text-start py-2 shadow-sm rounded">
+  <div class="input-group mb-3 text-start py-2 shadow-sm rounded back-bar">
     <button
-      class="btn btn-outline-secondary fw-bold border-0"
+      class="btn fw-bold border-0 h-100"
       type="button"
       id="button-addon1"
       @click="back()"
@@ -16,11 +16,11 @@
 
 <script>
 export default {
-  props: ["title", "toMain"],
+  props: ["title", "toPath"],
   methods: {
     back() {
-      if (this.toMain) {
-        this.$router.push("/");
+      if (this.toPath) {
+        this.$router.push(this.toPath);
       } else {
         this.$router.go(-1);
       }
@@ -28,5 +28,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

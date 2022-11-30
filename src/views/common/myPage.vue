@@ -1,7 +1,7 @@
 <template>
   <div class="fs-1">
     <!-- 헤더 공통 레이아웃 (뒤로가기) -->
-    <back-component :title="'설정'" :toMain="'Y'" />
+    <back-component :title="'설정'" :toPath="'/'" />
     <div class="mb-3">
       {{ getName }}님<br />
       안녕하세요!

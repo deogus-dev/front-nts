@@ -1,7 +1,7 @@
 <template>
   <div class="fs-1 h-100">
     <!-- 헤더 공통 레이아웃 (뒤로가기) -->
-    <back-component :title="'출퇴근 기록'" :toMain="'Y'" />
+    <back-component :title="'출퇴근 기록'" :toPath="'/'" />
 
     <select v-model="search.date" @change="getAttends(search.date)">
       <option
@@ -34,17 +34,6 @@
       </li>
     </ul>
     <div v-else>해당월에 데이터가 존재하지 않음</div>
-    <!-- <div class="list-group">
-      <a class="list-group-item list-group-item-action" aria-current="true">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">List group item heading</h5>
-
-          <span class="badge rounded-pill text-bg-primary">Primary</span>
-        </div>
-        <p class="mb-1">Some placeholder content in a paragraph.</p>
-        <small>And some small print.</small>
-      </a>
-    </div> -->
   </div>
 </template>
 

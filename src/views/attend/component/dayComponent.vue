@@ -1,22 +1,29 @@
 <template>
-  <div class="row row-cols-5 m-0 align-items-center h-100">
-    <div class="col p-0 fw-light">
-      <h4>{{ getDay(-2) }}</h4>
+  <div class="day-container container text-center">
+    <div class="date-area row row-cols-5 rounded">
+      <div class="col p-0 py-4">
+        <p class="date-op py-1">{{ getDay(-2) }}</p>
+        <p class="month-op py-1">{{ getMonth(-2) }}</p>
+      </div>
+      <div class="col p-0 py-4">
+        <p class="date-op py-1">{{ getDay(-1) }}</p>
+        <p class="month-op py-1">{{ getMonth(-1) }}</p>
+      </div>
+      <div class="col p-0 py-4">
+        <p class="date-bw py-1">{{ getDay(0) }}</p>
+        <p class="month-bw py-1">{{ getMonth(0) }}</p>
+      </div>
+      <div class="col p-0 py-4">
+        <p class="date-op py-1">{{ getDay(1) }}</p>
+        <p class="month-op py-1">{{ getMonth(1) }}</p>
+      </div>
+      <div class="col p-0 py-4">
+        <p class="date-op py-1">{{ getDay(2) }}</p>
+        <p class="month-op py-1">{{ getMonth(2) }}</p>
+      </div>
     </div>
-    <div class="col p-0 fw-light">
-      <h4>{{ getDay(-1) }}</h4>
-    </div>
-    <div class="col p-0 fw-bold">
-      <h4>{{ getDay(0) }}</h4>
-    </div>
-    <div class="col p-0 fw-light">
-      <h4>{{ getDay(1) }}</h4>
-    </div>
-    <div class="col p-0 fw-light">
-      <h4>{{ getDay(2) }}</h4>
-    </div>
-    <div class="col-12">
-      <h2 class="fw-bold">{{ time }}</h2>
+    <div class="time-area py-5">
+      <p class="realtime">{{ time }}</p>
     </div>
   </div>
 </template>
@@ -26,13 +33,18 @@ export default {
   data() {
     return {
       interval: null,
-      time: null,
+      time: "00:00:00",
     };
   },
   created() {
     setInterval(this.getTime, 1000);
   },
   computed: {
+    getMonth() {
+      return (days) => {
+        return this.$moment().add("days", days).format("MM\n월");
+      };
+    },
     getDay() {
       return (days) => {
         return this.$moment().add("days", days).format("DD\n일");
@@ -41,7 +53,6 @@ export default {
   },
   methods: {
     getTime() {
-      // return this.$moment().format("HH:mm:ss");
       this.time = this.$moment().format("HH:mm:ss");
     },
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="h-100">
-    <transition name="slide-fade" mode="out-in">
-      <router-view />
+    <transition class="h-100" name="slide-fade" mode="out-in">
+      <router-view class="h-100" />
     </transition>
     <!-- <global-alert /> -->
   </div>
@@ -17,13 +17,8 @@ export default {
 </script>
 
 <style>
-/* .app-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

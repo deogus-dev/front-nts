@@ -1,35 +1,48 @@
 <template>
-  <div class="card h-100">
-    <div class="card-header bg-transparent border-0 d-flex justify-content-end">
-      <div class="form-check form-switch">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          role="switch"
-          id="flexSwitchCheckChecked"
-          true-value="AT07"
-          false-value="AT01"
-          @change="toggle()"
-          v-model="attendInfo[1].attendCode"
-          :disabled="attendStatus === 'out' || attendStatus === 'end'"
-        />
-        <select
-          class="border-0"
-          style="appearance: none"
-          for="flexSwitchCheckChecked"
-          v-model="attendInfo[1].attendCode"
-          disabled
-        >
-          <option value="AT01">정상근무</option>
-          <option value="AT07">재택근무</option>
-        </select>
+  <div class="card h-100 border-0 py-2 container-md">
+    <!-- {{ attendInfo }} -->
+    <div class="card-header border-0 row m-0 px-0 py-3 bg-transparent">
+      <div class="col-2 text-start">
+        <button class="btn h-100 border rounded-circle">
+          <i class="bi-person h-100"></i>
+        </button>
+      </div>
+      <div class="col-7 text-start">
+        <h5>
+          <strong>{{ getName }}</strong
+          >님<br />환영합니다.
+        </h5>
+      </div>
+      <div class="col-3 text-start">
+        <div class="form-check form-switch">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckChecked"
+            true-value="AT07"
+            false-value="AT01"
+            @change="toggle()"
+            v-model="attendInfo[1].attendCode"
+            :disabled="attendStatus === 'out' || attendStatus === 'end'"
+          />
+          <!-- <label class="form-check-label" for="flexSwitchCheckChecked">{{
+            attendInfo[1].attendCode
+          }}</label> -->
+          <select
+            class="border-0"
+            style="appearance: none"
+            for="flexSwitchCheckChecked"
+            v-model="attendInfo[1].attendCode"
+            disabled
+          >
+            <option value="AT01">정상근무</option>
+            <option value="AT07">재택근무</option>
+          </select>
+        </div>
       </div>
     </div>
-    <div class="card-header bg-transparent border-0 shadow-sm py-4">
-      <span class="main-header-bold">{{ getName }}</span>
-      <span class="main-header">님<br />환영합니다.</span>
-    </div>
-    <div class="card-header border-0">
+    <div class="card-body h-100 border-0 shadow">
       <day-component v-if="attendStatus === 'in'"></day-component>
       <working-component
         v-else-if="attendStatus === 'out'"
@@ -37,25 +50,31 @@
       ></working-component>
       <end-component v-else></end-component>
     </div>
-    <div class="card-header border-0">
+
+    <div class="card-body border-0 p-0">
       <button
-        class="btn findmy-position w-100"
+        class="btn bg-gradient w-100 shadow"
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasBottom"
         aria-controls="offcanvasBottom"
       >
-        내 위치 확인하기
+        내 위치보기
       </button>
     </div>
-    <div class="card-body py-4">
+    <div class="card-body px-0 py-5 border-0" v-if="attendStatus !== 'end'">
+      <!-- <attend-button
+        class="btn w-100 py-3 my-1 bg-gradient"
+        :attendStatus="attendStatus"
+        :locationStatus="locationInfo.circleIn"
+      ></attend-button> -->
       <button
-        class="btn attend-btn w-100 py-4 my-1"
+        class="btn w-100 py-3 my-1 bg-gradient"
         :class="
           (attendStatus === 'in' && locationInfo.circleIn) ||
           attendStatus === 'out' ||
           attendInfo[1].attendCode === 'AT07'
-            ? 'attend-btn'
+            ? 'btn-success'
             : 'btn-secondary'
         "
         @click="attend(attendStatus)"
@@ -63,14 +82,14 @@
         {{ attendStatus === "in" ? "출근하기" : "퇴근하기" }}
       </button>
       <router-link
-        class="btn attend-history-btn w-100 py-5 my-1 text-start"
+        class="btn w-100 py-3 my-1 btn-secondary bg-gradient opacity-50"
+        style="--bs-bg-opacity: 0.5"
         to="/attendhistory"
       >
-        <p>나의 출퇴근 기록</p>
-        <p>출퇴근 기록을 확인하세요!</p>
+        나의 출퇴근 기록
       </router-link>
+      <!-- <pre class="text-start">{{ attendInfo }}</pre> -->
     </div>
-    <!-- 카카오 map component start -->
     <div
       class="offcanvas offcanvas-bottom h-100"
       tabindex="-1"
@@ -113,7 +132,6 @@
         </button>
       </div>
     </div>
-    <!-- 카카오 map component end -->
   </div>
 </template>
 

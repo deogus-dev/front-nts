@@ -1,17 +1,16 @@
 <template>
-  <div class="container h-100">
-    <div class="h-100 py-3">
+  <div class="h-100 card">
+    <div class="card-body p-0 overflow-auto">
       <transition name="slide-fade" mode="out-in">
         <router-view />
       </transition>
     </div>
-    <Footer></Footer>
+    <Footer class="card-footer p-0"></Footer>
     <offcanvas></offcanvas>
   </div>
 </template>
 
 <script>
-import Header from "@/layouts/header.vue";
 import Footer from "@/layouts/footer.vue";
 import Offcanvas from "@/views/attend/component/holynpmComponent.vue";
 
@@ -20,7 +19,6 @@ export default {
     return {};
   },
   components: {
-    Header,
     Footer,
     Offcanvas,
   },
