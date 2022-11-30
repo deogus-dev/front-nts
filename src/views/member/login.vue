@@ -1,5 +1,7 @@
 <template>
   <section class="vh-100">
+    <!-- 헤더 공통 레이아웃 (뒤로가기) -->
+    <back-component :title="'로그인'" />
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-6 text-black">

@@ -1,5 +1,5 @@
 <template>
-  <div class="input-group mb-3 text-start">
+  <div class="input-group mb-3 text-start py-2 shadow-sm rounded">
     <button
       class="btn btn-outline-secondary fw-bold border-0"
       type="button"
@@ -28,3 +28,5 @@ export default {
   },
 };
 </script>
+
+<style></style>

@@ -1,30 +1,14 @@
 <template>
-  <!-- <div class="card h-100 border-0">
-    <div class="card-body h-100 py-5">
-      <h1>0918</h1>
-      <p>간편한 출퇴근의 시작</p>
-    </div>
-    <div class="card-body h-100">
-      <router-link
-        :to="{ name: 'login' }"
-        class="btn btn-primary form-control py-3 my-1"
+  <div class="container h-100 index-container">
+    <h1 class="main-title">0918</h1>
+    <h5 class="sub-title">간편한<br />출근의 시작</h5>
+    <div class="button-area">
+      <router-link to="/login" class="btn w-100 loginBtn py-3 my-2"
         >로그인 후 이용하기</router-link
       >
-      <router-link
-        :to="{ name: 'signup' }"
-        class="btn btn-secondary form-control py-3 my-1"
+      <router-link to="/signup" class="btn w-100 signupBtn py-3 my-2"
         >회원가입</router-link
       >
     </div>
-  </div> -->
-  <div>
-    <h1>0918</h1>
-    <p>간편한 출퇴근의 시작</p>
-    <router-link to="/login" class="btn btn-primary form-control py-3 mt-5"
-      >로그인 후 이용하기</router-link
-    >
-    <router-link to="/signup" class="btn btn-secondary form-control py-3 mt-1"
-      >회원가입</router-link
-    >
   </div>
 </template>
