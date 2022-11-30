@@ -52,7 +52,7 @@
       </button>
 
       <button
-        class="btn attend-btn w-100 py-3 my-1"
+        class="btn w-100 py-3 my-1"
         :class="
           (attendStatus === 'in' && locationInfo.circleIn) ||
           attendStatus === 'out' ||
@@ -81,7 +81,7 @@
     >
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasBottomLabel">
-          Nine to Six Map
+          <!-- Nine to Six Map -->
         </h5>
         <button
           type="button"
@@ -106,7 +106,7 @@
             (attendStatus === 'in' && locationInfo.circleIn) ||
             attendStatus === 'out' ||
             attendInfo[1].attendCode === 'AT07'
-              ? 'btn-success'
+              ? 'attend-btn'
               : 'btn-secondary'
           "
           @click="attend()"

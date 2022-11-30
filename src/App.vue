@@ -1,5 +1,6 @@
 <template>
   <div class="h-100">
+    <h6 class="fixed-top opacity-50">version 1.0</h6>
     <transition class="h-100" name="slide-fade" mode="out-in">
       <router-view class="h-100" />
     </transition>
