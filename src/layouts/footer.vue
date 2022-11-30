@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar d-flex justify-content-between px-2 rounded-top">
+  <nav class="navbar d-flex justify-content-between p-2 rounded-top">
     <router-link to="/" class="btn btn-light w-25 py-2">메인</router-link>
 
     <router-link to="/attendhistory" class="btn btn-light w-25 py-2"

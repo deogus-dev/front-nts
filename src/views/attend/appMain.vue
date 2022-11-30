@@ -33,15 +33,14 @@
     <!-- 메인 헤더 -->
 
     <!-- 서브 컴포넌트 -->
-    <div class="card-header border-0">
+    <div class="card-body border-0">
       <day-component v-if="attendStatus === 'in'"></day-component>
       <working-component
         v-else-if="attendStatus === 'out'"
         :inTime="attendInfo[1].inTime"
       ></working-component>
       <end-component v-else></end-component>
-    </div>
-    <div class="card-header border-0">
+
       <button
         class="btn findmy-position w-100"
         type="button"
@@ -51,8 +50,7 @@
       >
         내 위치 확인하기
       </button>
-    </div>
-    <div class="card-body">
+
       <button
         class="btn attend-btn w-100 py-3 my-1"
         :class="
