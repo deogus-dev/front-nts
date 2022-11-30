@@ -1,5 +1,6 @@
 <template>
   <div class="card h-100">
+    <!-- 메인 헤더 -->
     <div class="card-header bg-transparent border-0 d-flex justify-content-end">
       <div class="form-check form-switch">
         <input
@@ -29,6 +30,9 @@
       <span class="main-header-bold">{{ getName }}</span>
       <span class="main-header">님<br />환영합니다.</span>
     </div>
+    <!-- 메인 헤더 -->
+
+    <!-- 서브 컴포넌트 -->
     <div class="card-header border-0">
       <day-component v-if="attendStatus === 'in'"></day-component>
       <working-component
@@ -50,7 +54,7 @@
     </div>
     <div class="card-body">
       <button
-        class="btn attend-btn w-100 py-2 my-1"
+        class="btn attend-btn w-100 py-3 my-1"
         :class="
           (attendStatus === 'in' && locationInfo.circleIn) ||
           attendStatus === 'out' ||
@@ -63,11 +67,11 @@
         {{ attendStatus === "in" ? "출근하기" : "퇴근하기" }}
       </button>
       <router-link
-        class="btn attend-history-btn w-100 py-5 my-1 text-start"
+        class="btn attend-history-btn w-100 p-5 my-1 text-start"
         to="/attendhistory"
       >
         <p>나의 출퇴근 기록</p>
-        <p>출퇴근 기록을 확인하세요!</p>
+        <span>출퇴근 기록을 확인하세요!</span>
       </router-link>
     </div>
     <!-- 카카오 map component start -->

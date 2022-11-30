@@ -52,6 +52,7 @@
 .card-body,
 .card-footer {
   border: 0px;
+  background: transparent;
 }
 
 .main-header-bold {
@@ -126,5 +127,27 @@
   background-position: 100% 50%;
   background-color: #ead5fa;
   border-radius: 5px;
+  color: #222222;
+}
+
+.attend-history-btn > p {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  /* identical to box height, or 138% */
+
+  letter-spacing: -0.02em;
+
+  color: #222222;
+}
+
+.attend-history-btn > span {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  /* identical to box height, or 138% */
+
+  letter-spacing: -0.02em;
+
   color: #222222;
 }
