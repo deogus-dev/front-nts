@@ -1,48 +1,28 @@
 .index-container {
   background: #4d5dfa;
 }
-.index-container > .main-title {
+
+.index-container .title-area {
   position: absolute;
-  left: 40px;
   top: 150px;
-
-  font-family: "Jost";
-  font-style: normal;
-  font-weight: 800;
-  font-size: 60px;
-  line-height: 20px;
-  /* identical to box height, or 33% */
-
-  display: flex;
-  align-items: center;
-  letter-spacing: 3px;
-
   color: #ffffff;
 }
+.index-container .title-area .main-title {
+  font-weight: 800;
+  font-size: 60px;
+  letter-spacing: 3px;
+}
 
-.index-container > .sub-title {
-  position: absolute;
-  left: 40px;
-  top: 210px;
-
-  font-family: "Noto Sans";
-  font-style: normal;
+.index-container .title-area .sub-title {
   font-weight: 600;
   font-size: 28px;
-  line-height: 40px;
-  /* or 36% */
-
-  display: flex;
-  align-items: center;
-
-  color: #ffffff;
-
   opacity: 0.5;
 }
 .index-container .button-area {
   position: relative;
-  padding: 10px 0px;
-  top: 600px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  top: 650px;
 }
 
 .index-container .button-area .loginBtn {
