@@ -42,7 +42,7 @@
       <end-component v-else></end-component>
 
       <button
-        class="btn findmy-position w-100"
+        class="btn findmy-position py-3 my-1 w-100 border-0"
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasBottom"
