@@ -1,5 +1,8 @@
 .index-container {
-  background: #4d5dfa;
+  background-image: url("../image/main_clock.png");
+  background-repeat: no-repeat;
+  background-position: 80% 50%;
+  background-color: #4d5dfa;
 }
 
 .index-container .title-area {
