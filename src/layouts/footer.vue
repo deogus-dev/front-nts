@@ -1,14 +1,16 @@
 <template>
-  <nav class="bottom-navbar">
+  <nav class="bottom-navbar w-100 rounded-top">
     <ul class="p-0">
-      <li>
+      <li class="py-2">
         <router-link to="/" class="menu-home is-active">
-          <span class="menu-text">메인</span></router-link
+          <i class="fa-solid fa-house m-1"></i
+          ><span class="menu-text">메인</span></router-link
         >
       </li>
       <li>
         <router-link to="/attendhistory" class="menu-home">
-          <span class="menu-text">기록</span></router-link
+          <i class="fa-solid fa-rectangle-history m-1"></i
+          ><span class="menu-text">기록</span></router-link
         >
       </li>
       <li>

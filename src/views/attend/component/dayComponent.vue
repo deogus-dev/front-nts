@@ -37,6 +37,7 @@ export default {
     };
   },
   created() {
+    this.getTime();
     setInterval(this.getTime, 1000);
   },
   computed: {
