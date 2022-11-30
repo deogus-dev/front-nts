@@ -25,7 +25,7 @@
         </select>
       </div>
     </div>
-    <div class="card-header bg-transparent border-0 shadow-sm py-4">
+    <div class="card-header bg-transparent border-0 shadow-sm">
       <span class="main-header-bold">{{ getName }}</span>
       <span class="main-header">님<br />환영합니다.</span>
     </div>
@@ -48,9 +48,9 @@
         내 위치 확인하기
       </button>
     </div>
-    <div class="card-body py-4">
+    <div class="card-body">
       <button
-        class="btn attend-btn w-100 py-4 my-1"
+        class="btn attend-btn w-100 py-2 my-1"
         :class="
           (attendStatus === 'in' && locationInfo.circleIn) ||
           attendStatus === 'out' ||
