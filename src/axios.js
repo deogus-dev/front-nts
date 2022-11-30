@@ -85,7 +85,7 @@ axios.interceptors.response.use(
 
       return retryOriginalRequest;
     } else {
-      router.push("/login");
+      router.push("/index");
     }
     return Promise.reject(error);
   }
