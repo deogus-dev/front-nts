@@ -33,10 +33,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
-nav {
+/* nav {
   padding: 30px;
 }
 
@@ -47,5 +47,5 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
-}
+} */
 </style>

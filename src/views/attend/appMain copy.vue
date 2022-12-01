@@ -42,7 +42,7 @@
         </div>
       </div>
     </div>
-    <div class="card-body h-100 border-0 shadow">
+    <div class="card-body h-100 border-0">
       <day-component v-if="attendStatus === 'in'"></day-component>
       <working-component
         v-else-if="attendStatus === 'out'"
