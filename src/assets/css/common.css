@@ -88,7 +88,13 @@
 }
 /* footer */
 
+a.router-link-exact-active > * {
+  color: #2a4cc8;
+  font-weight: 900;
+}
+
 a {
+  color: #ffffff;
   text-decoration: none;
 }
 
