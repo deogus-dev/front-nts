@@ -10,11 +10,6 @@
         :style="'width: ' + (workHour / 8) * 100 + '%;'"
       ></div>
     </div>
-    <p class="my-3">
-      <span
-        >출근시간 : <strong>{{ inTime | timeFormat }}</strong></span
-      >
-    </p>
   </div>
 </template>
 

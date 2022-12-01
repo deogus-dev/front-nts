@@ -1,6 +1,9 @@
 <template>
   <div class="h-100 card">
-    <div class="card-body p-0 overflow-auto" style="overflow-x: hidden">
+    <header id="header" v-if="$route.path !== '/'">
+      <back-component :title="$route.name"></back-component>
+    </header>
+    <div class="card-body p-0 overflow-auto">
       <transition name="slide-fade" mode="out-in">
         <router-view />
       </transition>
@@ -13,6 +16,7 @@
 <script>
 import Footer from "@/layouts/footer.vue";
 import Offcanvas from "@/views/attend/component/holynpmComponent.vue";
+import BackComponent from "@/components/backComponent.vue";
 
 export default {
   data: function () {
@@ -21,6 +25,7 @@ export default {
   components: {
     Footer,
     Offcanvas,
+    BackComponent,
   },
   created() {},
 };

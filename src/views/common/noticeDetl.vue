@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!-- 헤더 공통 레이아웃 (뒤로가기) -->
-    <back-component :title="'공지사항'" />
     <p>공지 상세 | {{ id }}</p>
   </div>
 </template>

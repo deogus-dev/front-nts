@@ -6,12 +6,12 @@ export default [
   },
   {
     path: "/attendhistory",
-    name: "attendhistory",
+    name: "내 근무기록",
     component: () => import("@/views/attend/attendHistory.vue"),
   },
   {
     path: "/mypage",
-    name: "mypage",
+    name: "설정",
     component: () => import("@/views/common/myPage.vue"),
   },
 ];

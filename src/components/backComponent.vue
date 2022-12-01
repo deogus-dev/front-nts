@@ -1,28 +1,28 @@
 <template>
-  <div class="input-group mb-3 py-2 text-center shadow-sm rounded back-bar">
-    <button
-      class="btn fw-bold border-0 h-100"
-      type="button"
-      id="button-addon1"
-      @click="back()"
-    >
-      &lt;
+  <div class="inner">
+    <button class="is-back" @click="back()">
+      <font-awesome-icon icon="arrow-left" />
     </button>
-    <span class="form-control fw-bold border-0" placeholder="">{{
-      title
-    }}</span>
+    <div class="has-text-centered">
+      <h2 class="title is-3">{{ title }}</h2>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["title", "toPath"],
+  props: ["title"],
   methods: {
     back() {
-      if (this.toPath) {
-        this.$router.push(this.toPath);
-      } else {
-        this.$router.go(-1);
+      switch (this.$route.path) {
+        case "/":
+        case "/attendhistory":
+        case "/mypage":
+          this.$router.push("/");
+          return;
+        default:
+          this.$router.go(-1);
+          return;
       }
     },
   },

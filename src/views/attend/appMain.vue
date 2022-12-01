@@ -45,6 +45,28 @@
         :outTime="attendInfo[1].outTime"
       ></end-component>
 
+      <div class="my-2 d-flex">
+        <div class="input-group input-group-sm">
+          <span
+            class="input-group-text border-0 bg-transparent"
+            id="inputGroup-sizing-sm"
+            >출근</span
+          >
+          <label class="form-control text-center border-0 bg-transparent">{{
+            attendInfo[1].inTime | timeFormat
+          }}</label>
+
+          <span
+            class="input-group-text border-0 bg-transparent"
+            id="inputGroup-sizing-sm"
+            >퇴근</span
+          >
+          <label class="form-control text-center border-0 bg-transparent">{{
+            attendInfo[1].outTime | timeFormat
+          }}</label>
+        </div>
+      </div>
+
       <button
         class="btn findmy-position my-1 w-100 border-0 shadow-sm"
         type="button"
@@ -55,6 +77,7 @@
         <font-awesome-icon class="me-2 text-primary" icon="location-dot" />내
         위치 확인하기
       </button>
+      <!-- 서브 컴포넌트 -->
 
       <button
         class="btn w-100 py-3 my-1"
@@ -101,10 +124,6 @@
           :locationInfo="locationInfo"
           @setLocationInfo="setLocationInfo"
         />
-        <!-- <attend-button
-          class="btn fixed-bottom mb-5 mx-5 bg-gradient py-3"
-          :attendStatus="attendStatus"
-        ></attend-button> -->
         <button
           class="btn fixed-bottom mb-5 mx-5 bg-gradient py-3"
           :class="

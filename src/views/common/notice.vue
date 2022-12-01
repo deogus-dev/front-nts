@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!-- 헤더 공통 레이아웃 (뒤로가기) -->
-    <back-component :title="'공지사항'" />
     <div class="list-group w-100 text-start">
       <div v-for="notice in noticeList" :key="notice.id">
         <router-link
