@@ -1,5 +1,5 @@
 <template>
-  <div class="input-group mb-3 text-start py-2 shadow-sm rounded back-bar">
+  <div class="input-group mb-3 py-2 text-center shadow-sm rounded back-bar">
     <button
       class="btn fw-bold border-0 h-100"
       type="button"
