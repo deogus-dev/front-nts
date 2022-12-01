@@ -1,7 +1,7 @@
 <template>
   <div class="container text-center">
     <p class="my-3 worktime-txt">{{ workText }}째<br />근무중</p>
-    <div class="progress my-4">
+    <div class="progress my-3">
       <div
         class="progress-bar"
         role="progressbar"
