@@ -6,6 +6,7 @@ import axios from "axios";
 import VueMoment from "vue-moment";
 import dateUtil from "@/utils/date-util";
 import "./axios.js";
+import "@/assets/js/fontAwesomeIcon";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap";
@@ -26,9 +27,7 @@ axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 
 Vue.component("globalAlert", () => import("@/components/alert/global.vue"));
 Vue.component("backComponent", () => import("@/components/backComponent.vue"));
-Vue.component("loading-splash", () =>
-  import("@/components/splash/splash_white.vue")
-);
+Vue.component("loading", () => import("@/components/loading.vue"));
 
 Vue.use(VueMoment);
 

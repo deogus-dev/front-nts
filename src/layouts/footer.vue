@@ -1,33 +1,34 @@
 <template>
   <nav class="bottom-navbar w-100 rounded-top">
     <ul class="p-0">
-      <li class="py-2">
-        <router-link to="/" class="menu-home is-active">
-          <i class="fa-solid fa-house m-1"></i
-          ><span class="menu-text">메인</span></router-link
-        >
+      <li>
+        <router-link to="/" class="footer-icon">
+          <font-awesome-icon icon="house" />
+          <span class="menu-text mt-2">메인</span>
+        </router-link>
       </li>
       <li>
-        <router-link to="/attendhistory" class="menu-home">
-          <i class="fa-solid fa-rectangle-history m-1"></i
-          ><span class="menu-text">기록</span></router-link
-        >
+        <router-link to="/attendhistory" class="footer-icon">
+          <font-awesome-icon icon="clock" />
+          <span class="menu-text mt-2">기록</span>
+        </router-link>
       </li>
       <li>
         <button
-          class="menu-home"
+          class="footer-icon"
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasHoly"
           aria-controls="offcanvasHoly"
-          to="/"
         >
-          <span class="menu-text">휴가</span>
+          <font-awesome-icon icon="plane" />
+          <span class="menu-text mt-2">휴가</span>
         </button>
       </li>
       <li>
-        <router-link to="/mypage" class="menu-home">
-          <span class="menu-text">설정</span></router-link
-        >
+        <router-link to="/mypage" class="footer-icon">
+          <font-awesome-icon icon="sliders" />
+          <span class="menu-text mt-2">설정</span>
+        </router-link>
       </li>
     </ul>
   </nav>

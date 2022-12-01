@@ -1,3 +1,7 @@
+a {
+  text-decoration: none;
+}
+
 .index-container {
   background-image: url("../image/main_clock.png");
   background-repeat: no-repeat;
@@ -173,7 +177,8 @@
   text-align: center;
 }
 
-.bottom-navbar > ul > li > a {
+.bottom-navbar > ul > li > a,
+.bottom-navbar > ul > li > button {
   margin: 0 auto;
   display: flex;
   width: 48px;
@@ -182,6 +187,10 @@
   align-items: center;
   color: #0f1f2e;
 }
+
+.footer-icon {
+  font-size: 13px;
+}
 /* footer */
 
 .splash {
@@ -189,6 +198,5 @@
   width: 100%;
   height: 100%;
   z-index: 1;
-  /* opacity: 0.5; */
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.8);
 }
