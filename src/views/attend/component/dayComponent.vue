@@ -1,5 +1,5 @@
 <template>
-  <div class="day-container container text-center">
+  <div class="container text-center">
     <div class="date-area row row-cols-5 rounded">
       <div class="col p-0 py-2">
         <p class="month-op py-1">{{ getMonth(-2) }}</p>

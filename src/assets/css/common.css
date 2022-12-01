@@ -201,3 +201,15 @@ a {
   z-index: 1;
   background: rgba(255, 255, 255, 0.8);
 }
+
+.worktime-txt {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 44px;
+
+  color: #424753;
+}
+
+.progress-bar {
+  background: #a1b8f4;
+}

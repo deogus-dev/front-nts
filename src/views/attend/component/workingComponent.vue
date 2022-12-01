@@ -1,32 +1,20 @@
 <template>
-  <div class="row m-0 align-items-center h-100">
-    <div class="col-12">
-      <!-- <button><i class="bi-arrow-clockwise"></i></button> -->
-      출근시간 : {{ inTime | timeFormat }}
+  <div class="container text-center">
+    <p class="my-3 worktime-txt">{{ workText }}째<br />근무중</p>
+    <div class="progress my-4">
+      <div
+        class="progress-bar"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        :style="'width: ' + (workHour / 8) * 100 + '%;'"
+      ></div>
     </div>
-    <div class="col-12">{{ workText }}</div>
-    <div class="col-12">
-      <div class="progress">
-        <!-- <div
-          class="progress-bar"
-          role="progressbar"
-          aria-label="Basic example"
-          :style="'width: ' + (workingTime.hour / 8) * 100 + '%'"
-          aria-valuenow="25"
-          aria-valuemin="0"
-          aria-valuemax="100"
-        ></div> -->
-        <div
-          class="progress-bar progress-bar-striped progress-bar-animated"
-          role="progressbar"
-          aria-label="Animated striped example"
-          aria-valuenow="75"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          :style="'width: ' + (workHour / 8) * 100 + '%'"
-        ></div>
-      </div>
-    </div>
+    <p class="my-3">
+      <span
+        >출근시간 : <strong>{{ inTime | timeFormat }}</strong></span
+      >
+    </p>
   </div>
 </template>
 
@@ -68,7 +56,7 @@ export default {
       // alert(t2.format("YYYY-MM-DD HH:mm:ss"));
       const workTime = this.$moment.utc(t1.diff(t2));
       this.workHour = workTime.format("H");
-      this.workText = workTime.format("HH시간 mm분째 근무중");
+      this.workText = workTime.format("HH시간 mm분");
       //   return {
       //     hour: this.$moment.utc(t1.diff(t2)).add(-1, "hours").format("H"),
       //     text: this.$moment
