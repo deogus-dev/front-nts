@@ -7,10 +7,21 @@ import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    loading: false,
+  },
+  mutations: {
+    loadingStart(state) {
+      state.loading = true;
+    },
+    loadingEnd(state) {
+      state.loading = false;
+    },
+  },
   actions: {},
-  getters: {},
+  getters: {
+    getLoadingState: (state) => state.loading,
+  },
   modules: {
     common,
     auth,

@@ -4623,6 +4623,11 @@
     "cli-cursor" "^2.0.0"
     "wrap-ansi" "^3.0.1"
 
+"lottie-web@^5.1.9":
+  "integrity" "sha512-q2hfqKrGXNkwjSSZjKxf3fWMi0e3ZBc03qBkVWoGbwUJ7BcG+9YXjMPtmmhitzk8Nc6VQ5PRnh9yInPdfq0PZg=="
+  "resolved" "https://registry.npmjs.org/lottie-web/-/lottie-web-5.10.0.tgz"
+  "version" "5.10.0"
+
 "lower-case@^2.0.2":
   "integrity" "sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg=="
   "resolved" "https://registry.npmjs.org/lower-case/-/lower-case-2.0.2.tgz"
@@ -6953,6 +6958,13 @@
   "resolved" "https://registry.npmjs.org/vue-loading-overlay/-/vue-loading-overlay-3.0.1.tgz"
   "version" "3.0.1"
 
+"vue-lottie@^0.2.1":
+  "integrity" "sha512-zInUX69Ij8MhVR3XArpu4PqqBoufwKxS5UMutWCPm59VUaB5H6GtnaIzf9M+l6aYU+Kr8gF/W9dzWLgRuU6V+Q=="
+  "resolved" "https://registry.npmjs.org/vue-lottie/-/vue-lottie-0.2.1.tgz"
+  "version" "0.2.1"
+  dependencies:
+    "lottie-web" "^5.1.9"
+
 "vue-moment@^4.1.0":
   "integrity" "sha512-Gzisqpg82ItlrUyiD9d0Kfru+JorW2o4mQOH06lEDZNgxci0tv/fua1Hl0bo4DozDV2JK1r52Atn/8QVCu8qQw=="
   "resolved" "https://registry.npmjs.org/vue-moment/-/vue-moment-4.1.0.tgz"
@@ -6986,7 +6998,7 @@
   "resolved" "https://registry.npmjs.org/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@*", "vue@^2 || ^3.2.13", "vue@^2.0.0", "vue@^2.6.14", "vue@>=1.x.x", "vue@~2":
+"vue@*", "vue@^2 || ^3.2.13", "vue@^2.0.0", "vue@^2.5.16", "vue@^2.6.14", "vue@>=1.x.x", "vue@~2":
   "integrity" "sha512-ncwlZx5qOcn754bCu5/tS/IWPhXHopfit79cx+uIlLMyt3vCMGcXai5yCG5y+I6cDmEj4ukRYyZail9FTQh7lQ=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-2.7.8.tgz"
   "version" "2.7.8"

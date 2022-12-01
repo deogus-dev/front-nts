@@ -139,32 +139,8 @@ export default {
     };
   },
 
-  async created() {
-    try {
-      // 1. 서버에 출근정보 요청
-      const result1 = await this.$axios.get("/attends");
-      if (result1.status === 200) {
-        console.log(result1.data.attendList);
-        this.attendInfo = result1.data.attendList;
-
-        // if (
-        //   this.attendInfo[0].attendCode !== "AT08" &&
-        //   !this.attendInfo[0].outTime
-        // ) {
-        //   alert("전일 퇴근 정보가 없어 18:00 퇴근으로 입력합니다.");
-        // }
-
-        if (!this.attendInfo[1].attendCode) {
-          this.attendInfo[1].attendCode = "AT01";
-        }
-
-        if (!this.attendInfo[1].attendDate) {
-          this.attendInfo[1].attendDate = this.$moment().format("YYMMDD");
-        }
-      }
-    } catch (err) {
-      // console.log(err);
-    }
+  created() {
+    this.getAttend();
   },
 
   computed: {
@@ -204,6 +180,33 @@ export default {
   },
 
   methods: {
+    async getAttend() {
+      try {
+        // 1. 서버에 출근정보 요청
+        const result1 = await this.$axios.get("/attends");
+        if (result1.status === 200) {
+          console.log(result1.data.attendList);
+          this.attendInfo = result1.data.attendList;
+
+          // if (
+          //   this.attendInfo[0].attendCode !== "AT08" &&
+          //   !this.attendInfo[0].outTime
+          // ) {
+          //   alert("전일 퇴근 정보가 없어 18:00 퇴근으로 입력합니다.");
+          // }
+
+          if (!this.attendInfo[1].attendCode) {
+            this.attendInfo[1].attendCode = "AT01";
+          }
+
+          if (!this.attendInfo[1].attendDate) {
+            this.attendInfo[1].attendDate = this.$moment().format("YYMMDD");
+          }
+        }
+      } catch (err) {
+        // console.log(err);
+      }
+    },
     setLocationInfo(param) {
       this.locationInfo.circleIn = param.circleIn;
       this.locationInfo.locCode = param.locCode;
@@ -241,7 +244,8 @@ export default {
           }
           // global alert으로 변경
           alert(attendTxt + "이 확인되었습니다!");
-          this.$router.go();
+          this.getAttend();
+          // this.$router.go();
         }
       } catch (err) {
         // console.log(JSON.stringify(err));

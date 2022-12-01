@@ -19,10 +19,6 @@ const requireAuth = () => (to, from, next) => {
   }
 };
 
-// router.beforeEach(function (to, from, next) {
-//   console.log(this.$router);
-// });
-
 const routes = [
   {
     //앱 메인
@@ -60,6 +56,17 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach(function (to, from, next) {
+  store.commit("loadingStart");
+  setTimeout(() => {
+    next();
+  }, 100);
+});
+
+router.afterEach((to, from) => {
+  store.commit("loadingEnd");
 });
 
 export default router;

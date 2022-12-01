@@ -26,6 +26,9 @@ axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 
 Vue.component("globalAlert", () => import("@/components/alert/global.vue"));
 Vue.component("backComponent", () => import("@/components/backComponent.vue"));
+Vue.component("loading-splash", () =>
+  import("@/components/splash/splash_white.vue")
+);
 
 Vue.use(VueMoment);
 
