@@ -17,6 +17,7 @@ const addRefreshSubscriber = (callback) => {
 // 요청 인터셉터 추가
 axios.interceptors.request.use(
   (config) => {
+    store.commit("loadingStart");
     // 로그인, 토큰 재발급 일때는 header에 토큰을 넣지 않는다.
     if (config.url != "/reissue" && config.url != "/auth") {
       config.headers["Authorization"] =
@@ -35,6 +36,7 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   (response) => {
+    store.commit("loadingEnd");
     return response;
   },
   async (error) => {

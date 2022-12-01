@@ -58,11 +58,12 @@ const router = new VueRouter({
   routes,
 });
 
+// 라우터 이동 스플래시 적용
 router.beforeEach(function (to, from, next) {
   store.commit("loadingStart");
   setTimeout(() => {
     next();
-  }, 100);
+  }, 500);
 });
 
 router.afterEach((to, from) => {
