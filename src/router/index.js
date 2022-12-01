@@ -4,7 +4,7 @@ import store from "../store";
 import index from "@/views/index.vue";
 import login from "@/views/member/login.vue";
 import signup from "@/views/member/signup.vue";
-import FrameDefault from "@/layouts/workFrame.vue";
+import layout from "@/layouts/layout.vue";
 import pageRouter from "./pageRouter";
 import commonRouter from "./common-router";
 import signupFinish from "@/views/member/signup-finish.vue";
@@ -46,7 +46,7 @@ const routes = [
   },
   {
     path: "/",
-    component: FrameDefault,
+    component: layout,
     children: [...pageRouter, ...commonRouter],
     beforeEnter: requireAuth(),
   },

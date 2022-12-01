@@ -1,66 +1,31 @@
 <template>
-  <div class="bg-light font-weight-bold fs-3">
-    <button
-      class="btn btn-primary"
-      type="button"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasExample"
-      aria-controls="offcanvasExample"
-    >
-      =
-    </button>
-    <div
-      class="offcanvas offcanvas-start"
-      tabindex="-1"
-      id="offcanvasExample"
-      aria-labelledby="offcanvasExampleLabel"
-    >
-      <div class="offcanvas-header text-secondary">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Nine To Six</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="offcanvas-body">
-        <div>
-          Some text as placeholder. In real life you can have the elements you
-          have chosen. Like, text, images, lists, etc.
-        </div>
-        <div class="dropdown mt-3">
-          <button
-            class="btn btn-secondary dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown"
-          >
-            Dropdown button
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </div>
+  <header id="header" v-if="$route.path !== '/'">
+    <div class="inner">
+      <button class="is-back" @click="back()">
+        <font-awesome-icon icon="arrow-left" />
+      </button>
+      <div class="has-text-centered">
+        <h2 class="title is-3">{{ $route.name }}</h2>
       </div>
     </div>
-  </div>
+  </header>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapGetters({
-      loginYn: "isLoggedIn",
-    }),
-    ...mapGetters({
-      userNm: "getUserName",
-    }),
+  methods: {
+    back() {
+      switch (this.$route.path) {
+        case "/":
+        case "/attendhistory":
+        case "/mypage":
+          this.$router.push("/");
+          return;
+        default:
+          this.$router.go(-1);
+          return;
+      }
+    },
   },
 };
 </script>
