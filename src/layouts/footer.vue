@@ -1,5 +1,5 @@
 <template>
-  <nav class="bottom-navbar w-100 rounded-top">
+  <nav class="bottom-navbar w-100 rounded-top pt-2">
     <ul class="p-0">
       <li>
         <router-link to="/" class="footer-icon">
