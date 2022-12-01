@@ -39,7 +39,11 @@
         v-else-if="attendStatus === 'out'"
         :inTime="attendInfo[1].inTime"
       ></working-component>
-      <end-component v-else></end-component>
+      <end-component
+        v-else
+        :inTime="attendInfo[1].inTime"
+        :outTime="attendInfo[1].outTime"
+      ></end-component>
 
       <button
         class="btn findmy-position my-1 w-100 border-0 shadow-sm"

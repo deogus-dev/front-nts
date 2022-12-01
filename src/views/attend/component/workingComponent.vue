@@ -31,17 +31,6 @@ export default {
     setInterval(this.workingTime, 10000);
     this.workingTime();
   },
-  filters: {
-    timeFormat: function (val) {
-      return (
-        val.substring(0, 2) +
-        ":" +
-        val.substring(2, 4) +
-        ":" +
-        val.substring(4, 6)
-      );
-    },
-  },
   methods: {
     workingTime() {
       const t1 = this.$moment(this.$moment(), "YYYYMMDDHHmmss");

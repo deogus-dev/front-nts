@@ -29,6 +29,12 @@ Vue.component("globalAlert", () => import("@/components/alert/global.vue"));
 Vue.component("backComponent", () => import("@/components/backComponent.vue"));
 Vue.component("loading", () => import("@/components/loading.vue"));
 
+Vue.filter("timeFormat", function (val) {
+  return (
+    val.substring(0, 2) + ":" + val.substring(2, 4) + ":" + val.substring(4, 6)
+  );
+});
+
 Vue.use(VueMoment);
 
 new Vue({
