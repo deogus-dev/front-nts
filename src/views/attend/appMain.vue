@@ -244,8 +244,7 @@ export default {
           }
           // global alert으로 변경
           alert(attendTxt + "이 확인되었습니다!");
-          this.getAttend();
-          // this.$router.go();
+          this.$router.go();
         }
       } catch (err) {
         // console.log(JSON.stringify(err));

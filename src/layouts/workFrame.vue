@@ -1,6 +1,6 @@
 <template>
   <div class="h-100 card">
-    <div class="card-body p-0 overflow-auto shadow">
+    <div class="card-body p-0 overflow-auto">
       <transition name="slide-fade" mode="out-in">
         <router-view />
       </transition>

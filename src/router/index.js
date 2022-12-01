@@ -63,7 +63,7 @@ router.beforeEach(function (to, from, next) {
   store.commit("loadingStart");
   setTimeout(() => {
     next();
-  }, 500);
+  }, 250);
 });
 
 router.afterEach((to, from) => {
