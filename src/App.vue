@@ -2,41 +2,38 @@
   <div class="h-100">
     <loading class="splash h-100" v-if="getLoadingState"></loading>
     <h6 class="fixed-top opacity-50 m-2">version 1.0</h6>
-    <transition class="h-100" name="slide-fade" mode="out-in">
-      <router-view class="h-100" />
+    <Header></Header>
+    <transition name="slide-fade" mode="out-in">
+      <router-view />
     </transition>
-    <!-- <global-alert /> -->
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-
+import Header from "@/layouts/header.vue";
+import Footer from "@/layouts/footer.vue";
 export default {
-  data() {
-    return {};
-  },
-  created() {},
   computed: {
     ...mapGetters(["getLoadingState"]),
   },
+  components: {
+    Header,
+    Footer,
+  },
 };
 </script>
-
-<style>
+<!-- <style>
 #app {
-  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
+  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 }
 
-router-link {
-  text-decoration: none;
-}
-
-/* nav {
+nav {
   padding: 30px;
 }
 
@@ -47,5 +44,5 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
-} */
-</style>
+}
+</style> -->

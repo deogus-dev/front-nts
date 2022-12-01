@@ -29,13 +29,13 @@ const routes = [
   {
     //로그인
     path: "/login",
-    name: "login",
+    name: "로그인",
     component: login,
   },
   {
     // 회원가입
     path: "/signup",
-    name: "signup",
+    name: "회원가입",
     component: signup,
   },
   {

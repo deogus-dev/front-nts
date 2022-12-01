@@ -1,5 +1,5 @@
 <template>
-  <footer id="footer">
+  <footer id="footer" v-if="isVisible">
     <nav class="bottom-navbar w-100 rounded-top">
       <ul class="p-0">
         <li class="py-1">
@@ -35,3 +35,19 @@
     </nav>
   </footer>
 </template>
+
+<script>
+export default {
+  computed: {
+    isVisible() {
+      switch (this.$route.path) {
+        case "/index":
+        case "/login":
+          return false;
+        default:
+          return true;
+      }
+    },
+  },
+};
+</script>
