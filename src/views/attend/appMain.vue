@@ -65,8 +65,7 @@
         {{ attendStatus === "in" ? "출근하기" : "퇴근하기" }}
       </button>
       <router-link
-        class="attend-history-btn w-100 p-5 my-1 text-start"
-        type="button"
+        class="btn attend-history-btn w-100 p-5 my-1 text-start"
         to="/attendhistory"
       >
         <p>나의 출퇴근 기록</p>
