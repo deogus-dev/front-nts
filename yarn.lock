@@ -6953,11 +6953,6 @@
     "hash-sum" "^2.0.0"
     "loader-utils" "^2.0.0"
 
-"vue-loading-overlay@3.0":
-  "integrity" "sha512-1y7Yghbb8SFw0DzMVz6tVKUz7wvsmWw+78mKQ148ZWDfGroX86wCUmsurx4BxNggziVfWWGvS0QexpwkmdSMgw=="
-  "resolved" "https://registry.npmjs.org/vue-loading-overlay/-/vue-loading-overlay-3.0.1.tgz"
-  "version" "3.0.1"
-
 "vue-lottie@^0.2.1":
   "integrity" "sha512-zInUX69Ij8MhVR3XArpu4PqqBoufwKxS5UMutWCPm59VUaB5H6GtnaIzf9M+l6aYU+Kr8gF/W9dzWLgRuU6V+Q=="
   "resolved" "https://registry.npmjs.org/vue-lottie/-/vue-lottie-0.2.1.tgz"

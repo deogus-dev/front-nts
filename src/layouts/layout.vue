@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="h-100">
     <transition name="slide-fade" mode="out-in">
       <router-view id="body" class="h-100" />
     </transition>
-    <offcanvas class="h-25"></offcanvas>
+    <offcanvas></offcanvas>
     <!--     
     <Header></Header>
 

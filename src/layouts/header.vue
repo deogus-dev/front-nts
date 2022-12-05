@@ -1,5 +1,5 @@
 <template>
-  <header id="header" v-if="isVisible">
+  <header id="header" v-if="isVisible" class="sticky-top">
     <div class="inner">
       <button class="is-back" @click="back()">
         <font-awesome-icon icon="arrow-left" />

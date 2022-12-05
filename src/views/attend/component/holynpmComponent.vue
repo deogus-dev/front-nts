@@ -1,7 +1,7 @@
 <template>
   <div
     class="offcanvas offcanvas-bottom p-0 rounded-top"
-    style="height: auto"
+    style="height: 30%"
     tabindex="-1"
     id="offcanvasHoly"
     aria-labelledby="offcanvasHolyLabel"
