@@ -1,5 +1,5 @@
 <template>
-  <div class="h-100">
+  <div class="h-100 overflow-hidden">
     <transition name="slide-fade" mode="out-in">
       <router-view id="body" class="h-100" />
     </transition>

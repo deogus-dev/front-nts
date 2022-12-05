@@ -1,5 +1,5 @@
 <template>
-  <div class="fs-1">
+  <div class="container">
     <div class="mb-3">
       {{ getName }}님<br />
       안녕하세요!

@@ -129,6 +129,7 @@ export default {
       const result = await this.$axios.get("/attends/" + date);
       if (result.status === 200) {
         this.attendList = result.data.attendList;
+        console.log(result.data.attendList);
       }
     },
   },

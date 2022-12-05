@@ -33,10 +33,9 @@
 /* header */
 
 /* body */
-/* #body {
-  padding-top: 68px;
-  padding-bottom: 68px;
-} */
+#body {
+  overflow: hidden;
+}
 /* body */
 
 /* footer */
