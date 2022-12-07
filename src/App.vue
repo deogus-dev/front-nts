@@ -1,7 +1,7 @@
 <template>
   <div class="h-100 overflow-hidden">
     <loading class="loading h-100" v-if="getLoadingState"></loading>
-    <h6 class="fixed-top opacity-50 m-2">version 1.0</h6>
+    <h6 class="fixed-top opacity-50 m-2">version 1.1</h6>
     <Header></Header>
     <transition name="slide-fade" mode="out-in">
       <router-view />
