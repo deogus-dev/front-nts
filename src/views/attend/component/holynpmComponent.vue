@@ -42,7 +42,8 @@
         aria-labelledby="nav-home-tab"
         tabindex="0"
       >
-        <select class="form-select mb-3" v-model="data.attendCode">
+        <select class="form-select mb-3" v-model="data.attendCode" required>
+          <option value="" selected>Display but don't show in list</option>
           <option v-for="code in comCode" :key="code.code" :value="code.code">
             {{ code.name }}
           </option>

@@ -87,6 +87,10 @@
 }
 /* footer */
 
+/* select option[value=""][disabled] {
+  display: none;
+} */
+
 a.router-link-exact-active > * {
   color: #2a4cc8;
   font-weight: 900;
